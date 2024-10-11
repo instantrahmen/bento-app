@@ -19,6 +19,9 @@ module.exports = {
 		es2017: true,
 		node: true
 	},
+	rules: {
+		'prefer-arrow-callback': 'warn',
+	},
 	overrides: [
 		{
 			files: ['*.svelte'],

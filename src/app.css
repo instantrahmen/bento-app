@@ -6,19 +6,19 @@
 	@layer base {
 		@layer base {
 			:root {
-				--background: 0 0% 100%;
+				--background: 278 10% 95%;
 				--foreground: 240 10% 3.9%;
 				--card: 0 0% 100%;
 				--card-foreground: 240 10% 3.9%;
 				--popover: 0 0% 100%;
 				--popover-foreground: 240 10% 3.9%;
-				--primary: 278 61% 36.3%;
-				--primary-foreground: 355.7 100% 97.3%;
-				--secondary: 240 4.8% 95.9%;
-				--secondary-foreground: 240 5.9% 10%;
+				--primary: 278 61% 66.3%;
+				--primary-foreground: 240 5.9% 10%;
+				--secondary: 325 67% 65.3%;
+				--secondary-foreground: 0 0% 95%;
 				--muted: 240 4.8% 95.9%;
 				--muted-foreground: 240 3.8% 46.1%;
-				--accent: 240 4.8% 95.9%;
+				--accent: 254 55% 65.3%;
 				--accent-foreground: 240 5.9% 10%;
 				--destructive: 0 72.22% 50.59%;
 				--destructive-foreground: 0 0% 98%;
@@ -36,11 +36,11 @@
 				--popover-foreground: 0 0% 95%;
 				--primary: 278 61% 45.3%;
 				--primary-foreground: 278 61% 10%;
-				--secondary: 240 3.7% 15.9%;
+				--secondary: 325 67% 45.3%;
 				--secondary-foreground: 0 0% 98%;
 				--muted: 0 0% 15%;
 				--muted-foreground: 240 5% 64.9%;
-				--accent: 12 6.5% 15.1%;
+				--accent: 254 55% 45.3%;
 				--accent-foreground: 0 0% 98%;
 				--destructive: 0 62.8% 30.6%;
 				--destructive-foreground: 0 85.7% 97.3%;
@@ -58,5 +58,17 @@
 	}
 	body {
 		@apply bg-background text-foreground;
+		/* @apply bg-gradient-to-br from-primary to-secondary text-foreground; */
+	}
+}
+
+
+@layer components {
+	.link {
+		@apply text-primary underline-offset-4 hover:underline;
+	}
+
+	.card-glass {
+		@apply bg-card/25 rounded-md border shadow-sm backdrop-blur-lg border-border/25;
 	}
 }

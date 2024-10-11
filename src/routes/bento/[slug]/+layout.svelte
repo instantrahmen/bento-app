@@ -8,23 +8,24 @@
 	let { children, data } = $props();
 </script>
 
-<div class="flex h-dvh w-full flex-row">
-	<div class="z-10 m-0 flex h-full flex-col gap-2 border-r bg-card px-0 py-2 text-3xl *:m-1">
+<div class="flex h-dvh w-full flex-row p-2">
+	<div class="z-10 flex h-full flex-col gap-2 rounded-md border-r bg-card px-0 py-3 text-3xl *:m-1">
 		<Button
 			href="/"
-			class="!m-0 w-full rounded-none border-b-2 pb-2 text-[length:inherit] text-card-foreground hover:text-primary"
+			class="!m-0 w-full rounded-none border-b pb-2 text-[length:inherit] text-card-foreground hover:text-primary "
 			variant="link"
 			size="icon"
 		>
-			<Icon icon="simple-icons:bento" class="h-[1em] w-[1em]" />
+			<Icon icon="material-symbols:bento" class="h-[1em] w-[1em]" />
 		</Button>
 		{#if data.user?.bentos}
 			{#each data.user.bentos as bento}
 				<Button
 					href="/bento/{bento.slug}"
 					class={cn(
-						' text-[length:inherit] shadow-inner hover:text-primary',
-						bento.slug === data.slug && 'light bg-muted-foreground/20 '
+						' p-1 text-[length:inherit] shadow-blue-950/90 hover:text-card-foreground/80 active:shadow-inner *:active:scale-90 dark:shadow-black',
+						bento.slug === data.slug && 'light bg-muted-foreground/10 shadow-inner ',
+						bento.slug !== data.slug && 'text-muted-foreground'
 					)}
 					variant="ghost"
 					size="icon"
@@ -37,8 +38,14 @@
 				</Button>
 			{/each}
 			<div>
-				<Button href="/bento/create" class="text-[length:inherit] " variant="ghost" size="icon">
+				<Button
+					href="/bento/create"
+					class="text-[length:inherit] text-muted-foreground hover:text-card-foreground"
+					variant="ghost"
+					size="icon"
+				>
 					<Plus class="h-[1em] w-[1em]" />
+					<span class="sr-only">Create new bento</span>
 				</Button>
 			</div>
 		{/if}

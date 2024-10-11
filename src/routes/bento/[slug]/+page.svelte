@@ -1,9 +1,12 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import type { BentoLink } from '@prisma/client';
 	import type { PageData } from './$types';
 	import Icon from '@iconify/svelte';
 	import { cn } from '$lib/utils/shadcn';
+	import { untrack } from 'svelte';
+	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
 
 	let { data } = $props();
 
@@ -19,13 +22,24 @@
 		tall: 'col-span-2 row-span-1',
 	};
 
+	const shapeIcons = {
+		wide: 'simple-icons:rectangle', // a wide rectangle icon
+	};
+
 	let bentoLinkShapeTest: string[] = [
-		// shapes['squareSm'],
-		// shapes['wide'],
-		// shapes['tall'],
-		// shapes['squareSm'],
-		// shapes['squareLg'],
+		shapes['squareSm'],
+		shapes['wide'],
+		shapes['tall'],
+		shapes['squareSm'],
+		shapes['squareLg'],
 	];
+
+	// let testEditLink = $state();
+	const linkIds = $derived((currentBento?.links ?? []).map(({ id }) => id));
+
+	const editingInitialValue = untrack(() => Object.fromEntries(linkIds.map((id) => [id, false])));
+
+	let editing = $state(editingInitialValue);
 </script>
 
 {#if currentBento}
@@ -37,10 +51,10 @@
 				class="w-full max-w-3xl rounded-lg shadow-md"
 			/>
 		{:else if currentBento.icon}
-			<Icon icon={currentBento.icon || ''} class="mx-auto h-28 w-28 text-foreground/50" />
+			<Icon icon={currentBento.icon || ''} class="mx-auto h-28 w-28 text-foreground" />
 		{/if}
 		<h2 class=" text-6xl font-thin">{currentBento.title}</h2>
-		<p class="text-lg">{currentBento.description}</p>
+		<p class="text-lg text-muted-foreground">{currentBento.description}</p>
 	</div>
 
 	{#if currentBento.links.length > 0}
@@ -49,7 +63,7 @@
 		>
 			{#each [...currentBento.links, ...currentBento.links, ...currentBento.links] as link, i}
 				<div class={cn('text-6xl text-primary-foreground/75', bentoLinkShapeTest[i] || '')}>
-					{@render bentoLink({ link, index: i })}
+					{@render bentoLink({ link, index: i, edit: editing[i] })}
 				</div>
 			{/each}
 
@@ -61,9 +75,7 @@
 					image: null,
 					description: null,
 				},
-				onClick: () => {
-					// confirm('Add a link?');
-				},
+				onClick: () => {},
 			})}
 		</div>
 	{:else}
@@ -79,6 +91,7 @@
 				onClick: () => {
 					// confirm('Add a link?');
 				},
+				hideEditButton: true,
 			})}
 		</div>
 	{/if}
@@ -91,31 +104,125 @@
 
 {#snippet bentoLink({
 	link,
+	index,
 	onClick,
+	edit = false,
+	hideEditButton = false,
+}: {
+	link: LinkData;
+	onClick?: (e: Event) => void;
+	index?: number;
+	edit?: boolean;
+	hideEditButton?: boolean;
+})}
+	{#if edit}
+		{@render bentoLinkEditable({
+			link,
+			index,
+		})}
+	{:else}
+		<div class="relative h-full">
+			<Button
+				href={!!link.url ? link.url : undefined}
+				variant="card"
+				on:click={(e) => {
+					if (onClick) onClick(e);
+				}}
+				class={cn(
+					'z-0 flex h-full w-full flex-col rounded-sm border p-4 text-[length:inherit] text-card-foreground/90 shadow-md hover:z-0 '
+				)}
+			>
+				{#if link.icon}
+					<Icon icon={link.icon || ''} class="h-[1em] w-[1em] text-inherit" />
+				{/if}
+				<h3 class="text-base font-semibold tracking-wide">{link.title}</h3>
+				<!-- <span
+				class="line-clamp-1 block w-full max-w-full overflow-ellipsis break-words text-center text-xs tracking-wide text-card-foreground/35"
+				>{link.url}</span
+			> -->
+			</Button>
+
+			{#if !hideEditButton}
+				<Button
+					variant="ghost"
+					size="icon"
+					class="absolute right-2 top-2 text-card-foreground/90"
+					on:click={(e) => {
+						e.stopPropagation();
+						e.preventDefault();
+						if (index) {
+							editing[index] = !editing[index];
+						}
+					}}
+				>
+					<Icon icon="ci:edit" class="h-[1em] w-[1em]" />
+				</Button>
+			{:else}
+				<span> hidden</span>
+			{/if}
+		</div>
+	{/if}
+{/snippet}
+
+{#snippet bentoLinkEditable({
+	link,
+	index,
 }: {
 	link: LinkData;
 	onClick?: (e: Event) => void;
 	index?: number;
 })}
-	<Button
-		href={!!link.url ? link.url : undefined}
-		on:click={(e) => {
-			if (onClick) onClick(e);
-		}}
+	<form
+		action="?/updateLink"
+		method="post"
 		class={cn(
-			'flex h-full w-full flex-col rounded-sm border bg-card p-4 text-[length:inherit] text-card-foreground/90 shadow-md'
-			// bentoLinkShapeTest[index]
+			'@container',
+			buttonVariants({ variant: 'default' }),
+			'relative flex h-full w-full flex-col gap-2 rounded-sm border bg-card p-4 text-[length:inherit] text-card-foreground/90 shadow-md hover:bg-card'
 		)}
 	>
+		<Button
+			variant="ghost"
+			size="icon"
+			class="absolute right-2 top-2"
+			on:click={(e) => {
+				e.stopPropagation();
+				e.preventDefault();
+				// confirm('Add a link?');
+
+				if (index) {
+					editing[index] = !editing[index];
+				}
+			}}
+		>
+			<Icon icon="ci:save" class="h-[1em] w-[1em]" />
+		</Button>
 		{#if link.icon}
 			<Icon icon={link.icon || ''} class="h-[1em] w-[1em] text-inherit" />
 		{/if}
-		<h3 class="text-base font-semibold tracking-wide">{link.title}</h3>
-		<span
+		<div class="flex w-full flex-col gap-2 @xs:flex-row @xs:items-center">
+			<Label for="title">Name</Label>
+			<Input
+				class="w-full text-lg font-semibold"
+				placeholder={link.title}
+				name="title"
+				value={link.title}
+			/>
+		</div>
+		<div class="flex w-full flex-col gap-2 @xs:flex-row @xs:items-center">
+			<Label for="url">URL</Label>
+			<Input
+				class="w-full text-sm font-medium text-muted-foreground/50 placeholder-muted-foreground/35"
+				placeholder="https://example.com"
+				name="url"
+				value={link.url}
+			/>
+		</div>
+		<!-- <span
 			class="line-clamp-1 block w-full max-w-full overflow-ellipsis break-words text-center text-xs tracking-wide text-card-foreground/35"
 			>{link.url}</span
-		>
-	</Button>
+		> -->
+	</form>
 {/snippet}
 
 <style lang="postcss">

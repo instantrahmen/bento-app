@@ -91,6 +91,9 @@ model Bento {
   ownerId     String
   owner       User        @relation(fields: [ownerId], references: [id])
   links       BentoLink[]
+
+  background     String?
+  backgroundType String? // "color" | "image" | "gradient"
 }
 
 model BentoLink {
@@ -100,6 +103,7 @@ model BentoLink {
   icon        String?
   image       String?
   description String?
+  shape       String  @default("square-sm")
   bentoId     String
   bento       Bento   @relation(fields: [bentoId], references: [id])
 }
