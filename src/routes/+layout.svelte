@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Lightswitch from '$lib/components/Lightswitch.svelte';
+	import Lightswitch from '$lib/components/light-switch.svelte';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { buttonVariants } from '$lib/components/ui/button';
 	import '../app.css';

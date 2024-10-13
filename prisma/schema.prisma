@@ -91,6 +91,7 @@ model Bento {
   ownerId     String
   owner       User        @relation(fields: [ownerId], references: [id])
   links       BentoLink[]
+  public      Boolean     @default(false)
 
   background     String?
   backgroundType String? // "color" | "image" | "gradient"
