@@ -8,8 +8,10 @@
 	let { children, data } = $props();
 </script>
 
-<div class="flex h-dvh w-full flex-row p-2">
-	<div class="z-10 flex h-full flex-col gap-2 rounded-md border-r bg-card px-0 py-3 text-3xl *:m-1">
+<div class="flex h-dvh w-full flex-row overflow-y-auto p-2">
+	<div
+		class="sticky top-0 z-10 flex h-full flex-col gap-2 rounded-md border-r bg-card px-0 py-3 text-3xl *:m-1"
+	>
 		<Button
 			href="/"
 			class="!m-0 w-full rounded-none border-b pb-2 text-[length:inherit] text-card-foreground hover:text-primary "
@@ -50,7 +52,7 @@
 			</div>
 		{/if}
 	</div>
-	<div class="m-auto flex h-full max-w-6xl flex-1 flex-col justify-center gap-6 p-4">
+	<div class="m-auto flex min-h-full max-w-6xl flex-1 flex-col justify-center gap-6 p-4">
 		{@render children()}
 	</div>
 </div>

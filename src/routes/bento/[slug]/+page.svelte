@@ -34,7 +34,14 @@
 		shapes['squareLg'],
 	];
 
-	// let testEditLink = $state();
+	const stringIsValidUrl = (url: string): boolean => {
+		try {
+			const urlObj = new URL(url);
+			return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
+		} catch {
+			return false;
+		}
+	};
 	const linkIds = $derived((currentBento?.links ?? []).map(({ id }) => id));
 
 	const editingInitialValue = untrack(() => Object.fromEntries(linkIds.map((id) => [id, false])));
@@ -44,9 +51,9 @@
 
 {#if currentBento}
 	<div class="flex flex-col gap-2 p-4 text-center">
-		{#if currentBento.image}
+		{#if currentBento.image || stringIsValidUrl(currentBento.icon || '')}
 			<img
-				src={currentBento.image}
+				src={currentBento.image || currentBento.icon || 'https://placehold.co/128x128'}
 				alt={currentBento.title}
 				class="w-full max-w-3xl rounded-lg shadow-md"
 			/>
@@ -59,10 +66,15 @@
 
 	{#if currentBento.links.length > 0}
 		<div
-			class="bento-grid grid gap-1 text-3xl [grid-auto-rows:1fr] [grid-template-columns:repeat(auto-fill,minmax(12rem,1fr))]"
+			class="bento-grid grid grid-flow-dense gap-1 text-3xl [grid-auto-rows:1fr] [grid-template-columns:repeat(auto-fill,minmax(12rem,1fr))]"
 		>
-			{#each [...currentBento.links, ...currentBento.links, ...currentBento.links] as link, i}
-				<div class={cn('text-6xl text-primary-foreground/75', bentoLinkShapeTest[i] || '')}>
+			{#each currentBento.links as link, i}
+				<div
+					class={cn(
+						'text-6xl text-primary-foreground/75',
+						shapes[link.shape as keyof typeof shapes]
+					)}
+				>
 					{@render bentoLink({ link, index: i, edit: editing[i] })}
 				</div>
 			{/each}
@@ -133,7 +145,15 @@
 				)}
 			>
 				{#if link.icon}
-					<Icon icon={link.icon || ''} class="h-[1em] w-[1em] text-inherit" />
+					{#if stringIsValidUrl(link.icon || '')}
+						<img
+							src={link.icon || 'https://placehold.co/128x128'}
+							alt={link.title}
+							class="h-[2em] w-[2em] text-inherit"
+						/>
+					{:else}
+						<Icon icon={link.icon || ''} class="h-[1em] w-[1em] text-inherit" />
+					{/if}
 				{/if}
 				<h3 class="text-base font-semibold tracking-wide">{link.title}</h3>
 				<!-- <span
@@ -201,8 +221,9 @@
 			<Icon icon={link.icon || ''} class="h-[1em] w-[1em] text-inherit" />
 		{/if}
 		<div class="flex w-full flex-col gap-2 @xs:flex-row @xs:items-center">
-			<Label for="title">Name</Label>
+			<Label for={`title-${index}`}>Name</Label>
 			<Input
+				id={`title-${index}`}
 				class="w-full text-lg font-semibold"
 				placeholder={link.title}
 				name="title"
@@ -210,8 +231,9 @@
 			/>
 		</div>
 		<div class="flex w-full flex-col gap-2 @xs:flex-row @xs:items-center">
-			<Label for="url">URL</Label>
+			<Label for={`url-${index}`}>URL</Label>
 			<Input
+				id={`url-${index}`}
 				class="w-full text-sm font-medium text-muted-foreground/50 placeholder-muted-foreground/35"
 				placeholder="https://example.com"
 				name="url"
