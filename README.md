@@ -8,8 +8,6 @@
   </p>
   
 <div>
-    <a href="https://github.com/Louis3797/awesome-readme-template/">View Demo</a>
-  <span> · </span>
     <a href="https://github.com/Louis3797/awesome-readme-template">Documentation</a>
   <span> · </span>
     <a href="https://github.com/instantrahmen/bento-app/issues/">Report Bug</a>

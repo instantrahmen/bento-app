@@ -8,7 +8,7 @@
 	let { data } = $props();
 </script>
 
-<h1>SvelteKit Auth Example!</h1>
+<h2 class="text-3xl font-semibold">Bento App</h2>
 <div>
 	{#if data.session}
 		{#if data.session.user?.image}
@@ -23,9 +23,13 @@
 		</SignOut>
 
 		{#if data.user}
-			<pre>
+			<div class="rounded border border-border bg-card p-4 shadow">
+				<Button variant="outline" href="/bento">Bentos</Button>
+				<Button variant="outline" href="/test">Test Page</Button>
+			</div>
+			<!-- <pre>
 {JSON.stringify(data.user, null, 2)}
-			</pre>
+			</pre> -->
 		{/if}
 	{:else}
 		<div class="rounded border border-border bg-card p-4 shadow">
@@ -45,9 +49,9 @@
 				</div>
 			</SignIn>
 
-			<pre>
+			<!-- <pre>
 {JSON.stringify($page.data, null, 2)}
-			</pre>
+			</pre> -->
 		</div>
 	{/if}
 </div>
