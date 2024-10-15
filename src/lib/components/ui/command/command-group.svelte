@@ -6,8 +6,6 @@
 	};
 
 	let { class: className, children, this: self = $bindable(null), ...restProps }: Props = $props();
-	// let className: string | undefined | null = undefined;
-	// // export { className as class };
 </script>
 
 <CommandPrimitive.Group asChild>

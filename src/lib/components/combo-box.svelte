@@ -140,7 +140,7 @@
 					{@const rowItems = filteredOptions.slice(rowStart, rowEnd)}
 
 					<div
-						class="grid items-center justify-between"
+						class="grid items-center justify-between overflow-visible"
 						style="grid-template-columns: repeat({cols}, minmax(0, 1fr));"
 					>
 						{#each rowItems as option (option.value)}
@@ -149,8 +149,6 @@
 								value={option.value}
 								onSelect={(c) => handleSelect(c, ids)}
 								asChild={!!children && asChildren}
-								class={cn('bg-red-500')}
-								tabindex={0}
 							>
 								{#if !children}
 									{#if selected}
