@@ -9,6 +9,7 @@
 	import { fuzzySearch } from '$lib/utils/fuzzy-search';
 	import VirtualList from './virtual-list.svelte';
 	import Icon from '@iconify/svelte';
+	import { Debounced } from 'runed';
 
 	type IDs = {
 		content: string;
@@ -60,6 +61,8 @@
 		name = 'combobox',
 	}: Props = $props();
 
+	let debouncedValue = new Debounced(() => searchInput, 250);
+
 	let selectedValue = $derived(options.find((f) => f.value === value)?.label ?? placeholder);
 
 	let filteredOptions: { label: string; value: string }[] = $state(untrack(() => options));
@@ -85,7 +88,7 @@
 
 	$effect(() => {
 		if (autoFilterItems) {
-			filteredOptions = fuzzySearch(options, ['label', 'value'], searchInput);
+			filteredOptions = fuzzySearch(options, ['label', 'value'], debouncedValue.current);
 		} else {
 			filteredOptions = options;
 		}
@@ -114,11 +117,10 @@
 		<Command.Root>
 			<Command.Input
 				{placeholder}
-				debounceTime={250}
 				class="h-9"
 				name="combobox-search-{name}"
 				id="combobox-search-{name}"
-				bind:debouncedValue={searchInput}
+				bind:value={searchInput}
 				onInput={(val: string) => {
 					console.log({ val });
 				}}
@@ -147,6 +149,8 @@
 								value={option.value}
 								onSelect={(c) => handleSelect(c, ids)}
 								asChild={!!children && asChildren}
+								class={cn('bg-red-500')}
+								tabindex={0}
 							>
 								{#if !children}
 									{#if selected}
@@ -173,3 +177,12 @@
 		</Command.Root>
 	</Popover.Content>
 </Popover.Root>
+
+<style>
+	/* Debug tabindex by highlighting anything with focus  */
+	/* :global(*:focus-visible) {
+		outline: 2px solid red;
+		boder: 2px solid red;
+		background: blue !important;
+	} */
+</style>
