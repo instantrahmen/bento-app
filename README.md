@@ -49,10 +49,31 @@ Go to the project directory:
 cd bento-app
 ```
 
+Copy the .env.example file to .env and fill out the required keys.
+For the Discord ID and secret, go to [https://discord.com/developers/applications](https://discord.com/developers/applications) and create a new application.
+
+For the GitHub ID and secret, go to [https://github.com/settings/apps](https://github.com/settings/apps) and create a new application.
+
+```bash
+cp .env.example .env
+```
+
+Generate a new auth secret (remember to copy it into .env):
+
+```bash
+openssl rand -hex 32
+```
+
 Install dependencies:
 
 ```bash
 bun install
+```
+
+Create the database:
+
+```bash
+bun db:push
 ```
 
 Start the development server:
