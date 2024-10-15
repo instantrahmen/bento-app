@@ -1,12 +1,13 @@
 <script lang="ts">
-	import Lightswitch from '$lib/components/light-switch.svelte';
+	import '../app.css';
+	import { ModeWatcher } from 'mode-watcher';
 	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
+	import { SignIn } from '@auth/sveltekit/components';
+	import { browser } from '$app/environment';
+	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
+	import Lightswitch from '$lib/components/light-switch.svelte';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { buttonVariants } from '$lib/components/ui/button';
-	import '../app.css';
-	import { SignIn } from '@auth/sveltekit/components';
-	import { ModeWatcher } from 'mode-watcher';
-	import { browser } from '$app/environment';
 
 	let { children, data } = $props();
 
@@ -57,6 +58,7 @@
 	<main class="mx-auto my-auto flex h-full max-h-dvh w-full flex-1 flex-col">
 		{@render children()}
 	</main>
+	<SvelteQueryDevtools />
 </QueryClientProvider>
 
 <style lang="postcss">

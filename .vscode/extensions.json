@@ -10,6 +10,7 @@
 		"antfu.iconify",
 		"esbenp.prettier-vscode",
 		"rvest.vs-code-prettier-eslint",
-		"yoavbls.pretty-ts-errors"
+		"yoavbls.pretty-ts-errors",
+		"hyoban.tailwindcss-classname-highlight"
 	]
 }

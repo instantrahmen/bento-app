@@ -1,42 +1,3 @@
-<!-- 
-const mockApiSearch = (searchQuery: string): string[] => {
-  const lookingForCats = searchQuery.includes("cat")
-  const lookingForDogs = searchQuery.includes("dog")
-  if (lookingForCats && lookingForDogs) {
-    return [...cats, ...dogs]
-  } else if (lookingForCats) {
-    return cats
-  } else if (lookingForDogs) {
-    return dogs
-  } else {
-    return []
-  }
-}
-
-export default function CommandCustomFiltering() {
-  const [commandInput, setCommandInput] = React.useState<string>("")
-  const [results, setResults] = React.useState<string[]>([])
-  React.useEffect(() => {
-    setResults(mockApiSearch(commandInput))
-  }, [commandInput])
-
-  return (
-    <Command className="rounded-lg border shadow-md" shouldFilter={false}>
-      <CommandInput placeholder="Type 'cat' or 'dog'..." value={commandInput} onValueChange={setCommandInput} />
-      <CommandList>
-        <CommandEmpty>{ commandInput === "" ? "Start typing to load results": "No results found." }</CommandEmpty>
-        <CommandGroup>
-          {
-            results.map((result: string) => <CommandItem key={result} value={result}>
-              { result }
-            </CommandItem>)
-          }
-        </CommandGroup>
-      </CommandList>
-    </Command>
-  )
-} -->
-
 <script lang="ts">
 	import Check from 'svelte-radix/Check.svelte';
 	import CaretSort from 'svelte-radix/CaretSort.svelte';
@@ -45,8 +6,9 @@ export default function CommandCustomFiltering() {
 	import * as Popover from '$lib/components/ui/popover';
 	import { Button } from '$lib/components/ui/button';
 	import { cn } from '$lib/utils/shadcn';
-	import Input from './ui/input/input.svelte';
 	import { fuzzySearch } from '$lib/utils/fuzzy-search';
+	import VirtualList from './virtual-list.svelte';
+	import Icon from '@iconify/svelte';
 
 	type IDs = {
 		content: string;
@@ -75,8 +37,9 @@ export default function CommandCustomFiltering() {
 		asChildren?: boolean;
 		onSelect?: (value: string, ids: IDs) => void;
 		searchInput?: string;
-		onSearchChange?: (value: string) => void;
 		autoFilterItems?: boolean;
+		cols?: number;
+		overscan?: number;
 	}
 
 	let {
@@ -84,17 +47,22 @@ export default function CommandCustomFiltering() {
 		value = $bindable(null),
 		open = $bindable(false),
 		class: className = $bindable(''),
+		searchInput = $bindable(''),
 		emptyText = 'No options found...',
 		placeholder = 'Select an option...',
 		children,
 		asChildren = false,
 		onSelect,
-		searchInput = $bindable(''),
-		onSearchChange,
 		autoFilterItems = false,
+		cols = $bindable(4),
+		overscan = $bindable(10),
 	}: Props = $props();
 
 	let selectedValue = $derived(options.find((f) => f.value === value)?.label ?? placeholder);
+
+	let filteredOptions: { label: string; value: string }[] = $state(untrack(() => options));
+
+	let rows = $derived(Math.ceil(filteredOptions.length / cols));
 
 	function closeAndFocusTrigger(triggerId: string) {
 		open = false;
@@ -102,8 +70,6 @@ export default function CommandCustomFiltering() {
 			document.getElementById(triggerId)?.focus();
 		});
 	}
-
-	let filteredOptions: { label: string; value: string }[] = $state(untrack(() => options));
 
 	const handleSelect = (currentValue: string, ids: IDs) => {
 		console.log('onSelect', currentValue);
@@ -130,17 +96,22 @@ export default function CommandCustomFiltering() {
 			builders={[builder]}
 			variant="outline"
 			role="combobox"
+			size={'sm'}
 			aria-expanded={open}
-			class="w-[200px] justify-between"
+			class="flex w-min flex-row justify-between gap-2"
 		>
+			{#if value}
+				<Icon icon={value} class="h-6 w-6" />
+			{/if}
 			{selectedValue}
+
 			<CaretSort class="ml-2 h-4 w-4 shrink-0 opacity-50" />
 		</Button>
 	</Popover.Trigger>
 	<Popover.Content class="w-[200px] p-0">
 		<Command.Root>
 			<Command.Input
-				placeholder="Search framework..."
+				{placeholder}
 				class="h-9"
 				bind:debouncedValue={searchInput}
 				onInput={(val: string) => {
@@ -148,33 +119,51 @@ export default function CommandCustomFiltering() {
 				}}
 			/>
 			<Command.Empty>{emptyText}</Command.Empty>
-			<Command.Group class={cn('command-group', className)}>
-				{#each filteredOptions as option}
-					{@const selected = value === option.value}
-					<Command.Item
-						value={option.value}
-						onSelect={(c) => handleSelect(c, ids)}
-						asChild={!!children && asChildren}
+			<Command.Group asChild>
+				<VirtualList
+					{overscan}
+					class={cn(className)}
+					containerClass="command-group h-[200px] overflow-y-auto"
+					count={rows}
+					childrenClass="[&>*]:w-full w-full flex flex-col"
+					let:row
+				>
+					{@const rowStart = row.index * cols}
+					{@const rowEnd = Math.min(rowStart + cols, filteredOptions.length)}
+					{@const rowItems = filteredOptions.slice(rowStart, rowEnd)}
+					<div
+						class="grid items-center justify-between"
+						style="grid-template-columns: repeat({cols}, minmax(0, 1fr));"
 					>
-						{#if !children}
-							{#if selected}
-								<Check class={cn('mr-2 h-4 w-4')} />
-							{:else}
-								<span class={cn('mr-2 h-4 w-4')}></span>
-							{/if}
-							{option.label}
-						{:else}
-							{@render children({
-								option,
-								selected,
-								itemProps: {
-									onSelect: (c) => handleSelect(c, ids),
-									value: option.value,
-								},
-							})}
-						{/if}
-					</Command.Item>
-				{/each}
+						{#each rowItems as option (option.value)}
+							{@const selected = value === option.value}
+
+							<Command.Item
+								value={option.value}
+								onSelect={(c) => handleSelect(c, ids)}
+								asChild={!!children && asChildren}
+							>
+								{#if !children}
+									{#if selected}
+										<Check class={cn('mr-2 h-4 w-4')} />
+									{:else}
+										<span class={cn('mr-2 h-4 w-4')}></span>
+									{/if}
+									{option.label}
+								{:else}
+									{@render children({
+										option,
+										selected,
+										itemProps: {
+											onSelect: (c) => handleSelect(c, ids),
+											value: option.value,
+										},
+									})}
+								{/if}
+							</Command.Item>
+						{/each}
+					</div>
+				</VirtualList>
 			</Command.Group>
 		</Command.Root>
 	</Popover.Content>

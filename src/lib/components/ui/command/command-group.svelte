@@ -1,18 +1,26 @@
 <script lang="ts">
-	import { Command as CommandPrimitive } from "cmdk-sv";
-	import { cn } from "$lib/utils/shadcn.js";
-	type $$Props = CommandPrimitive.GroupProps;
+	import { Command as CommandPrimitive } from 'cmdk-sv';
+	import { cn } from '$lib/utils/shadcn.js';
+	type Props = CommandPrimitive.GroupProps & {
+		this?: HTMLDivElement | null;
+	};
 
-	let className: string | undefined | null = undefined;
-	export { className as class };
+	let { class: className, children, this: self = $bindable(null), ...restProps }: Props = $props();
+	// let className: string | undefined | null = undefined;
+	// // export { className as class };
 </script>
 
-<CommandPrimitive.Group
-	class={cn(
-		"text-foreground [&_[data-cmdk-group-heading]]:text-muted-foreground overflow-hidden p-1 [&_[data-cmdk-group-heading]]:px-2 [&_[data-cmdk-group-heading]]:py-1.5 [&_[data-cmdk-group-heading]]:text-xs [&_[data-cmdk-group-heading]]:font-medium",
-		className
-	)}
-	{...$$restProps}
->
-	<slot />
+<CommandPrimitive.Group asChild>
+	<div
+		bind:this={self}
+		class={cn(
+			'overflow-hidden p-1 text-foreground [&_[data-cmdk-group-heading]]:px-2 [&_[data-cmdk-group-heading]]:py-1.5 [&_[data-cmdk-group-heading]]:text-xs [&_[data-cmdk-group-heading]]:font-medium [&_[data-cmdk-group-heading]]:text-muted-foreground',
+			className
+		)}
+		{...restProps}
+	>
+		{#if children}
+			{@render children()}
+		{/if}
+	</div>
 </CommandPrimitive.Group>
