@@ -12,7 +12,24 @@
 
 		<div class="text-2xl">{index}</div>
 	</VirtualList> -->
-	<IconSelect />
+	<IconSelect
+		iconSets={[
+			'radix-icons',
+			'lucide',
+			'mdi',
+			'cib',
+			'simple-icons',
+			'fa-brands',
+			'fa',
+			'fa6',
+			'fa6-solid',
+			'fa6-brands',
+			'fe',
+			'cbi',
+			'logos',
+			'bxl',
+		]}
+	/>
 </div>
 
 <style lang="postcss">

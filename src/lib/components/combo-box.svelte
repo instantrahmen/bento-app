@@ -40,6 +40,7 @@
 		autoFilterItems?: boolean;
 		cols?: number;
 		overscan?: number;
+		name?: string;
 	}
 
 	let {
@@ -56,6 +57,7 @@
 		autoFilterItems = false,
 		cols = $bindable(4),
 		overscan = $bindable(10),
+		name = 'combobox',
 	}: Props = $props();
 
 	let selectedValue = $derived(options.find((f) => f.value === value)?.label ?? placeholder);
@@ -112,7 +114,10 @@
 		<Command.Root>
 			<Command.Input
 				{placeholder}
+				debounceTime={250}
 				class="h-9"
+				name="combobox-search-{name}"
+				id="combobox-search-{name}"
 				bind:debouncedValue={searchInput}
 				onInput={(val: string) => {
 					console.log({ val });
@@ -123,7 +128,7 @@
 				<VirtualList
 					{overscan}
 					class={cn(className)}
-					containerClass="command-group h-[200px] overflow-y-auto"
+					containerClass="command-group h-[200px] overflow-y-auto overflow-x-visible"
 					count={rows}
 					childrenClass="[&>*]:w-full w-full flex flex-col"
 					let:row
@@ -131,13 +136,13 @@
 					{@const rowStart = row.index * cols}
 					{@const rowEnd = Math.min(rowStart + cols, filteredOptions.length)}
 					{@const rowItems = filteredOptions.slice(rowStart, rowEnd)}
+
 					<div
 						class="grid items-center justify-between"
 						style="grid-template-columns: repeat({cols}, minmax(0, 1fr));"
 					>
 						{#each rowItems as option (option.value)}
 							{@const selected = value === option.value}
-
 							<Command.Item
 								value={option.value}
 								onSelect={(c) => handleSelect(c, ids)}

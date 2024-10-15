@@ -19,28 +19,38 @@ export const searchIcons = async (params: { query: string; prefixes?: string }) 
 	return null;
 };
 
-export const getCollectionIcons = async (prefix: string = 'mdi') => {
+// const iconNameToFullName = (icon: string) => `${prefix}:${icon}`;
+const iconOption = (icon: string) => ({
+	label: icon,
+	value: icon,
+});
+
+export const getCollectionIconsSet = async (prefix: string = 'mdi') => {
 	const apiUrl = new URL(`${API_BASE}/collection`);
 	apiUrl.searchParams.append('prefix', prefix);
-
 	const collection: APIv2CollectionResponse = await fetch(apiUrl).then((r) => r.json());
-
 	const { uncategorized = [], categories = {} } = collection;
 
-	// To get a list of all icon names that should be shown, use the following logic:
-
-	// Get values from uncategorized property, if it exists.
-	// Traverse all categories from categories property, if it exists. One icon can exist in multiple categories, so check for duplicates, the easiest way to do that is to use Set class in JavaScript instead of Array.
-
 	const iconNameToFullName = (icon: string) => `${prefix}:${icon}`;
-	const iconOption = (icon: string) => ({
-		label: icon,
-		value: iconNameToFullName(icon),
-	});
-	const allIcons = new Set([
-		...uncategorized.map(iconOption),
-		...[...Object.values(categories).flat()].map(iconOption),
-	]);
+
+	const allIcons = new Set(
+		[...uncategorized, ...[...Object.values(categories).flat()]].map(iconNameToFullName)
+	);
 
 	return Array.from(allIcons);
+};
+
+export const getCollectionIcons = async (prefix: string = 'mdi') => {
+	const allIcons = await getCollectionIconsSet(prefix);
+
+	return Array.from(allIcons).map((icon) => iconOption(icon));
+};
+
+export const getMultipleCollectionsIcons = async (prefixes: string[] = ['mdi']) => {
+	const collections = await Promise.all(prefixes.map((prefix) => getCollectionIconsSet(prefix)));
+
+	// remove any possible duplicates by creating a set from the flattened array
+	const iconsSet = new Set(collections.flat());
+
+	return Array.from(iconsSet).map((icon) => iconOption(icon));
 };

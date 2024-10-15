@@ -7,32 +7,17 @@
 	import ComboBox from '$lib/components/combo-box.svelte';
 	import * as Command from '$lib/components/ui/command';
 
-	import { getCollectionIcons } from '../api/iconify';
+	import { getMultipleCollectionsIcons } from '../api/iconify';
 	import { paginate } from '$lib/utils/paginate';
-	import { browser } from '$app/environment';
 
-	const testIcons = $state([
-		{
-			label: 'Mdi Home',
-			value: 'mdi:home',
-		},
-		{
-			label: 'Mdi Account',
-			value: 'mdi:account',
-		},
-		{
-			label: 'Mdi Cog',
-			value: 'mdi:cog',
-		},
-		{
-			label: 'Mdi Plus',
-			value: 'mdi:plus',
-		},
-	]);
-
+	let {
+		iconSets = ['mdi', 'cib', 'fa', 'fa-brands'],
+	}: {
+		iconSets?: string[];
+	} = $props();
 	const query = createQuery({
-		queryKey: ['iconify', 'collection', 'mdi'],
-		queryFn: async () => await getCollectionIcons('mdi'),
+		queryKey: [iconSets.map((i) => `icons-${i}`)],
+		queryFn: async () => await getMultipleCollectionsIcons(iconSets),
 	});
 
 	const placeholderItem = $derived(
@@ -45,7 +30,7 @@
 				return [{ label: 'Error', value: 'mdi:alert' }];
 			}
 
-			return [testIcons[0]];
+			return [{ label: 'No icons found', value: 'mdi:alert' }];
 		})()
 	);
 
@@ -57,6 +42,11 @@
 </script>
 
 <!-- {JSON.stringify(currentItems, null, 2)} -->
+<div class="prose-xs">
+	Total Icons: <code class="inline rounded-sm bg-muted p-1"
+		>{JSON.stringify($query.data?.length, null, 2)}</code
+	>
+</div>
 <ComboBox
 	asChildren
 	placeholder="Select an icon..."
@@ -72,12 +62,14 @@
 		{:else if $query.isError}
 			Error
 		{:else}
-			<Command.Item
-				class={cn('flex flex-row items-center justify-center text-center transition-all')}
-				{...itemProps}
-			>
-				<Icon icon={option.value} class="inline h-6 w-6" />
-			</Command.Item>
+			{#key option.value}
+				<Command.Item
+					class={cn('flex flex-row items-center justify-center text-center transition-all')}
+					{...itemProps}
+				>
+					<Icon icon={option.value} class="inline h-6 w-6" />
+				</Command.Item>
+			{/key}
 		{/if}
 	{/snippet}
 </ComboBox>

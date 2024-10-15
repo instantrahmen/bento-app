@@ -26,14 +26,14 @@
 		class={cn(className)}
 		style="position: relative; height: {$virtualizer.getTotalSize()}px; width: 100%;"
 	>
-		{#each $virtualizer.getVirtualItems() as row (row.index)}
+		{#each $virtualizer.getVirtualItems() as row, i (`${row.index}-${i}`)}
 			<div
 				class:list-item-even={row.index % 2 === 0}
 				class:list-item-odd={row.index % 2 === 1}
 				style="position: absolute; top: 0; left: 0; height: {row.size}px; transform: translateY({row.start}px);"
 				class={cn(childrenClass)}
 			>
-				<slot {row} index={row.index} />
+				<slot {row} index={row.index} allItems={$virtualizer.getVirtualItems()} />
 			</div>
 		{/each}
 	</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Command as CommandPrimitive } from "cmdk-sv";
-	import { cn } from "$lib/utils/shadcn.js";
+	import { Command as CommandPrimitive } from 'cmdk-sv';
+	import { cn } from '$lib/utils/shadcn.js';
 
 	type $$Props = CommandPrimitive.ItemProps;
 
@@ -13,9 +13,10 @@
 <CommandPrimitive.Item
 	{asChild}
 	class={cn(
-		"aria-selected:bg-accent aria-selected:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+		'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
 		className
 	)}
+	tabindex={0}
 	{...$$restProps}
 	let:action
 	let:attrs

@@ -9,6 +9,7 @@
 		debouncedValue?: string;
 		onInput?: (value: string) => void;
 		onDebouncedInput?: (value: string) => void;
+		debounceTime?: number;
 	};
 
 	let {
@@ -17,6 +18,7 @@
 		debouncedValue = $bindable(''),
 		onInput,
 		onDebouncedInput,
+		debounceTime = $bindable(500),
 		...restProps
 	}: Props = $props();
 
@@ -25,7 +27,7 @@
 		if (onDebouncedInput) {
 			onDebouncedInput(value);
 		}
-	}, 500);
+	}, debounceTime);
 </script>
 
 <div
