@@ -1,0 +1,29 @@
+# syntax=docker.io/docker/dockerfile:1.4
+ARG _DEV_CONTAINERS_BASE_IMAGE=placeholder
+
+
+FROM $_DEV_CONTAINERS_BASE_IMAGE AS dev_containers_target_stage
+
+USER root
+
+COPY ./.devpod-internal/ /tmp/build-features/
+RUN chmod -R 0755 /tmp/build-features && ls /tmp/build-features
+
+RUN \
+echo "_CONTAINER_USER_HOME=$(getent passwd codespace | cut -d: -f6)" >> /tmp/build-features/devcontainer-features.builtin.env && \
+echo "_REMOTE_USER_HOME=$(getent passwd codespace | cut -d: -f6)" >> /tmp/build-features/devcontainer-features.builtin.env
+
+
+RUN cd /tmp/build-features/0 \
+&& chmod +x ./devcontainer-features-install.sh \
+&& ./devcontainer-features-install.sh
+
+
+RUN cd /tmp/build-features/1 \
+&& chmod +x ./devcontainer-features-install.sh \
+&& ./devcontainer-features-install.sh
+
+
+
+ARG _DEV_CONTAINERS_IMAGE_USER=root
+USER $_DEV_CONTAINERS_IMAGE_USER
