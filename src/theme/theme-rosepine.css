@@ -7,44 +7,44 @@
 
 		--muted: var(--rp-muted);
 		--muted-foreground: var(--rp-subtle);
-		--popover: var(--rp-overlay);
+		--popover: var(--rp-card);
 		--popover-foreground: var(--rp-text);
 		--card: var(--rp-surface);
 		--card-foreground: var(--rp-text);
-		--border: var(--rp-muted);
+		--border: var(--rp-overlay);
 		--input: var(--rp-overlay);
 		--primary: var(--rp-pine);
 		--primary-foreground: var(--rp-surface);
 		--secondary: (--rp-rose);
 		--secondary-foreground: var(--rp-surface);
-		--accent: var(--rp-foam);
-		--accent-foreground: var(--rp-surface);
+		--accent: var(--rp-overlay);
+		--accent-foreground: var(--rp-text);
 		--destructive: var(--rp-love);
 		--destructive-foreground: var(--rp-surface);
 		--ring: var(--rp-iris);
-		--radius: 1rem;
+		--radius: 0.6rem;
 	}
 	.dark {
 		--background: var(--rp-dark-base);
 		--foreground: var(--rp-dark-text);
 		--muted: var(--rp-dark-muted);
 		--muted-foreground: var(--rp-dark-subtle);
-		--popover: var(--rp-dark-overlay);
+		--popover: var(--rp-dark-card);
 		--popover-foreground: var(--rp-dark-text);
 		--card: var(--rp-dark-surface);
 		--card-foreground: var(--rp-dark-text);
-		--border: var(--rp-dark-muted);
+		--border: var(--rp-dark-overlay);
 		--input: var(--rp-dark-overlay);
 		--primary: var(--rp-dark-pine);
 		--primary-foreground: var(--rp-dark-surface);
 		--secondary: (--rp-dark-rose);
 		--secondary-foreground: var(--rp-dark-surface);
-		--accent: var(--rp-dark-foam);
-		--accent-foreground: var(--rp-dark-surface);
+		--accent: var(--rp-dark-overlay);
+		--accent-foreground: var(--rp-dark-text);
 		--destructive: var(--rp-dark-love);
 		--destructive-foreground: var(--rp-dark-surface);
 		--ring: var(--rp-dark-iris);
-		--radius: 1rem;
+		--radius: 0.6rem;
 	}
 }
 
