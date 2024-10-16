@@ -1,5 +1,9 @@
 :root {
 	/* ctpppuccin Latte */
+	--ctp-latte-base: 220 23% 95%; /* Background color */
+	--ctp-latte-mantle: 220 22% 92%;
+	--ctp-latte-crust: 220 21% 89%; /* Secondary background color */
+
 	--ctp-latte-text: 234 16% 35%; /* Primary text color */
 	--ctp-latte-subtext-1: 233 13% 41%;
 	--ctp-latte-subtext-0: 233 10% 47%;
@@ -9,9 +13,6 @@
 	--ctp-latte-surface-2: 227 12% 71%;
 	--ctp-latte-surface-1: 225 14% 77%;
 	--ctp-latte-surface-0: 223 16% 83%;
-	--ctp-latte-base: 220 23% 95%; /* Background color */
-	--ctp-latte-mantle: 220 22% 92%;
-	--ctp-latte-crust: 220 21% 89%; /* Secondary background color */
 	--ctp-latte-rosewater: 11 59% 67%;
 	--ctp-latte-flamingo: 0 60% 67%;
 	--ctp-latte-pink: 316 73% 69%;
@@ -28,6 +29,9 @@
 	--ctp-latte-lavender: 231 97% 72%;
 
 	/* catpppuccin Mocha */
+	--ctp-mocha-base: 240 21% 15%;
+	--ctp-mocha-mantle: 240 21% 12%;
+	--ctp-mocha-crust: 240 23% 9%;
 	--ctp-mocha-text: 226 64% 88%;
 	--ctp-mocha-subtext-1: 227 35% 80%;
 	--ctp-mocha-subtext-0: 228 24% 72%;
@@ -37,9 +41,6 @@
 	--ctp-mocha-surface-2: 233 12% 39%;
 	--ctp-mocha-surface-1: 234 13% 31%;
 	--ctp-mocha-surface-0: 237 16% 23%;
-	--ctp-mocha-base: 240 21% 15%;
-	--ctp-mocha-mantle: 240 21% 12%;
-	--ctp-mocha-crust: 240 23% 9%;
 	--ctp-mocha-rosewater: 10 56% 91%;
 	--ctp-mocha-flamingo: 0 59% 88%;
 	--ctp-mocha-pink: 316 72% 86%;

@@ -7,18 +7,18 @@
 		--foreground: var(--ctp-latte-text);
 		--muted: var(--ctp-latte-subtext-1);
 		--muted-foreground: var(--ctp-overlay-1);
-		--popover: var(--ctp-latte-overlay-0);
+		--popover: var(--ctp-latte-mantle);
 		--popover-foreground: var(--ctp-latte-text);
 		--card: var(--ctp-latte-mantle);
 		--card-foreground: var(--ctp-latte-text);
 		--border: var(--ctp-latte-surface-1);
 		--input: var(--ctp-latte-surface-0);
 		--primary: var(--ctp-latte-sky);
-		--primary-foreground: var(--ctp-latte-text);
+		--primary-foreground: var(--ctp-text-black);
 		--secondary: var(--ctp-latte-mauve);
 		--secondary-foreground: var(--ctp-latte-base);
-		--accent: var(--ctp-latte-overlay-2);
-		--accent-foreground: var(--ctp-latte-text);
+		--accent: var(--ctp-latte-surface-2);
+		--accent-foreground: var(--ctp-text-black);
 
 		--destructive: var(--ctp-latte-red);
 		--destructive-foreground: var(--ctp-latte-base);
@@ -33,17 +33,17 @@
 		--foreground: var(--ctp-mocha-text);
 		--muted: var(--ctp-mocha-subtext-1);
 		--muted-foreground: var(--ctp-mocha-overlay-1);
-		--popover: var(--ctp-mocha-overlay-0);
+		--popover: var(--ctp-mocha-surface-0);
 		--popover-foreground: var(--ctp-mocha-text);
 		--card: var(--ctp-mocha-surface-0);
 		--card-foreground: var(--ctp-mocha-text);
 		--border: var(--ctp-mocha-surface-1);
-		--input: var(--ctp-mocha-surface-0);
-		--primary: var(--ctp-mocha-sky);
-		--primary-foreground: var(--ctp-mocha-text);
+		--input: var(--ctp-mocha-surface-2);
+		--primary: var(--ctp-mocha-blue);
+		--primary-foreground: var(--ctp-mocha-crust);
 		--secondary: var(--ctp-mocha-mauve);
 		--secondary-foreground: var(--ctp-mocha-base);
-		--accent: var(--ctp-mocha-overlay-2);
+		--accent: var(--ctp-mocha-surface-1);
 		--accent-foreground: var(--ctp-mocha-text);
 
 		--destructive: var(--ctp-mocha-red);

@@ -1,4 +1,5 @@
-@import './theme/theme-rosepine.css';
+/* @import './theme/theme-rosepine.css'; */
+@import './theme/theme-catppuccin.css';
 
 @tailwind base;
 @tailwind components;
