@@ -18,7 +18,7 @@
 
 	interface Props {
 		options: { label: string; value: string }[];
-		value?: string | null;
+		value?: string;
 		open?: boolean;
 		placeholder?: string;
 		emptyText?: string;
@@ -46,7 +46,7 @@
 
 	let {
 		options,
-		value = $bindable(null),
+		value = $bindable(),
 		open = $bindable(false),
 		class: className = $bindable(''),
 		searchInput = $bindable(''),
@@ -175,12 +175,7 @@
 		</Command.Root>
 	</Popover.Content>
 </Popover.Root>
+<input type="hidden" {name} id={name} bind:value />
 
 <style>
-	/* Debug tabindex by highlighting anything with focus  */
-	/* :global(*:focus-visible) {
-		outline: 2px solid red;
-		boder: 2px solid red;
-		background: blue !important;
-	} */
 </style>

@@ -12,8 +12,12 @@
 
 	let {
 		iconSets = ['mdi', 'cib', 'fa', 'fa-brands'],
+		value = $bindable(),
+		name = 'icon',
 	}: {
 		iconSets?: string[];
+		value?: string;
+		name?: string;
 	} = $props();
 	const query = createQuery({
 		queryKey: [iconSets.map((i) => `icons-${i}`)],
@@ -55,6 +59,8 @@
 	autoFilterItems
 	cols={4}
 	overscan={5}
+	bind:value
+	{name}
 >
 	{#snippet children({ selected, option, itemProps })}
 		{#if $query.isLoading}

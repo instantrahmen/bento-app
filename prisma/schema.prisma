@@ -9,19 +9,25 @@ datasource db {
 
 // Auth Models
 model User {
-  id            String          @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String?         @unique
+  email         String?   @unique
   emailVerified DateTime?
   image         String?
-  accounts      Account[]
-  sessions      Session[]
-  bentos        Bento[]
+
+  // Relations
+  accounts Account[]
+  sessions Session[]
+  bentos   Bento[]
+
+  settings UserSettings?
+
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  userSettingsId String?
 }
 
 model Account {
@@ -44,6 +50,14 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+model UserSettings {
+  id                String  @id @default(cuid())
+  openLinksInNewTab Boolean @default(true)
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
 }
 
 model Session {
@@ -83,7 +97,7 @@ model Authenticator {
 // Bento Models
 model Bento {
   id          String      @id @default(cuid())
-  slug        String      @unique @default(cuid())
+  slug        String
   title       String
   icon        String?
   image       String?
@@ -95,6 +109,8 @@ model Bento {
 
   background     String?
   backgroundType String? // "color" | "image" | "gradient"
+
+  @@unique([slug, ownerId])
 }
 
 model BentoLink {
@@ -107,4 +123,5 @@ model BentoLink {
   shape       String  @default("square-sm")
   bentoId     String
   bento       Bento   @relation(fields: [bentoId], references: [id])
+  sortValue   String? // LexoRank style sorting key
 }

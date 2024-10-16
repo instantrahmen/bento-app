@@ -4,7 +4,7 @@ import Discord from '@auth/sveltekit/providers/discord';
 import { DISCORD_ID, DISCORD_SECRET } from '$env/static/private';
 
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import prisma from '$lib/prisma';
+import prisma from '$features/database/prisma';
 
 export const providers = [
 	'discord',
@@ -17,4 +17,11 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
 		Discord({ clientId: DISCORD_ID, clientSecret: DISCORD_SECRET }),
 		// GitHub({ clientId: GITHUB_ID, clientSecret: GITHUB_SECRET }),
 	],
+
+	callbacks: {
+		session({ session, user }) {
+			session.user.id = user.id;
+			return session;
+		},
+	},
 });

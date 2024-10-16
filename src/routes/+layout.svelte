@@ -1,13 +1,14 @@
 <script lang="ts">
 	import '../app.css';
 	import { ModeWatcher } from 'mode-watcher';
-	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
+	import { createQuery, QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
 	import { SignIn } from '@auth/sveltekit/components';
 	import { browser } from '$app/environment';
 	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 	import Lightswitch from '$lib/components/light-switch.svelte';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { buttonVariants } from '$lib/components/ui/button';
+	import { getMe } from '$lib/api/users/me';
 
 	let { children, data } = $props();
 

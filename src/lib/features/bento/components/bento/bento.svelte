@@ -10,16 +10,21 @@
 	import { cn } from '$lib/utils/shadcn';
 	import type { BentoWithLinks } from '$features/bento/types/api';
 
-	let { data } = $props();
+	let {
+		initialData,
+	}: {
+		initialData?: BentoWithLinks;
+	} = $props();
 
 	const bentosQuery = createQuery({
 		queryKey: ['bentos'],
 		queryFn: async () => await getBentos({}),
+		initialData,
 	});
 
-	let bentos = $derived($bentosQuery.data ?? []);
+	// let bentos = $derived($bentosQuery.data ?? []);
 
-	let currentBento = $derived(bentos.find((bento) => bento.slug === data.slug));
+	// let currentBento = $derived(bentos.find((bento) => bento.slug === data.slug));
 
 	type LinkData = Pick<BentoLink, 'title' | 'description' | 'url' | 'icon' | 'image'>;
 
@@ -219,7 +224,6 @@
 			on:click={(e) => {
 				e.stopPropagation();
 				e.preventDefault();
-				// confirm('Add a link?');
 
 				if (index) {
 					editing[index] = !editing[index];
@@ -251,10 +255,6 @@
 				value={link.url}
 			/>
 		</div>
-		<!-- <span
-			class="line-clamp-1 block w-full max-w-full overflow-ellipsis break-words text-center text-xs tracking-wide text-card-foreground/35"
-			>{link.url}</span
-		> -->
 	</form>
 {/snippet}
 

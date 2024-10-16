@@ -8,7 +8,7 @@
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { buttonVariants } from '$lib/components/ui/button';
 	import { cn } from '$lib/utils/shadcn';
-	import type { IconifyIcon } from '@iconify/svelte/dist/OfflineIcon.svelte';
+	import IconSelect from '$lib/features/icon-select/components/icon-select.svelte';
 
 	let { data } = $props();
 
@@ -22,15 +22,20 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<form method="POST" use:enhance class="mx-4 flex flex-col gap-4">
+<form
+	method="POST"
+	use:enhance
+	class="m-4 mx-4 flex w-full flex-col gap-4 rounded-md border bg-card p-4 shadow-md"
+>
 	{@render formFieldInput('title')}
-	<span class="flex flex-row items-center gap-2">
-		{@render formFieldInput('icon')}
-	</span>
+	<IconSelect bind:value={$formData.icon} name="icon" />
 	{@render formFieldTextArea('description')}
 	<Form.Button>Create new Bento Box</Form.Button>
 </form>
 
+<div></div>
+
+<!-- TODO: Extract to component -->
 {#snippet formFieldInput(name: FormName)}
 	<Form.Field {form} {name}>
 		<Form.Control let:attrs>

@@ -3,7 +3,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { formSchema } from './schema';
-import prisma from '$lib/prisma';
+import prisma from '$features/database/prisma.js';
 
 export const load: PageServerLoad = async () => {
 	return {

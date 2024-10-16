@@ -24,3 +24,9 @@
 		@apply rounded-md border border-border/25 bg-card/25 shadow-sm backdrop-blur-lg;
 	}
 }
+
+html,
+body,
+.bg-card {
+	@apply !transition-colors !duration-100;
+}

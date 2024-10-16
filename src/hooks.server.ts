@@ -1,6 +1,6 @@
-import prisma from '$lib/prisma';
+import prisma from '$features/database/prisma';
 import { redirect, type Handle } from '@sveltejs/kit';
-import { handle as authenticationHandle } from '$lib/auth';
+import { handle as authenticationHandle } from '$features/auth/auth';
 import { sequence } from '@sveltejs/kit/hooks';
 import { env } from '$env/dynamic/private';
 import credentials from '@auth/sveltekit/providers/credentials';
