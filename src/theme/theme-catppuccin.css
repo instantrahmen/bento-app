@@ -1,0 +1,63 @@
+@layer base {
+	:root {
+		--background: 225 14% 77%; /* surface1 hsl(225deg, 14%, 77%) */
+		--foreground: 234 16% 35%; /* text */
+		--muted: 227 12% 71%; /*  surface2 hsl(227deg, 12%, 71%) */
+		--muted-foreground: 233 13% 41%; /* subtext1 hsl(233deg, 13%, 41%) */
+		--popover: 220 23% 95%; /* base hsl(220deg, 23%, 95%) */
+		--popover-foreground: 234 16% 35%; /* text */
+		--card: 220 23% 95%; /* base hsl(220deg, 23%, 95%) */
+		--card-foreground: 234 16% 35%; /* text */
+		--border: 227 12% 71%; /* surface2 hsl(227deg, 12%, 71%) */
+		--input: 225 14% 77%; /* surface1 hsl(225deg, 14%, 77%) */
+		--primary: 220 91% 54%; /* blue hsl(220deg, 91%, 54%) */
+		--primary-foreground: 220 23% 95%; /* base hsl(220deg, 23%, 95%) */
+		--secondary: 231 97% 72%; /* lavender hsl(231deg, 97%, 72%) */
+		--secondary-foreground: 234 16% 15%; /* text */
+		--accent: 266 85% 58%; /* Mauve hsl(266deg, 85%, 58%) */
+		--accent-foreground: 220 23% 95%; /* base hsl(220deg, 23%, 95%) */
+
+		--destructive: 347 87% 44%; /* red hsl(347deg, 87%, 44%) */
+		--destructive-foreground: 220 23% 92%; /* mantle hsl(220deg, 22%, 92%) */
+
+		--ring: 266 85% 58%; /* Mauve hsl(266deg, 85%, 58%) */
+
+		--radius: 0.5rem;
+
+		--chart-1: 347 86% 44%; /* red */
+		--chart-2: 183 73% 34%; /* teal */
+		--chart-3: 220 91% 53%; /* blue */
+		--chart-4: 35 76% 49%; /* yellow */
+		--chart-5: 109 57% 39%; /* green */
+	}
+	.dark {
+		--background: 240 21% 15%; /* base */
+		--foreground: 226 64% 88%; /* text */
+		--muted: 233 12% 39%; /* surface2 hsl(233deg, 12%, 39%) */
+		--muted-foreground: 227 35% 80%; /* subtext1 */
+		--popover: 237 16% 23%; /* surface0 hsl(237deg, 16%, 23%) */
+		--popover-foreground: 226 64% 88%; /* text */
+		--card: 237 16% 23%; /* surface0 hsl(237deg, 16%, 23%) */
+		--card-foreground: 226 64% 88%; /* text */
+		--border: 234 13% 31%; /* surface1 hsl(234deg, 13%, 31%) */
+		--input: 240 21% 15%; /* base */
+		--primary: 217 92% 76%; /* blue */
+		--primary-foreground: 240 21% 12%; /* mantle */
+		--secondary: 232 97% 85%; /* lavender */
+		--secondary-foreground: 240 21% 12%; /* mantle */
+		/* --accent: 267 84% 81%; mauve */
+		/* --accent-foreground: 240 21% 12%; mantle */
+		--accent: 266 85% 58%; /* Mauve hsl(266deg, 85%, 58%) */
+		--accent-foreground: 220 23% 95%; /* base hsl(220deg, 23%, 95%) */
+		--destructive: 343 81% 75%; /* red */
+		--destructive-foreground: 240 21% 12%; /* mantle */
+		--ring: 267 84% 81%; /* mauve */
+		--radius: 0.5rem;
+
+		--chart-1: 343 81% 74%; /* red */
+		--chart-2: 170 57% 73%; /* teal */
+		--chart-3: 217 91% 75%; /* blue */
+		--chart-4: 41 86% 83%; /* yellow */
+		--chart-5: 115 54% 76%; /* green */
+	}
+}

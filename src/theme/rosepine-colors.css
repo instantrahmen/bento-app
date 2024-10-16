@@ -1,0 +1,37 @@
+@layer base {
+	:root {
+		/* Light Theme colors (hsl) */
+		--rp-base: 32 57% 95%;
+		--rp-surface: 35 100% 98%;
+		--rp-overlay: 33 43% 91%;
+		--rp-muted: 257 9% 61%;
+		--rp-subtle: 248 12% 52%;
+		--rp-text: 248 19% 40%;
+		--rp-love: 343 35% 55%;
+		--rp-gold: 35 81% 56%;
+		--rp-rose: 3 50% 57%;
+		--rp-pine: 197 53% 34%;
+		--rp-foam: 189 30% 48%;
+		--rp-iris: 268 21% 57%;
+		--rp-highlight-low: 25 35% 93%;
+		--rp-highlight-med: 10 9% 86%;
+		--rp-highlight-high: 315 4% 80%;
+
+		/* colors hsl */
+		--rp-dark-base: 249 22% 12%;
+		--rp-dark-surface: 247 23% 15%;
+		--rp-dark-overlay: 248 25% 18%;
+		--rp-dark-muted: 249 12% 47%;
+		--rp-dark-subtle: 248 15% 61%;
+		--rp-dark-text: 245 50% 91%;
+		--rp-dark-love: 343 76% 68%;
+		--rp-dark-gold: 35 88% 72%;
+		--rp-dark-rose: 2 55% 83%;
+		--rp-dark-pine: 197 49% 38%;
+		--rp-dark-foam: 189 43% 73%;
+		--rp-dark-iris: 267 57% 78%;
+		--rp-dark-highlight-low: 244 18% 15%;
+		--rp-dark-highlight-med: 249 15% 28%;
+		--rp-dark-highlight-high: 248 13% 36%;
+	}
+}
