@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { Command as CommandPrimitive } from 'cmdk-sv';
-	import { cn } from '$lib/utils/shadcn.js';
+	import { cn } from '$lib/utils/shadcn';
 
 	type $$Props = CommandPrimitive.ItemProps;
 
 	export let asChild = false;
+	// export let tooltipContent = '';
 
 	let className: string | undefined | null = undefined;
 	export { className as class };

@@ -23,6 +23,7 @@
 		placeholder?: string;
 		emptyText?: string;
 		class?: string;
+		listElement?: HTMLDivElement;
 		children?: Snippet<
 			[
 				{
@@ -45,6 +46,7 @@
 	}
 
 	let {
+		listElement = $bindable(),
 		options,
 		value = $bindable(),
 		open = $bindable(false),
@@ -134,6 +136,8 @@
 					count={rows}
 					childrenClass="[&>*]:w-full w-full flex flex-col"
 					let:row
+					bind:listElement
+					on:keydown
 				>
 					{@const rowStart = row.index * cols}
 					{@const rowEnd = Math.min(rowStart + cols, filteredOptions.length)}
