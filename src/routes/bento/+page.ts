@@ -5,11 +5,15 @@ export const load = async ({ parent, fetch }) => {
 	const { queryClient, user } = await parent();
 
 	await queryClient.prefetchQuery({
-		queryKey: ['bentos'],
+		queryKey: ['bentos', user?.id],
 		queryFn: async () => await getBentos({ fetch }),
 	});
 
-	if (!user.bentos?.length) {
+	if (!user) {
+		throw redirect(303, '/');
+	}
+
+	if (!user?.bentos?.length) {
 		throw redirect(303, '/bento/create');
 	}
 

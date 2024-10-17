@@ -1,18 +1,13 @@
-import type { IconifyMetaDataCollection } from '@iconify/json';
-import type { IconifyInfo } from '@iconify/types';
 import type { APIv2CollectionResponse } from '../types/iconify';
-import { list } from 'postcss';
-import { get } from 'svelte/store';
 
 export const API_BASE = 'https://api.iconify.design';
 
-export const getIconsInCollection = async (collection: string) => {
-	const icons = await fetch(`${API_BASE}/collections/${collection}/icons`, {
+export const getCollections = async () => {
+	const collections = await fetch(`${API_BASE}/collections`, {
 		cache: 'force-cache',
-		headers: {},
 	}).then((r) => r.json());
 
-	return icons;
+	return collections;
 };
 
 export const searchIcons = async (params: { query: string; prefixes?: string }) => {

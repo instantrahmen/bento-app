@@ -7,7 +7,7 @@ export const GET: RequestHandler = async ({ locals }) => {
 	const session = await locals.auth();
 
 	if (!session?.user?.id) {
-		throw new Response(null, { status: 401 });
+		return json({ user: null, session: null });
 	}
 
 	const user = await prisma.user
@@ -26,17 +26,12 @@ export const GET: RequestHandler = async ({ locals }) => {
 		.catch(() => null);
 
 	if (!user) {
-		throw new Response(null, { status: 404 });
+		return json({ user: null, session });
 	}
-
 	const res: APIGetUsersMeResponse = {
 		user,
 		session,
 	};
 
-	return json(res, {
-		headers: {
-			'Cache-Control': 'max-age=60',
-		},
-	});
+	return json(res);
 };

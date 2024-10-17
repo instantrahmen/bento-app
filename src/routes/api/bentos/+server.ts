@@ -25,11 +25,7 @@ export const GET: RequestHandler = async ({ locals }) => {
 		},
 	});
 
-	return json(bentos, {
-		headers: {
-			'Cache-Control': 'max-age=3600',
-		},
-	});
+	return json(bentos);
 };
 
 // Create new Bento
@@ -77,5 +73,5 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 			throw new Response(null, { status: 500 });
 		});
 
-	return json({ bento }, {});
+	return json({ bento });
 };

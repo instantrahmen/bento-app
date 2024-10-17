@@ -1,10 +1,27 @@
-import type { APIGetBentosResponse, APIQueryOptions } from '../../types/api';
+import type {
+	APIGetBentosResponse,
+	APIGetBentoResponse,
+	APIGetBentoOptions,
+	APIGetBentosOptions,
+} from '../../types/api';
 
 export const getBentos = async ({
 	fetch = globalThis.fetch,
-}: APIQueryOptions): Promise<APIGetBentosResponse> => {
+}: APIGetBentosOptions): Promise<APIGetBentosResponse> => {
 	try {
-		const res = (await fetch('/api/bentos').then((r) => r.json())) as Promise<APIGetBentosResponse>;
+		const res: APIGetBentosResponse = await fetch('/api/bentos').then((r) => r.json());
+		return res;
+	} catch (error) {
+		throw error;
+	}
+};
+
+export const getBento = async ({
+	fetch = globalThis.fetch,
+	slug,
+}: APIGetBentoOptions): Promise<APIGetBentoResponse> => {
+	try {
+		const res: APIGetBentoResponse = await fetch(`/api/bentos/${slug}`).then((r) => r.json());
 		return res;
 	} catch (error) {
 		throw error;

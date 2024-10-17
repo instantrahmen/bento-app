@@ -14,6 +14,6 @@ const user = Prisma.validator<Prisma.UserDefaultArgs>()({
 type User = Prisma.UserGetPayload<typeof user>;
 
 export type APIGetUsersMeResponse = {
-	user: User;
-	session: Session;
+	user: User | null;
+	session: Session | null;
 };

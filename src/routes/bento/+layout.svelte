@@ -7,14 +7,12 @@
 	import { cn } from '$lib/utils/shadcn';
 	import { Button } from '$lib/components/ui/button';
 	import { getBentos } from '$lib/features/bento/api/index.js';
+	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
+	import { keys } from '$features/bento/api/keys';
 
 	let { children, data } = $props();
 
-	const bentosQuery = createQuery({
-		queryKey: ['bentos'],
-		queryFn: async () => await getBentos({}),
-		initialData: data.user.bentos,
-	});
+	const bentosQuery = createQuery(toReadable(() => keys.bentos({})));
 
 	let bentos = $derived($bentosQuery.data ?? []);
 
@@ -23,7 +21,7 @@
 
 <div class="flex h-dvh w-full flex-row overflow-y-auto p-2">
 	<div
-		class="sticky top-0 z-10 flex h-full flex-col gap-2 rounded-md border bg-card px-0 py-3 text-3xl *:m-1"
+		class="sticky top-0 z-10 flex h-full flex-col gap-2 overflow-y-auto rounded-md border bg-card px-0 py-3 text-3xl *:m-1"
 	>
 		<Button
 			href="/"

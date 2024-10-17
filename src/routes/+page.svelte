@@ -4,32 +4,43 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { cn } from '$lib/utils/shadcn';
 	import { buttonVariants } from '$lib/components/ui/button';
+	import { createQuery } from '@tanstack/svelte-query';
+	import { keys } from '$features/auth/api/keys';
 
 	let { data } = $props();
+
+	const query = createQuery(keys.me({}));
+
+	let { user, session } = $derived(
+		$query.data ?? {
+			user: null,
+			session: null,
+		}
+	);
 </script>
 
 <h2 class="text-3xl font-semibold">Bento App</h2>
 <div>
-	{#if data.session}
-		{#if data.session.user?.image}
-			<img src={data.session.user.image} class="avatar" alt="User Avatar" />
+	{#if session}
+		{#if session.user?.image}
+			<img src={session.user.image} class="avatar" alt="User Avatar" />
 		{/if}
 		<span class="signedInText">
 			<small>Signed in as</small><br />
-			<strong>{data.session.user?.name ?? 'User'}</strong>
+			<strong>{session.user?.name ?? 'User'}</strong>
 		</span>
 		<SignOut>
 			<div slot="submitButton" class="buttonPrimary">Sign out</div>
 		</SignOut>
 
-		{#if data.user}
+		{#if user}
 			<div class="rounded border border-border bg-card p-4 shadow">
 				<Button variant="outline" href="/bento">Bentos</Button>
 				<Button variant="outline" href="/test">Test Page</Button>
 			</div>
-			<!-- <pre>
-{JSON.stringify(data.user, null, 2)}
-			</pre> -->
+			<pre>
+{JSON.stringify({ user, session }, null, 2)}
+			</pre>
 		{/if}
 	{:else}
 		<div class="rounded border border-border bg-card p-4 shadow">

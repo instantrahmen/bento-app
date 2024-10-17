@@ -12,6 +12,11 @@ const config = {
 			'$api/*': './src/lib/api',
 			'$lib/*': './src/lib',
 		}
+	},
+	compilerOptions: {
+		compatibility: {
+			componentApi: 4
+		}
 	}
 };
 
