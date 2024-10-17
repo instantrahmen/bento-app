@@ -51,7 +51,7 @@
 </script>
 
 <ClickableCard
-	class={cn('h-full', className)}
+	class={cn('absolute inset-0 h-full', className)}
 	disabled={editing}
 	href={link.url || undefined}
 	onClick={handleClick}
@@ -86,7 +86,7 @@
 			onClick?.(e);
 		}}
 	>
-		<Icon icon="ci:edit" class="h-[1em] w-[1em]" />
+		<Icon {icon} class="h-[1em] w-[1em]" />
 	</Button>
 {/snippet}
 
@@ -100,7 +100,7 @@
 	{#if link.icon}
 		<Icon icon={link.icon || ''} class="h-[1em] w-[1em] text-inherit" />
 	{/if}
-	<IconSelect value={link.icon ?? undefined} />
+	<IconSelect bind:value={link.icon} />
 	{@render input(['title', key])}
 	{@render input(['url', key])}
 {/snippet}
@@ -113,7 +113,7 @@
 			class="w-full text-lg font-semibold"
 			placeholder={link[name]}
 			{name}
-			value={link[name]}
+			bind:value={link[name]}
 		/>
 	</div>
 {/snippet}

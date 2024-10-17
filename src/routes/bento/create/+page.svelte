@@ -28,7 +28,12 @@
 	class="m-4 mx-4 flex w-full flex-col gap-4 rounded-md border bg-card p-4 shadow-md"
 >
 	{@render formFieldInput('title')}
-	<IconSelect bind:value={$formData.icon} name="icon" />
+	<Form.Field {form} name="icon">
+		<Form.Control let:attrs>
+			<Form.Label>Icon</Form.Label>
+			<IconSelect {...attrs} bind:value={$formData.icon} name="icon" />
+		</Form.Control>
+	</Form.Field>
 	{@render formFieldTextArea('description')}
 	<Form.Button>Create new Bento Box</Form.Button>
 </form>

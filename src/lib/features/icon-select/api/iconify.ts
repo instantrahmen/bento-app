@@ -1,8 +1,9 @@
+import type { IconifyMetaDataCollection } from '@iconify/json/dist/index.js';
 import type { APIv2CollectionResponse } from '../types/iconify';
 
 export const API_BASE = 'https://api.iconify.design';
 
-export const getCollections = async () => {
+export const getCollections = async (): Promise<IconifyMetaDataCollection> => {
 	const collections = await fetch(`${API_BASE}/collections`, {
 		cache: 'force-cache',
 	}).then((r) => r.json());

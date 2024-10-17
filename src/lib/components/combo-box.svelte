@@ -18,7 +18,7 @@
 
 	interface Props {
 		options: { label: string; value: string }[];
-		value?: string;
+		value?: string | null;
 		open?: boolean;
 		placeholder?: string;
 		emptyText?: string;
@@ -103,20 +103,19 @@
 			builders={[builder]}
 			variant="outline"
 			role="combobox"
-			size={'sm'}
 			aria-expanded={open}
-			class="flex w-min flex-row justify-between gap-2"
+			class="flex w-min justify-between gap-4 p-2"
 		>
 			{#if value}
 				<Icon icon={value} class="h-6 w-6" />
 			{/if}
-			{selectedValue}
+			<span class="">{selectedValue}</span>
 
-			<CaretSort class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+			<CaretSort class="relative -mr-2 h-4 w-4 shrink-0 opacity-50" />
 		</Button>
 	</Popover.Trigger>
-	<Popover.Content class="w-[200px] p-0">
-		<Command.Root>
+	<Popover.Content align="start" class="w-full max-w-[200px] bg-transparent p-0">
+		<Command.Root class="bg-background">
 			<Command.Input
 				{placeholder}
 				class="h-9"
@@ -132,7 +131,7 @@
 				<VirtualList
 					{overscan}
 					class={cn(className)}
-					containerClass="command-group h-[200px] overflow-y-auto overflow-x-visible"
+					containerClass="command-group p-1 h-[200px] overflow-y-auto"
 					count={rows}
 					childrenClass="[&>*]:w-full w-full flex flex-col"
 					let:row

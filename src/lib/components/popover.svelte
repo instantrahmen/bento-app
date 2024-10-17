@@ -1,15 +1,18 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { cn } from '$lib/utils';
-	import type { Snippet } from 'svelte';
+	import { untrack, type Snippet } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
+	import { Debounced } from 'runed';
+	import Portal from 'svelte-portal';
 
 	let {
 		open = $bindable(false),
 		children,
-		popover = 'auto',
 		class: className = '',
-		closeDelay = 0,
-		openDelay = 0,
+		closeDelay = 2000,
+		portal,
+		openDelay = 50,
 		...restProps
 	}: HTMLAttributes<HTMLDivElement> & {
 		followCursor?: boolean;
@@ -17,29 +20,45 @@
 		openDelay?: number;
 		closeDelay?: number;
 		children: Snippet;
+		portal?: HTMLElement | string;
 	} = $props();
 
 	let popoverEl: HTMLDivElement | null = $state(null);
-	$effect(() => {
-		if (!popoverEl) {
-			return;
-		}
 
-		if (open) {
-			// open after delay
-			setTimeout(() => {
-				popoverEl?.togglePopover(open);
-			}, openDelay);
-		} else {
-			// close after delay
-			setTimeout(() => {
-				popoverEl?.togglePopover(open);
-			}, closeDelay);
+	const debouncedOpen = new Debounced(() => open, openDelay);
+	const debouncedClose = new Debounced(() => !open, closeDelay);
+
+	let actuallyOpen = $state(untrack(() => open));
+
+	const updateOpen = (_actuallyOpen = untrack(() => actuallyOpen)) => {
+		if (debouncedOpen.current) {
+			actuallyOpen = true;
+		} else if (debouncedClose.current) {
+			actuallyOpen = false;
 		}
-		// popoverEl.togglePopover(open);
+	};
+
+	$effect(() => {
+		updateOpen();
+	});
+
+	$effect(() => {
+		if (open) {
+			debouncedClose.setImmediately(false);
+		}
 	});
 </script>
 
-<div {popover} class={cn(className)} bind:this={popoverEl} {...restProps}>
-	{@render children()}
-</div>
+<Portal target="body">
+	{#if actuallyOpen}
+		<div
+			in:fade={{ duration: 200 }}
+			out:fade={{ duration: 200, delay: 200 }}
+			class={cn('z-50', className)}
+			bind:this={popoverEl}
+			{...restProps}
+		>
+			{@render children()}
+		</div>
+	{/if}
+</Portal>

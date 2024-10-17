@@ -17,11 +17,11 @@
 
 	let {
 		iconSets = [...defaultIconsSets],
-		value = $bindable(),
+		value = $bindable(null),
 		name = 'icon',
 	}: {
 		iconSets?: string[];
-		value?: string;
+		value?: string | null;
 		name?: string;
 	} = $props();
 
@@ -58,8 +58,12 @@
 
 	let currentItems = $derived(paginatedItems[currentPage]);
 
-	const getTooltip = (option: { label: string; value: string }) => {
-		return 'test';
+	const getCollectionByIcon = (value: string) => {
+		if ($collectionInfoQuery.isLoading || $collectionInfoQuery.isError) return null;
+		const prefix = value.split(':')[0];
+		let collection = $collectionInfoQuery.data?.[prefix];
+		if (!collection) return null;
+		return collection;
 	};
 
 	let tooltipText: string = $state('');
@@ -76,25 +80,30 @@
 	});
 </script>
 
-<pre class="prose-sm">
-	<code>
-{JSON.stringify(
-			{
-				hovering,
-				lastActiveElement,
-			},
-			null,
-			2
-		)}
-	</code>
-</pre>
-
 <Popover
-	openDelay={0}
-	closeDelay={300}
+	closeDelay={10000}
 	open={tooltipOpen}
-	class="popover rounded border bg-card p-2 shadow-lg">{lastActiveElement}</Popover
+	class="popover prose-sm rounded border bg-background py-2 pl-4 pr-2 shadow-lg"
 >
+	{@const collection = getCollectionByIcon(lastActiveElement)}
+	{@const iconName = lastActiveElement.split(':')[1]}
+	<div class="flex flex-row items-center justify-start gap-4">
+		<Icon icon={lastActiveElement} class="h-8 w-8" />
+		<div
+			class="flex flex-1 flex-col items-start justify-center rounded border bg-card p-2 text-card-foreground"
+		>
+			<h3 class="m-0 p-0 font-semibold capitalize">{iconName}</h3>
+			{#if collection}
+				{@const { name, license, author } = collection}
+				<span>From {name} v{collection.version} </span>
+				<span
+					>Licensed under <a href={license.url}>{license.title}</a> by
+					<a href={author.url}>{author.name}</a></span
+				>
+			{/if}
+		</div>
+	</div>
+</Popover>
 
 <ComboBox
 	asChildren
@@ -137,13 +146,13 @@
 							value = option.value;
 						}}
 						class={cn(
-							'flex flex-row items-center justify-center text-center transition-all',
+							'flex flex-row items-center justify-center p-3 text-center transition-all',
 							'focus-visible:bg-accent focus-visible:text-accent-foreground focus-visible:outline-none',
 							'tooltip-container'
 						)}
 						{...itemProps}
 					>
-						<Icon icon={option.value} class="inline h-6 w-6" />
+						<Icon icon={option.value} class="inline h-8 w-8" />
 					</Button>
 				</div>
 			{/key}
@@ -156,27 +165,12 @@
 		position: absolute;
 		inset: unset;
 		width: calc(100vw - 2rem);
-		height: 4rem;
+		height: min-content;
 		bottom: 1rem;
 		left: 1rem;
 
-		transition: all 0.6s ease-in-out;
-		&:popover-open {
-			animation: slide-up 0.6s ease-in-out;
+		a {
+			@apply text-primary underline;
 		}
-
-		@keyframes slide-up {
-			from {
-				transform: translate(0, 4rem);
-			}
-			to {
-				transform: translate(0, 0rem);
-			}
-		}
-
-		/* margin: 0; */
-		/* right: 0; */
-		/* @apply m-0 grid gap-2 p-0 text-center; */
-		/* grid-template-columns: repeat(4, 1fr); */
 	}
 </style>
