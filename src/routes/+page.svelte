@@ -1,22 +1,12 @@
 <script lang="ts">
 	import { SignIn, SignOut } from '@auth/sveltekit/components';
-	import { page } from '$app/stores';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { cn } from '$lib/utils/shadcn';
 	import { buttonVariants } from '$lib/components/ui/button';
-	import { createQuery } from '@tanstack/svelte-query';
-	import { keys } from '$features/auth/api/keys';
 
 	let { data } = $props();
 
-	const query = createQuery(keys.me({}));
-
-	let { user, session } = $derived(
-		$query.data ?? {
-			user: null,
-			session: null,
-		}
-	);
+	let { user, session } = $derived(data);
 </script>
 
 <h2 class="text-3xl font-semibold">Bento App</h2>

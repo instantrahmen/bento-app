@@ -1,14 +1,22 @@
 <script lang="ts">
+	import { enableCache } from 'iconify-icon';
 	import '../app.css';
-
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 	import { ModeWatcher } from 'mode-watcher';
+	import { onMount } from 'svelte';
 
 	import Navbar from './../lib/features/navbar/components/navbar.svelte';
 
+	onMount(() => {
+		enableCache('all');
+	});
 	let { children, data } = $props();
 </script>
+
+<svelte:head>
+	<title>Bento App</title>
+</svelte:head>
 
 <QueryClientProvider client={data.queryClient}>
 	<ModeWatcher />

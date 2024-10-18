@@ -1,18 +1,18 @@
 <script lang="ts">
 	import Icon from '@iconify/svelte';
-	import { getIconName } from '$lib/utils';
+	import { cn, getIconName } from '$lib/utils';
 	import { stringIsValidUrl } from '$lib/utils';
 
-	let { src, alt }: { src: string; alt: string } = $props();
+	let { src, alt, class: className = '' }: { src: string; alt: string; class?: string } = $props();
 </script>
 
 {#if stringIsValidUrl(src)}
-	<img {src} {alt} class="h-[2em] w-[2em] text-inherit" role="presentation" />
+	<img {src} {alt} class={cn('h-[5em] w-[5em] text-inherit', className)} />
 {:else}
-	<Icon
+	<iconify-icon
 		aria-roledescription={`${getIconName(src)} icon`}
 		icon={src}
-		class="h-[1em] w-[1em] text-inherit"
+		class={cn('items-center self-center text-center text-[5em] text-inherit')}
 		role="presentation"
-	/>
+	></iconify-icon>
 {/if}

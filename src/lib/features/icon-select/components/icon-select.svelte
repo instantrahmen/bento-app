@@ -19,10 +19,12 @@
 		iconSets = [...defaultIconsSets],
 		value = $bindable(null),
 		name = 'icon',
+		class: className = '',
 	}: {
 		iconSets?: string[];
 		value?: string | null;
 		name?: string;
+		class?: string;
 	} = $props();
 
 	const queryOptions = {
@@ -88,7 +90,7 @@
 	{@const collection = getCollectionByIcon(lastActiveElement)}
 	{@const iconName = lastActiveElement.split(':')[1]}
 	<div class="flex flex-row items-center justify-start gap-4">
-		<Icon icon={lastActiveElement} class="h-8 w-8" />
+		<Icon icon={lastActiveElement} class="h-8 w-8"></Icon>
 		<div
 			class="flex flex-1 flex-col items-start justify-center rounded border bg-card p-2 text-card-foreground"
 		>
@@ -110,6 +112,7 @@
 	placeholder="Select an icon..."
 	options={(currentItems || []).length > 0 ? currentItems : placeholderItem}
 	class="combobox-container"
+	inputClass={cn(className)}
 	autoFilterItems
 	cols={4}
 	overscan={5}
@@ -152,7 +155,7 @@
 						)}
 						{...itemProps}
 					>
-						<Icon icon={option.value} class="inline h-8 w-8" />
+						<Icon icon={option.value} class=" inline h-8 w-8 text-center text-[2rem]"></Icon>
 					</Button>
 				</div>
 			{/key}

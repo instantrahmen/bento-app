@@ -12,3 +12,6 @@ vite.config.ts.timestamp-*
 
 prisma/dev.db
 .git.bak
+
+caddy
+caddy/**/*

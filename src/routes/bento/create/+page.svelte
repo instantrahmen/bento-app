@@ -54,7 +54,7 @@
 							'icon-preview'
 						)}
 					>
-						<Icon icon={$formData[name] || ''} class="h-6 w-6" />
+						<iconify-icon icon={$formData[name] || ''} class="h-6 w-6"></iconify-icon>
 					</span>
 				{/if}
 				<Input {...attrs} bind:value={$formData[name]} />

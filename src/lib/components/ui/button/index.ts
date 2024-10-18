@@ -20,6 +20,7 @@ const buttonVariants = tv({
 			sm: 'h-8 rounded-md px-3 text-xs',
 			lg: 'h-10 rounded-md px-8',
 			icon: 'h-9 w-9',
+			'sm:icon': 'sm:h-9 sm:w-9 h-8 rounded-md px-3 text-xs',
 			shrink: 'h-9 px-4 py-2 w-min',
 		},
 	},

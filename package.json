@@ -74,6 +74,7 @@
     "eslint-plugin-import": "^2.31.0",
     "formsnap": "^1.0.1",
     "fuse.js": "^7.0.0",
+    "iconify-icon": "^2.1.0",
     "lucide-svelte": "^0.451.0",
     "mode-watcher": "^0.4.1",
     "paneforge": "^0.0.6",

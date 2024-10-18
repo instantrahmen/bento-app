@@ -11,7 +11,9 @@ export const GET: RequestHandler = async ({ locals }) => {
 	const session = await locals.auth();
 
 	if (!session?.user?.id) {
-		throw new Response(null, { status: 401 });
+		console.warn('not logged in');
+		return json({ bentos: [] });
+		// throw new Response(null, { status: 401 });
 	}
 
 	const bentos: APIGetBentosResponse = await prisma.bento.findMany({
@@ -25,6 +27,11 @@ export const GET: RequestHandler = async ({ locals }) => {
 		},
 	});
 
+	if (!bentos) {
+		console.warn('bentos not found');
+		return json({ bentos: [] });
+		// throw new Response(null, { status: 404 });
+	}
 	return json(bentos);
 };
 
@@ -46,6 +53,7 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 		.map((field) => field[0]);
 
 	if (missingFields.length > 0) {
+		console.warn('Missing required fields', missingFields);
 		throw json(
 			{
 				error: `Missing required fields: ${missingFields.join(', ')}`,
@@ -70,7 +78,8 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 			},
 		})
 		.catch(() => {
-			throw new Response(null, { status: 500 });
+			console.error('Failed to create bento');
+			throw json({ error: 'Failed to create bento' }, { status: 500 });
 		});
 
 	return json({ bento });

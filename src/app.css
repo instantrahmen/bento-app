@@ -11,7 +11,6 @@
 	}
 	body {
 		@apply bg-background text-foreground;
-		/* @apply bg-gradient-to-br from-primary to-secondary text-foreground; */
 	}
 }
 
@@ -19,14 +18,23 @@
 	.link {
 		@apply text-primary underline-offset-4 hover:underline;
 	}
-
-	.card-glass {
-		@apply rounded-md border border-border/25 bg-card/25 shadow-sm backdrop-blur-lg;
-	}
 }
 
 html,
 body,
 .bg-card {
 	@apply !transition-colors !duration-100;
+}
+
+/* body {                            
+	@apply bg-gradient-to-br from-primary to-secondary text-foreground;
+}
+.bg-card {
+	@apply bg-card/55 backdrop-blur-md;
+} */
+
+iconify-icon {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
 }

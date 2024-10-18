@@ -17,6 +17,9 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
 		Discord({ clientId: DISCORD_ID, clientSecret: DISCORD_SECRET }),
 		// GitHub({ clientId: GITHUB_ID, clientSecret: GITHUB_SECRET }),
 	],
+	// useSecureCookies: true,
+	// trustHost: true,
+	// debug: true,
 
 	callbacks: {
 		session({ session, user }) {

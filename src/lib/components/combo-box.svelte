@@ -23,6 +23,7 @@
 		placeholder?: string;
 		emptyText?: string;
 		class?: string;
+		inputClass?: string;
 		listElement?: HTMLDivElement;
 		children?: Snippet<
 			[
@@ -50,7 +51,7 @@
 		options,
 		value = $bindable(),
 		open = $bindable(false),
-		class: className = $bindable(''),
+		class: className = '',
 		searchInput = $bindable(''),
 		emptyText = 'No options found...',
 		placeholder = 'Select an option...',
@@ -61,6 +62,7 @@
 		cols = $bindable(4),
 		overscan = $bindable(10),
 		name = 'combobox',
+		inputClass = '',
 	}: Props = $props();
 
 	let debouncedValue = new Debounced(() => searchInput, 250);
@@ -104,10 +106,10 @@
 			variant="outline"
 			role="combobox"
 			aria-expanded={open}
-			class="flex w-min justify-between gap-4 p-2"
+			class="cn{cn('flex w-min justify-between gap-4 p-2', inputClass)}"
 		>
 			{#if value}
-				<Icon icon={value} class="h-6 w-6" />
+				<Icon icon={value} class="h-6 w-6"></Icon>
 			{/if}
 			<span class="">{selectedValue}</span>
 

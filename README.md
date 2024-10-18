@@ -1,6 +1,4 @@
 <div align="center">
-
-  <img src="static/favicon.svg" alt="logo" width="200" height="auto" />
   <h1>Bento App</h1>
   
   <p>
@@ -8,8 +6,8 @@
   </p>
   
 <div>
-    <a href="https://github.com/Louis3797/awesome-readme-template">Documentation</a>
-  <span> · </span>
+
+  <h4>
     <a href="https://github.com/instantrahmen/bento-app/issues/">Report Bug</a>
   <span> · </span> 
     <a href="https://github.com/instantrahmen/bento-app/issues/">Request Feature</a>

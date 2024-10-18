@@ -9,7 +9,8 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 	const slug = params.slug;
 
 	if (!session?.user?.id) {
-		throw new Response(null, { status: 401 });
+		console.warn('not logged in');
+		return json({ bento: null }, { status: 401 });
 	}
 
 	const bento: APIGetBentoResponse | null = await prisma.bento
@@ -29,7 +30,8 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 		});
 
 	if (!bento) {
-		throw new Response(null, { status: 404 });
+		console.warn('bento not found');
+		return json({ bento: null }, { status: 404 });
 	}
 
 	return json(bento);
