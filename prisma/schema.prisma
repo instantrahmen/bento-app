@@ -99,29 +99,21 @@ model Bento {
   id          String      @id @default(cuid())
   slug        String
   title       String
-  icon        String?
-  image       String?
-  description String?
+  icon        String      @default("")
+  description String      @default("")
   ownerId     String
   owner       User        @relation(fields: [ownerId], references: [id])
   links       BentoLink[]
-  public      Boolean     @default(false)
-
-  background     String?
-  backgroundType String? // "color" | "image" | "gradient"
 
   @@unique([slug, ownerId])
 }
 
 model BentoLink {
-  id          String  @id @default(cuid())
+  id          String @id @default(cuid())
   title       String
   url         String
-  icon        String?
-  image       String?
-  description String?
-  shape       String  @default("square-sm")
+  icon        String @default("mdi:link")
+  description String @default("")
   bentoId     String
-  bento       Bento   @relation(fields: [bentoId], references: [id])
-  sortValue   String? // LexoRank style sorting key
+  bento       Bento  @relation(fields: [bentoId], references: [id])
 }

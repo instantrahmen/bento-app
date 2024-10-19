@@ -14,11 +14,13 @@ export type Bento = Prisma.BentoGetPayload<typeof bento>;
 
 export type APIGetBentosResponse = BentoWithLinks[];
 export type APIGetBentoResponse = BentoWithLinks;
+
 export type APIPostBentosResponse = Bento;
-export type APIPostBentosBody = Pick<Bento, 'title' | 'slug' | 'icon'>;
+export type APIPostBentosBody = Omit<Bento, 'id' | 'ownerId'>;
 
 export type APIPutBentosResponse = Bento;
-export type APIPutBentosBody = Pick<Bento, 'id'> & Partial<Pick<Bento, 'title' | 'slug' | 'icon'>>;
+export type APIPutBentosBody = Pick<Bento, 'id'> & Partial<Bento>;
+
 export type APIDeleteBentosResponse = Bento;
 export type APIDeleteBentosBody = Pick<Bento, 'id'>;
 

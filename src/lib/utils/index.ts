@@ -3,6 +3,17 @@ export * from './fuzzy-search';
 export * from './paginate';
 export * from './shadcn';
 
+export const slugify = (text: string) => {
+	return text
+		.toString()
+		.toLowerCase()
+		.replace(/\s+/g, '-') // Replace spaces with -
+		.replace(/[^\w\-]+/g, '') // Remove all non-word chars
+		.replace(/\-\-+/g, '-') // Replace multiple - with single -
+		.replace(/^-+/, '') // Trim - from start of text
+		.replace(/-+$/, ''); // Trim - from end of text
+};
+
 /**
  * Checks if a given string is a valid URL by verifying if it starts with "http:" or "https:".
  *

@@ -20,6 +20,9 @@ export const getBento = async ({
 	fetch = globalThis.fetch,
 	slug,
 }: APIGetBentoOptions): Promise<APIGetBentoResponse> => {
+	if (!slug.trim()) {
+		throw new Error('slug is required');
+	}
 	try {
 		const res: APIGetBentoResponse = await fetch(`/api/bentos/${slug}`).then((r) => r.json());
 		return res;

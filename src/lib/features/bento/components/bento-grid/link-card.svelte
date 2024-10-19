@@ -38,18 +38,12 @@
 		variant="card"
 		size="none"
 		{href}
-		class={cn(
-			'absolute left-0 top-0 h-full w-full overflow-hidden'
-			// 'rounded-md border bg-card outline-none ring-ring hover:bg-opacity-80 hover:shadow-lg focus-visible:ring-2'
-		)}
+		class={cn('absolute left-0 top-0 h-full w-full overflow-hidden')}
 	>
 		<div
 			class="flex h-full flex-col items-center justify-center gap-0 p-6 text-[0.5rem] text-card-foreground @[11rem]:text-sm @[16rem]:text-xl @sm:text-3xl"
 		>
-			<IconOrImage
-				src={link.icon || link.image || 'http://placekitten.com/300/300'}
-				alt={link.title}
-			/>
+			<IconOrImage src={link.icon || 'https://placehold.co/600x400'} alt={link.title} />
 			<span class={cn('text-xl font-semibold tracking-wide')}>
 				{link.title}
 			</span>
