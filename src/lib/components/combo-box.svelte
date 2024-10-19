@@ -81,7 +81,6 @@
 	}
 
 	const handleSelect = (currentValue: string, ids: IDs) => {
-		console.log('onSelect', currentValue);
 		value = currentValue;
 		closeAndFocusTrigger(ids.trigger);
 
@@ -124,9 +123,6 @@
 				name="combobox-search-{name}"
 				id="combobox-search-{name}"
 				bind:value={searchInput}
-				onInput={(val: string) => {
-					console.log({ val });
-				}}
 			/>
 			<Command.Empty>{emptyText}</Command.Empty>
 			<Command.Group asChild>
