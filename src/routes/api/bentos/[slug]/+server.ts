@@ -34,8 +34,6 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 		return json({ bento: null }, { status: 404 });
 	}
 
-	console.log('found bento. SHould return only one');
-	console.log({ bento });
 	return json(bento);
 };
 

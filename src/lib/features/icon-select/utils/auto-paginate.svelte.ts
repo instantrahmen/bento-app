@@ -17,19 +17,11 @@ export function scrollBehavior(
 ): ActionReturn {
 	function handleScroll(event: Event) {
 		const { scrollTop, clientHeight, scrollHeight } = node;
-		console.log('scrolling', {
-			scrollTop,
-			clientHeight,
-			sum: scrollTop + clientHeight,
-			scrollHeight,
-		});
 		if (scrollTop + clientHeight >= scrollHeight - 10) {
-			console.log('[use:autoPaginate] hit bottom');
 			if (events.onScrollBottom) events.onScrollBottom(node, event);
 		}
 
 		if (scrollTop <= 0) {
-			console.log('[use:autoPaginate] hit top');
 			if (events.onScrollTop) events.onScrollTop(node, event);
 		}
 	}
