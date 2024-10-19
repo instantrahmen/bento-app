@@ -25,8 +25,9 @@
 <Form.Field {form} {...restProps}>
 	<Form.Control let:attrs>
 		<Form.Label for={attrs.id} class="capitalize">{restProps.name}</Form.Label>
+		{#if description}<Form.Description class="mt-0">{description}</Form.Description>{/if}
+
 		<Input {...attrs} bind:value />
 	</Form.Control>
-	{#if description}<Form.Description>{description}</Form.Description>{/if}
 	<Form.FieldErrors />
 </Form.Field>

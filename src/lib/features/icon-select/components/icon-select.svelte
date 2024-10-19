@@ -85,7 +85,7 @@
 <Popover
 	closeDelay={1000}
 	open={tooltipOpen}
-	class="popover prose-sm absolute inset-[unset] bottom-2 right-2 max-w-sm rounded border bg-background py-2 pl-4 pr-2 shadow-lg"
+	class="popover prose-sm absolute inset-[unset] bottom-2 right-2 max-w-sm rounded-md border bg-background py-2 pl-4 pr-2 shadow-lg"
 >
 	{@const collection = getCollectionByIcon(lastActiveElement)}
 	{@const iconName = lastActiveElement.split(':')[1]}

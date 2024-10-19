@@ -2,7 +2,7 @@
 	import type { APIGetUsersMeResponse } from '$features/auth/types';
 	import type { APIPostBentosBody } from '$features/bento/types/api';
 
-	import { fieldDescriptions, formSchema } from './schema';
+	import { formSchema } from './schema';
 	import { superForm, defaults, setError } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 
@@ -69,10 +69,6 @@
 		SPA: true,
 		validators: zod(formSchema),
 		onUpdate({ form }) {
-			if (form.data.title.length < 3) {
-				return setError(form, 'title', 'Title must be at least 3 characters long.');
-			}
-
 			if (form.valid) {
 				if (slug && initData?.id) {
 					$updateBentoMutation.mutate({
@@ -105,6 +101,11 @@
 			return stringIsValidUrl(initData.icon) ? 'image' : 'icon';
 		})
 	);
+
+	let tempIconImageState = $state({
+		icon: '',
+		image: '',
+	});
 </script>
 
 <form method="POST" use:enhance>
@@ -120,18 +121,29 @@
 				</span>
 			</h2>
 			<div class="text-left">
-				<DebugState state={{ initialData }} />
+				<DebugState state={{ initialData, initData }} />
 			</div>
 		{:else}
 			<h2 class="text-3xl font-extralight text-muted-foreground">New Bento</h2>
 		{/if}
 	</header>
-	<FormInput bind:value={$formData.title} {form} name="title" />
-	<FormInput bind:value={$formData.description} {form} name="description" />
-	<FormInput bind:value={$formData.icon} {form} name="icon" />
+	<FormInput
+		bind:value={$formData.title}
+		{form}
+		name="title"
+		description={formSchema.shape.title.description}
+	/>
+	<FormInput
+		bind:value={$formData.description}
+		{form}
+		name="description"
+		description={formSchema.shape.description.description}
+	/>
 	<Form.Field {form} name="icon">
 		<Form.Control let:attrs>
 			<Form.Label class="capitalize">{imageMode}</Form.Label>
+			<Form.Description>{formSchema.shape.icon.description}</Form.Description>
+
 			<Tabs.Root bind:value={imageMode} class="w-[400px]">
 				<Tabs.List class="grid w-full grid-cols-2">
 					<Tabs.Trigger value="icon">Icon</Tabs.Trigger>
@@ -150,7 +162,6 @@
 				</Tabs.Content>
 			</Tabs.Root>
 		</Form.Control>
-		<Form.Description>{fieldDescriptions.title}</Form.Description>
 		<Form.FieldErrors />
 	</Form.Field>
 
