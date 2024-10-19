@@ -12,6 +12,7 @@
 	import { keys } from '$features/bento/api/keys';
 	import { page } from '$app/stores';
 	import type { APIGetUsersMeResponse } from '$features/auth/types/api';
+	import { shapes } from '$features/bento/utils';
 
 	let { slug }: Props = $props();
 
@@ -43,7 +44,8 @@
 				'bento-grid',
 				'grid grid-flow-dense gap-2',
 				// Grid size
-				'grid-cols-2 @sm:grid-cols-4 @3xl:grid-cols-6 @5xl:grid-cols-8 @7xl:grid-cols-10'
+				'grid-cols-1 @xs:grid-cols-2 @sm:grid-cols-3 @3xl:grid-cols-4 @5xl:grid-cols-5'
+				// shapes.grid
 			)}
 		>
 			{#each currentBento.links as link (link.id)}
@@ -53,7 +55,7 @@
 	</div>
 {/if}
 
-<pre>
+<!-- <pre class="prose-xs hidden w-screen max-w-full overflow-auto sm:visible">
 	{JSON.stringify({ slug }, null, 2)}
 	{JSON.stringify($query.data, null, 2)}
-</pre>
+</pre> -->

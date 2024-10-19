@@ -22,7 +22,7 @@
 
 <div class="flex h-dvh w-full flex-row overflow-y-auto">
 	<BentosSidebar />
-	<div class="my-12 mr-2 flex min-h-full flex-1 flex-col text-base">
+	<div class="mx-2 mt-12 flex min-h-full flex-1 flex-col text-base">
 		{@render children()}
 	</div>
 </div>

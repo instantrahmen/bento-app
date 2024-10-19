@@ -6,6 +6,7 @@ const buttonVariants = tv({
 	base: 'focus-visible:ring-ring inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50',
 	variants: {
 		variant: {
+			none: '',
 			default: 'bg-primary text-primary-foreground hover:bg-primary/90 shadow',
 			destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm',
 			outline:
@@ -16,6 +17,7 @@ const buttonVariants = tv({
 			card: 'bg-card shadow-sm backdrop-blur-md border hover:bg-card/80',
 		},
 		size: {
+			none: '',
 			default: 'h-9 px-4 py-2',
 			sm: 'h-8 rounded-md px-3 text-xs',
 			lg: 'h-10 rounded-md px-8',

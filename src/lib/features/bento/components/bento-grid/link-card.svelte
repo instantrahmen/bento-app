@@ -2,8 +2,9 @@
 	import { Button } from '$lib/components/ui/button';
 	import type { BentoLink } from '@prisma/client';
 
+	type PartialLink = Partial<BentoLink> & Pick<BentoLink, 'id' | 'title' | 'icon'>;
 	export type LinkCardProps = {
-		link: BentoLink;
+		link: PartialLink;
 		onClick?: (e: Event) => void;
 		class?: string;
 	};
@@ -18,7 +19,7 @@
 
 	let { link: initLink, onClick, class: className = '' }: LinkCardProps = $props();
 
-	let link: BentoLink = $state(untrack(() => ({ ...initLink })));
+	let link: PartialLink = $state(untrack(() => ({ ...initLink })));
 
 	const handleClick = (e: Event) => {
 		if (onClick) {
@@ -31,30 +32,29 @@
 	let href = $derived(onClick ? undefined : link.url);
 </script>
 
-<div
-	class={cn(
-		'square relative box-border h-full w-full text-primary-foreground',
-		shapes[link.shape as keyof typeof shapes]
-	)}
->
-	<a
+<div class={cn('square relative box-border h-full w-full text-primary-foreground @container')}>
+	<Button
 		onclick={handleClick}
+		variant="card"
+		size="none"
 		{href}
 		class={cn(
-			'absolute left-0 top-0 h-full w-full overflow-hidden',
-			'rounded-md border bg-card outline-none ring-ring hover:bg-opacity-80 hover:shadow-lg focus-visible:ring-2'
+			'absolute left-0 top-0 h-full w-full overflow-hidden'
+			// 'rounded-md border bg-card outline-none ring-ring hover:bg-opacity-80 hover:shadow-lg focus-visible:ring-2'
 		)}
 	>
-		<div class="flex h-full flex-col items-center justify-center gap-0 p-6 text-card-foreground">
+		<div
+			class="flex h-full flex-col items-center justify-center gap-0 p-6 text-[0.5rem] text-card-foreground @[11rem]:text-sm @[16rem]:text-xl @sm:text-3xl"
+		>
 			<IconOrImage
 				src={link.icon || link.image || 'http://placekitten.com/300/300'}
 				alt={link.title}
 			/>
-			<span class={cn('text-xl font-semibold tracking-wide', link.shape === 'xs' && 'sr-only')}
-				>{link.title}</span
-			>
+			<span class={cn('text-xl font-semibold tracking-wide')}>
+				{link.title}
+			</span>
 		</div>
-	</a>
+	</Button>
 
 	<Button
 		class="absolute right-2 top-2 text-card-foreground focus-visible:ring-2"

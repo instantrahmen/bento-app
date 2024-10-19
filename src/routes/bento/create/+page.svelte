@@ -31,14 +31,12 @@
 	<Form.Field {form} name="icon">
 		<Form.Control let:attrs>
 			<Form.Label>Icon</Form.Label>
-			<IconSelect {...attrs} bind:value={$formData.icon} name="icon" />
+			<IconSelect {...attrs} value={$formData.icon} name="icon" />
 		</Form.Control>
 	</Form.Field>
 	{@render formFieldTextArea('description')}
 	<Form.Button>Create new Bento Box</Form.Button>
 </form>
-
-<div></div>
 
 <!-- TODO: Extract to component -->
 {#snippet formFieldInput(name: FormName)}
@@ -57,7 +55,7 @@
 						<iconify-icon icon={$formData[name] || ''} class="h-6 w-6"></iconify-icon>
 					</span>
 				{/if}
-				<Input {...attrs} bind:value={$formData[name]} />
+				<Input {...attrs} value={$formData[name]} />
 			</span>
 		</Form.Control>
 		{#if name in fieldDescriptions && fieldDescriptions[name]}
@@ -71,7 +69,7 @@
 	<Form.Field {form} {name}>
 		<Form.Control let:attrs>
 			<Form.Label class="capitalize">{name}</Form.Label>
-			<Textarea {...attrs} bind:value={$formData[name] as string} />
+			<Textarea {...attrs} value={$formData[name] as string} />
 		</Form.Control>
 		<Form.FieldErrors />
 	</Form.Field>
