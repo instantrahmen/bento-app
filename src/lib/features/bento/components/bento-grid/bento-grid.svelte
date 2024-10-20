@@ -5,14 +5,15 @@
 </script>
 
 <script lang="ts">
-	import { createQuery } from '@tanstack/svelte-query';
 	import { cn } from '$lib/utils/shadcn';
-	import LinkCard from './link-card.svelte';
+	import { createQuery } from '@tanstack/svelte-query';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
 	import { keys } from '$features/bento/api/keys';
+	import LinkCard from './link-card.svelte';
 	import { page } from '$app/stores';
 	import type { APIGetUsersMeResponse } from '$features/auth/types/api';
-	import { shapes } from '$features/bento/utils';
+	import { Button } from '$lib/components/ui/button';
+	import IconOrImage from '$lib/components/icon-or-image.svelte';
 
 	let { slug }: Props = $props();
 
@@ -29,6 +30,31 @@
 	let currentBento = $derived($query.data);
 </script>
 
+{#if currentBento}
+	<header class="my-4 flex flex-col items-center justify-center gap-2">
+		<!-- Bento edit button -->
+		<div class="square relative mx-auto">
+			<IconOrImage
+				src={currentBento.icon}
+				alt="Main icon for {currentBento.title}"
+				role="presentation"
+			/>
+		</div>
+		<h2 class="font-lighter inline-flex items-center gap-2 text-3xl">
+			{currentBento.title}
+
+			<Button
+				class="items-center text-center text-2xl focus-visible:text-ring focus-visible:ring-2"
+				variant="ghost"
+				size="icon"
+				href="/bento/{currentBento.slug}/edit"
+			>
+				<iconify-icon icon="lucide:square-pen" class="h-[1em] w-[1em] text-[1em]"></iconify-icon>
+			</Button>
+		</h2>
+	</header>
+{/if}
+
 {#if $query.isLoading}
 	<iconify-icon icon="mdi:loading" class="h-12 w-12 animate-spin"></iconify-icon>
 {:else if $query.isError || !currentBento}
@@ -38,7 +64,7 @@
 	</div>
 {:else if $query.data}
 	<!-- Bento Grid -->
-	<div class="@container">
+	<div class="relative mx-auto w-full max-w-2xl @container">
 		<div
 			class={cn(
 				'bento-grid',

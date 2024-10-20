@@ -1,9 +1,13 @@
 <script lang="ts">
-	import Icon from '@iconify/svelte';
+	import type { HTMLAttributes } from 'svelte/elements';
 	import { cn, getIconName } from '$lib/utils';
 	import { stringIsValidUrl } from '$lib/utils';
 
-	let { src, alt, class: className = '' }: { src: string; alt: string; class?: string } = $props();
+	let {
+		src,
+		alt,
+		class: className = '',
+	}: HTMLAttributes<HTMLElement> & { src: string; alt: string; class?: string } = $props();
 </script>
 
 {#if stringIsValidUrl(src)}

@@ -15,6 +15,5 @@ export const defaultIconsSets = [
 	'fa6-brands',
 	'fe',
 	'cbi',
-	'logos',
 	'bxl',
 ] as const;

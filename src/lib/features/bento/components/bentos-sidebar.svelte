@@ -1,7 +1,6 @@
-<svelte:options runes={true} />
-
 <script lang="ts">
 	import { createQuery } from '@tanstack/svelte-query';
+	import { slide } from 'svelte/transition';
 	import { Button } from '$lib/components/ui/button';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
 	import { keys } from '$features/bento/api/keys';
@@ -9,13 +8,22 @@
 	import type { APIGetUsersMeResponse } from '$features/auth/types/api';
 	import type { APIGetBentosResponse } from '../types/api';
 	import { cn } from '$lib/utils';
-	import { slide } from 'svelte/transition';
 	import { MediaQuery } from 'runed';
 	import { media } from '$lib/utils/media-queries';
+	import { useResizeObserver } from 'runed';
 	import { onNavigate } from '$app/navigation';
 
-	const screenMinSm = new MediaQuery(`(min-width: ${media.sm.min}px)`);
-	const screenMinXs = new MediaQuery(`(max-width: ${media.sm.min - 100}px)`);
+	let screenMinSm = new MediaQuery(`(min-width: ${media.sm.min}px)`);
+	let screenMinXs = new MediaQuery(`(max-width: ${media.sm.min - 100}px)`);
+
+	// HACK: For some reason the effect isn't triggered by screenMinSm so I'm using this to force it every resize
+	let screenWidth = $state(0);
+	useResizeObserver(
+		() => document.querySelector('body'),
+		([bodyEl]) => {
+			screenWidth = bodyEl?.contentRect.width;
+		}
+	);
 
 	type PageData = APIGetUsersMeResponse & {
 		slug?: string;
@@ -34,8 +42,11 @@
 
 	let sidebarOpen = $state(true);
 
+	const watch = (...args: any[]) => args;
+
 	$effect(() => {
-		// sidebarOpen = !!screenMinSm.matches;
+		watch(screenWidth);
+		sidebarOpen = !!screenMinSm.matches;
 	});
 
 	onNavigate(() => {
@@ -150,7 +161,8 @@
 			size={screenMinSm.matches ? 'icon' : 'lg'}
 		>
 			{#if bento.icon}
-				<iconify-icon icon={bento.icon || ''} class="h-[1em] w-[1em]"></iconify-icon>
+				<iconify-icon icon={bento.icon || ''} class="aspect-square h-[1em] w-[1em] text-[1em]"
+				></iconify-icon>
 			{:else}
 				<span class="text-[1em] font-thin capitalize">{bento.title[0]}</span>
 			{/if}

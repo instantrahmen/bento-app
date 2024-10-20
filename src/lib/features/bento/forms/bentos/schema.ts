@@ -29,9 +29,12 @@ export const formSchema = z.object({
 		.string()
 		.describe('An iconify icon or a url to an image')
 		.min(3, { message: 'Must be at least 3 characters' })
-		.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
-			message: 'Must be a valid iconify icon or a url to an image',
-		}),
+		.regex(/^[a-zA-Z]+:[a-zA-Z0-9_-]+$/, {
+			message: 'Must be a valid iconify icon or url',
+		})
+		.or(
+			z.string().url({ message: 'Must be a valid url' }).min(3, { message: 'Must be a valid url' })
+		),
 });
 
 export type FormSchema = typeof formSchema;
