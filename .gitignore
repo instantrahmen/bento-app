@@ -15,3 +15,6 @@ prisma/dev.db
 
 caddy
 caddy/**/*
+
+.ignored
+.ignored/**/*

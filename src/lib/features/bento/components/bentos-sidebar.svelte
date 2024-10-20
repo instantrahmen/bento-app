@@ -17,9 +17,6 @@
 	let screenMinSm = new MediaQuery(`(min-width: ${media.sm.min + 400}px)`);
 	let screenMinXs = new MediaQuery(`(max-width: ${media.sm.min - 100}px)`);
 
-	// HACK: For some reason the effect isn't triggered by screenMinSm so I'm using this to force it every resize
-	let screenWidth = $state(0);
-
 	type PageData = APIGetUsersMeResponse & {
 		slug?: string;
 	};
@@ -44,7 +41,13 @@
 		useResizeObserver(
 			() => document.querySelector('body'),
 			() => {
-				sidebarOpen = !!screenMinSm.matches;
+				if (sidebarOpen) {
+					if (screenMinSm.matches) {
+						sidebarOpen = false;
+					}
+				} else if (!screenMinSm.matches) {
+					sidebarOpen = true;
+				}
 			}
 		);
 	})
@@ -114,7 +117,7 @@
 					bento: {
 						title: 'Add a link',
 						slug: 'create',
-						icon: 'mdi:plus',
+						icon: 'lucide:plus',
 					},
 				})}
 			</div>
