@@ -2,14 +2,12 @@
 	"recommendations": [
 		"1yib.svelte-bundle",
 		"prisma.prisma",
-		"eamodio.gitlens",
 		"selemondev.vscode-shadcn-svelte",
 		"dexxiez.shadcn-color-preview",
 		"bradlc.vscode-tailwindcss",
 		"bourhaouta.tailwindshades",
 		"antfu.iconify",
 		"esbenp.prettier-vscode",
-		"rvest.vs-code-prettier-eslint",
 		"yoavbls.pretty-ts-errors",
 		"hyoban.tailwindcss-classname-highlight",
 		"matthewpi.caddyfile-support"
