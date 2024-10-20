@@ -12,18 +12,13 @@
 	import { media } from '$lib/utils/media-queries';
 	import { useResizeObserver } from 'runed';
 	import { onNavigate } from '$app/navigation';
+	import { onMount } from 'svelte';
 
-	let screenMinSm = new MediaQuery(`(min-width: ${media.sm.min}px)`);
+	let screenMinSm = new MediaQuery(`(min-width: ${media.sm.min + 400}px)`);
 	let screenMinXs = new MediaQuery(`(max-width: ${media.sm.min - 100}px)`);
 
 	// HACK: For some reason the effect isn't triggered by screenMinSm so I'm using this to force it every resize
 	let screenWidth = $state(0);
-	useResizeObserver(
-		() => document.querySelector('body'),
-		([bodyEl]) => {
-			screenWidth = bodyEl?.contentRect.width;
-		}
-	);
 
 	type PageData = APIGetUsersMeResponse & {
 		slug?: string;
@@ -44,10 +39,15 @@
 
 	const watch = (...args: any[]) => args;
 
-	$effect(() => {
-		watch(screenWidth);
-		sidebarOpen = !!screenMinSm.matches;
-	});
+	onMount(() => {
+
+		useResizeObserver(
+			() => document.querySelector('body'),
+			() => {
+				sidebarOpen = !!screenMinSm.matches;
+			}
+		);
+	})
 
 	onNavigate(() => {
 		if (!screenMinSm.matches) {
@@ -80,7 +80,8 @@
 			axis: 'x',
 		}}
 		class={cn(
-			'top-0 z-10 flex h-dvh flex-col gap-0 overflow-y-auto border-r bg-card px-0 py-0 text-3xl transition-all duration-300 *:m-1 sm:sticky sm:top-2 sm:my-2 sm:ml-2 sm:h-auto sm:rounded-md sm:border',
+			'top-0 z-10 flex h-dvh flex-col gap-0 overflow-y-auto border-r bg-card px-0 py-0 text-3xl transition-all duration-300 *:m-1',
+			'sm:sticky sm:top-2 sm:my-2 sm:ml-2 sm:h-auto sm:rounded-md sm:border',
 			!!screenMinXs.matches ? 'fixed w-full' : 'sticky'
 		)}
 	>
@@ -92,7 +93,7 @@
 				size="icon"
 			>
 				{@const icon = 'f7:sidebar-left'}
-				<iconify-icon {icon} class="h-[1em] w-[1em]"></iconify-icon>
+				<iconify-icon {icon} width="1em" height="1em" class="h-[1em] w-[1em]"></iconify-icon>
 			</Button>
 			<Button
 				href="/"
@@ -161,7 +162,7 @@
 			size={screenMinSm.matches ? 'icon' : 'lg'}
 		>
 			{#if bento.icon}
-				<iconify-icon icon={bento.icon || ''} class="aspect-square h-[1em] w-[1em] text-[1em]"
+				<iconify-icon width="1em" height="1em" icon={bento.icon || ''} class="aspect-square h-[1em] w-[1em] text-[1em]"
 				></iconify-icon>
 			{:else}
 				<span class="text-[1em] font-thin capitalize">{bento.title[0]}</span>
