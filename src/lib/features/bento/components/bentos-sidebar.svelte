@@ -1,18 +1,17 @@
 <script lang="ts">
+	import type { APIGetUsersMeResponse } from '$features/auth/types/api';
+	import type { APIGetBentosResponse } from '../types/api';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { slide } from 'svelte/transition';
+	import { MediaQuery, useResizeObserver } from 'runed';
+	import { onMount } from 'svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
 	import { keys } from '$features/bento/api/keys';
 	import { page } from '$app/stores';
-	import type { APIGetUsersMeResponse } from '$features/auth/types/api';
-	import type { APIGetBentosResponse } from '../types/api';
 	import { cn } from '$lib/utils';
-	import { MediaQuery } from 'runed';
 	import { media } from '$lib/utils/media-queries';
-	import { useResizeObserver } from 'runed';
 	import { onNavigate } from '$app/navigation';
-	import { onMount } from 'svelte';
 	import DebugState from '$lib/components/debug/debug-state.svelte';
 
 	let screenMinSm = new MediaQuery(`(${media.sm.queryStringMin})`);
@@ -87,7 +86,7 @@
 		class={cn(
 			'top-0 z-10 flex h-dvh flex-col gap-0 overflow-y-auto border-r bg-card px-0 py-0 text-3xl transition-all duration-300 *:m-1',
 			'sm:sticky sm:top-2 sm:my-2 sm:ml-2 sm:h-auto sm:rounded-md sm:border',
-			!!screenMaxXs.matches ? 'fixed w-full' : 'sticky'
+			screenMaxXs.matches ? 'fixed w-full' : 'sticky'
 		)}
 	>
 		<div class="flex items-center justify-between">

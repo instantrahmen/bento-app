@@ -2,9 +2,9 @@
 	import type { APIGetUsersMeResponse } from '$features/auth/types';
 	import type { APIPostBentosBody } from '$features/bento/types/api';
 
-	import { formSchema } from './schema';
-	import { superForm, defaults, setError } from 'sveltekit-superforms';
+	import { superForm, defaults } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
+	import { formSchema } from './schema';
 
 	export type Props = {
 		/** The slug of the bento to be edited. If not provided, a new bento will be created. */
@@ -13,10 +13,10 @@
 </script>
 
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { createQuery, createMutation, useQueryClient } from '@tanstack/svelte-query';
 
 	import { untrack } from 'svelte';
+	import { page } from '$app/stores';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
@@ -60,8 +60,8 @@
 			.toString()
 			.toLowerCase()
 			.replace(/\s+/g, '-') // Replace spaces with -
-			.replace(/[^\w\-]+/g, '') // Remove all non-word chars
-			.replace(/\-\-+/g, '-') // Replace multiple - with single -
+			.replace(/[^\w-]+/g, '') // Remove all non-word chars
+			.replace(/--+/g, '-') // Replace multiple - with single -
 			.replace(/^-+/, '') // Trim - from start of text
 			.replace(/-+$/, ''); // Trim - from end of text
 	};
@@ -101,11 +101,6 @@
 			return stringIsValidUrl(initData.icon) ? 'image' : 'icon';
 		})
 	);
-
-	let tempIconImageState = $state({
-		icon: '',
-		image: '',
-	});
 </script>
 
 <form method="POST" use:enhance>
@@ -173,46 +168,3 @@
 		formData: $formData,
 	}}
 />
-<!--
-<script lang="ts">
-	import { untrack } from 'svelte';
-	import { page } from '$app/stores';
-	import { createQuery, createMutation, useQueryClient } from '@tanstack/svelte-query';
-
-	import * as Form from '$lib/components/ui/form';
-	import { Input } from '$lib/components/ui/input';
-
-
-	import { keys } from '$features/bento/api/keys';
-	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
-	import { createBento, updateBento } from '$features/bento/api';
-
-	let client = $derived(useQueryClient());
-  let data: SuperValidated<Infer<FormSchema>> = $state({});
-
-	let { slug }: Props = $props();
-	let user = $derived($page.data.user) as APIGetUsersMeResponse['user'];
-	let initialData = $derived(user?.bentos.find((bento) => bento.slug === slug));
-
-	let bento = createQuery(toReadable(() => ({ ...keys.bento({ slug: slug || '' }), initialData })));
-
-	const createBentoMutation = createMutation({
-		mutationFn: (bento: APIPostBentosBody) => createBento({ body: bento }).then(() => bento),
-		onSuccess: () => client.invalidateQueries({ queryKey: ['bentos'] }),
-	});
-
-	const updateBentoMutation = createMutation({
-		mutationFn: (bento: APIPostBentosBody) => updateBento({ body: bento }).then(() => bento),
-		onSettled: () => client.invalidateQueries({ queryKey: ['bentos'] }),
-	});
-
-	let bentoLocalState = $state(untrack(() => ({ ...initialData })));
-
-	$effect(() => {
-		if (!$bento.isLoading && !$bento.isError && $bento.data) {
-			console.log('data changed', $bento.data);
-			bentoLocalState = $bento.data;
-		}
-	});
-</script>
--->
