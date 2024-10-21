@@ -14,8 +14,8 @@
 	import { onNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
 
-	let screenMinSm = new MediaQuery(`(min-width: ${media.sm.min + 400}px)`);
-	let screenMinXs = new MediaQuery(`(max-width: ${media.sm.min - 100}px)`);
+	let screenMinSm = new MediaQuery(media.sm.queryStringMin);
+	let screenMinXs = new MediaQuery(media.xs.queryStringMin);
 
 	type PageData = APIGetUsersMeResponse & {
 		slug?: string;
@@ -36,26 +36,27 @@
 
 	const watch = (...args: any[]) => args;
 
-	onMount(() => {
+	const setSidebarBasedOnScreenSize = () => {
+		if (sidebarOpen) {
+			if (!screenMinSm.matches) {
+				sidebarOpen = false;
+			}
+		} else if (screenMinSm.matches) {
+			sidebarOpen = true;
+		}
+	};
 
+	onMount(() => {
 		useResizeObserver(
 			() => document.querySelector('body'),
 			() => {
-				if (sidebarOpen) {
-					if (screenMinSm.matches) {
-						sidebarOpen = false;
-					}
-				} else if (!screenMinSm.matches) {
-					sidebarOpen = true;
-				}
+				setSidebarBasedOnScreenSize();
 			}
 		);
-	})
+	});
 
 	onNavigate(() => {
-		if (!screenMinSm.matches) {
-			sidebarOpen = false;
-		}
+		setSidebarBasedOnScreenSize();
 	});
 </script>
 
@@ -75,11 +76,11 @@
 {#if sidebarOpen}
 	<div
 		in:slide={{
-			duration: 200,
+			duration: 150,
 			axis: 'x',
 		}}
 		out:slide={{
-			duration: 200,
+			duration: 150,
 			axis: 'x',
 		}}
 		class={cn(
@@ -165,7 +166,11 @@
 			size={screenMinSm.matches ? 'icon' : 'lg'}
 		>
 			{#if bento.icon}
-				<iconify-icon width="1em" height="1em" icon={bento.icon || ''} class="aspect-square h-[1em] w-[1em] text-[1em]"
+				<iconify-icon
+					width="1em"
+					height="1em"
+					icon={bento.icon || ''}
+					class="aspect-square h-[1em] w-[1em] text-[1em]"
 				></iconify-icon>
 			{:else}
 				<span class="text-[1em] font-thin capitalize">{bento.title[0]}</span>

@@ -69,9 +69,7 @@
 			class={cn(
 				'bento-grid',
 				'grid grid-flow-dense gap-2',
-				// Grid size
-				'grid-cols-1 @xs:grid-cols-2 @sm:grid-cols-3 @3xl:grid-cols-4 @5xl:grid-cols-5'
-				// shapes.grid
+				'grid-cols-3 @2xl:grid-cols-4 @5xl:grid-cols-5'
 			)}
 		>
 			{#each currentBento.links as link (link.id)}

@@ -34,7 +34,8 @@ export const stringIsValidUrl = (url: string): boolean => {
  * @param icon The full icon name, e.g. "mdi:home".
  * @returns The name of the icon after the prefix, e.g. "home".
  */
-export const getIconName = (icon: string) => {
+export const getIconName = (icon: string = '') => {
+	if (!icon?.includes(':')) return icon;
 	const [_, iconName] = icon.split(':');
 	return iconName;
 };
@@ -42,8 +43,8 @@ export const getIconName = (icon: string) => {
 /**
  * Extracts the initials from a given name using valid separators: " ", "-", ".", "_"
  */
-export const getInitials = (name: string) => {
-	// Valid separators: " " "-" "." "_"
+export const getInitials = (name: string = '') => {
+	if (!name) return '';
 	return name
 		.split(/[\s-_.]+/)
 		.map((n) => n[0])
