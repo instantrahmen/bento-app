@@ -12,7 +12,7 @@
 		--popover-foreground: var(--dr-background);
 
 		--border: var(--dr-border-light);
-		--input: var(--dr-current-line);
+		--input: var(--dr-border-light);
 
 		--card: var(--dr-foreground);
 		--card-foreground: var(--dr-background);
@@ -41,9 +41,10 @@
 			--muted: var(--dr-current-line);
 			--muted-foreground: var(--dr-foreground-muted);
 
-			--popover: var(--dr-background) --popover-foreground: var(--dr-foreground);
+			--popover: var(--dr-background);
+			--popover-foreground: var(--dr-foreground);
 
-			--border: var(--dr-current-line);
+			--border: var(--dr-background);
 			--input: var(--dr-comment);
 
 			--card: var(--dr-background-overlay);

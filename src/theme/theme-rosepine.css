@@ -21,7 +21,7 @@
 		--accent-foreground: var(--rp-text);
 		--destructive: var(--rp-love);
 		--destructive-foreground: var(--rp-surface);
-		--ring: var(--rp-iris);
+		--ring: var(--rp-pine);
 		--radius: 0.6rem;
 
 		&.dark,
@@ -30,7 +30,7 @@
 			--foreground: var(--rp-dark-text);
 			--muted: var(--rp-dark-muted);
 			--muted-foreground: var(--rp-dark-subtle);
-			--popover: var(--rp-dark-card);
+			--popover: var(--rp-dark-surface);
 			--popover-foreground: var(--rp-dark-text);
 			--card: var(--rp-dark-surface);
 			--card-foreground: var(--rp-dark-text);
