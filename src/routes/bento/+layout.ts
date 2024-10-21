@@ -1,10 +1,15 @@
 import { getMultipleCollectionsIcons } from '$features/icon-select/api/iconify';
 import { defaultIconsSets } from '$features/icon-select/default-icons-sets';
 import { getBentos } from '$lib/features/bento/api';
+import { redirect } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 
 export const load = (async ({ params: { slug }, parent, fetch }) => {
-	const { queryClient } = await parent();
+	const { queryClient, session, user } = await parent();
+
+	if (!user?.id || !session?.user?.id) {
+		throw redirect(303, `/`);
+	}
 
 	await queryClient.prefetchQuery({
 		queryKey: ['bentos'],

@@ -7,16 +7,10 @@
 	import { onMount } from 'svelte';
 	import Navbar from '$features/navbar/components/navbar.svelte';
 	import { themeStorageKey } from 'mode-watcher';
-
-	const clearThemeFromLocalStorage = () => {
-		localStorage.removeItem($themeStorageKey);
-	};
+	import { themes } from '$features/themes/config';
 
 	onMount(() => {
 		enableCache('all');
-
-		// Just for testing purposes
-		clearThemeFromLocalStorage();
 	});
 
 	let { children, data } = $props();
@@ -27,7 +21,7 @@
 </svelte:head>
 
 <QueryClientProvider client={data.queryClient}>
-	<ModeWatcher defaultTheme="dracula" />
+	<ModeWatcher defaultTheme={themes[0].value} />
 
 	<Navbar {...data} />
 

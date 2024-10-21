@@ -14,14 +14,14 @@ const createMediaQuery = (min: number, max?: number): MediaQuery => {
 		min,
 		max,
 		get queryString() {
-			return `(min-width: ${min}px)${max ? ` and (max-width: ${max}px)` : ''}`;
+			return `min-width: ${min}px)${max ? ` and (max-width: ${max}px` : ''}`;
 		},
 		get queryStringMin() {
-			return `(min-width: ${min}px)`;
+			return `min-width: ${min}px`;
 		},
 		get queryStringMax() {
 			if (!max) return '';
-			return `(max-width: ${max}px)`;
+			return `max-width: ${max}px`;
 		},
 		get matches() {
 			if (browser) return window.matchMedia(this.queryString).matches;

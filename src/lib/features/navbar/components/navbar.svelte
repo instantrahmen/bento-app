@@ -1,11 +1,12 @@
 <script lang="ts">
-	import Lightswitch from '$lib/components/light-switch.svelte';
 	import { SignIn } from '@auth/sveltekit/components';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { getInitials } from '$lib/utils';
 	import { buttonVariants } from '$lib/components/ui/button';
 	import type { User } from '@prisma/client';
 	import type { Session } from '@auth/sveltekit';
+	import ThemePicker from '$features/themes/components/theme-picker.svelte';
+	import Lightswitch from '$features/themes/components/light-switch.svelte';
 
 	let {
 		user,
@@ -16,7 +17,10 @@
 	} = $props();
 </script>
 
-<nav class=" fixed flex h-12 w-full flex-row items-center justify-end gap-2 bg-none p-2">
+<nav
+	class="fixed right-2 top-2 flex h-12 w-min flex-row items-center justify-end gap-2 rounded-md border bg-card bg-none p-2 shadow-md"
+>
+	<ThemePicker />
 	<Lightswitch />
 	{#if !session?.user || !user}
 		<div class="actions">

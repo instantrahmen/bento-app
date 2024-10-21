@@ -3,56 +3,43 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { cn } from '$lib/utils/shadcn';
 	import { buttonVariants } from '$lib/components/ui/button';
+	import { afterNavigate, goto } from '$app/navigation';
 
 	let { data } = $props();
 
 	let { user, session } = $derived(data);
+
+	afterNavigate(() => {
+		// This should honestly never be called, but just to be safe we'll redirect both here and in `+page.ts`
+		if (user) {
+			goto(`/bento/${user.bentos[0].slug}`);
+		}
+	});
 </script>
 
-<h2 class="text-3xl font-semibold">Bento App</h2>
-<div>
-	{#if session}
-		{#if session.user?.image}
-			<img src={session.user.image} class="avatar" alt="User Avatar" />
-		{/if}
-		<span class="signedInText">
-			<small>Signed in as</small><br />
-			<strong>{session.user?.name ?? 'User'}</strong>
-		</span>
-		<SignOut>
-			<div slot="submitButton" class="buttonPrimary">Sign out</div>
-		</SignOut>
+<main class="flex min-h-[calc(100vh-3rem)] flex-col justify-start gap-4 p-4">
+	<h2 class="text-3xl font-semibold">Bento App</h2>
 
-		{#if user}
-			<div class="rounded border border-border bg-card p-4 shadow">
-				<Button variant="outline" href="/bento">Bentos</Button>
-				<Button variant="outline" href="/test">Test Page</Button>
+	<div class="flex flex-col gap-4 rounded-md border bg-card p-4 shadow">
+		<h3 class="text-lg font-semibold">Please sign in to continue</h3>
+		<p
+			class="w-fit rounded-md border border-border/50 bg-muted/50 p-2 text-xs text-muted-foreground shadow-sm"
+		>
+			Note: offline/local-only mode and more auth providers coming soon
+		</p>
+		<SignIn provider="discord">
+			<div
+				slot="submitButton"
+				class={cn(
+					buttonVariants({
+						variant: 'default',
+						size: 'default',
+						class: 'w-full',
+					})
+				)}
+			>
+				Sign in with Discord
 			</div>
-			<pre>
-{JSON.stringify({ user, session }, null, 2)}
-			</pre>
-		{/if}
-	{:else}
-		<div class="rounded border border-border bg-card p-4 shadow">
-			<span>Please sign in</span>
-			<SignIn provider="discord">
-				<div
-					slot="submitButton"
-					class={cn(
-						buttonVariants({
-							variant: 'default',
-							size: 'default',
-							class: 'w-full',
-						})
-					)}
-				>
-					Sign in with Discord
-				</div>
-			</SignIn>
-
-			<!-- <pre>
-{JSON.stringify($page.data, null, 2)}
-			</pre> -->
-		</div>
-	{/if}
-</div>
+		</SignIn>
+	</div>
+</main>

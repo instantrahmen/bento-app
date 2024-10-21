@@ -1,0 +1,47 @@
+@layer base {
+	html[data-theme='lunarpink'] {
+		--background: 0 0% 87%;
+		--foreground: 0 0% 7%;
+		--muted-foreground: 0 12% 15%;
+		--muted: 0 12% 65%;
+		--popover: 0 0% 97%;
+		--popover-foreground: 0 0% 4%;
+		--card: 0 0% 92%;
+		--card-foreground: 0 0% 5%;
+		--border: 0 0% 76%;
+		--input: 0 0% 92%;
+		--primary: 317 80% 52%;
+		--primary-foreground: 0 0% 100%;
+		--secondary: 317 30% 75%;
+		--secondary-foreground: 317 30% 15%;
+		--accent: 0 0% 72%;
+		--accent-foreground: 0 12% 12%;
+		--destructive: 1 93% 51%;
+		--destructive-foreground: 0 0% 100%;
+		--ring: 317 80% 52%;
+		--radius: 0.8rem;
+
+		&.dark,
+		.dark {
+			--background: 0 0% 7%;
+			--foreground: 0 0% 87%;
+			--muted: 0 12% 15%;
+			--muted-foreground: 0 12% 65%;
+			--popover: 0 0% 4%;
+			--popover-foreground: 0 0% 97%;
+			--card: 0 0% 5%;
+			--card-foreground: 0 0% 92%;
+			--border: 0 0% 12%;
+			--input: 0 0% 15%;
+			--primary: 317 80% 52%;
+			--primary-foreground: 0 0% 100%;
+			--secondary: 317 30% 75%;
+			--secondary-foreground: 317 30% 15%;
+			--accent: 0 0% 22%;
+			--accent-foreground: 0 0% 82%;
+			--destructive: 1 93% 51%;
+			--destructive-foreground: 0 0% 100%;
+			--ring: 317 80% 52%;
+		}
+	}
+}

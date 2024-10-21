@@ -13,9 +13,10 @@
 	import { useResizeObserver } from 'runed';
 	import { onNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import DebugState from '$lib/components/debug/debug-state.svelte';
 
-	let screenMinSm = new MediaQuery(media.sm.queryStringMin);
-	let screenMinXs = new MediaQuery(media.xs.queryStringMin);
+	let screenMinSm = new MediaQuery(`(${media.sm.queryStringMin})`);
+	let screenMaxXs = new MediaQuery(`(${media.xs.queryStringMax})`);
 
 	type PageData = APIGetUsersMeResponse & {
 		slug?: string;
@@ -64,11 +65,11 @@
 	<div class="absolute left-1 top-1 flex items-center justify-between text-3xl">
 		<Button
 			on:click={() => (sidebarOpen = !sidebarOpen)}
-			class="relative p-1 text-[length:inherit]  focus-visible:text-ring active:shadow-inner *:active:scale-90"
+			class="relative p-1 text-[length:inherit] text-xl  focus-visible:text-ring active:shadow-inner *:active:scale-90 sm:m-2"
 			variant="ghost"
 			size="icon"
 		>
-			<iconify-icon icon="f7-sidebar-left" class="h-[1em] w-[1em]"></iconify-icon>
+			<iconify-icon icon="f7:sidebar-left" class="h-[1em] w-[1em]"></iconify-icon>
 		</Button>
 	</div>
 {/if}
@@ -86,13 +87,13 @@
 		class={cn(
 			'top-0 z-10 flex h-dvh flex-col gap-0 overflow-y-auto border-r bg-card px-0 py-0 text-3xl transition-all duration-300 *:m-1',
 			'sm:sticky sm:top-2 sm:my-2 sm:ml-2 sm:h-auto sm:rounded-md sm:border',
-			!!screenMinXs.matches ? 'fixed w-full' : 'sticky'
+			!!screenMaxXs.matches ? 'fixed w-full' : 'sticky'
 		)}
 	>
 		<div class="flex items-center justify-between">
 			<Button
 				on:click={() => (sidebarOpen = !sidebarOpen)}
-				class="relative p-1 text-[length:inherit] focus-visible:text-ring  active:shadow-inner *:active:scale-90 "
+				class="relative p-1 text-[length:inherit] text-xl focus-visible:text-ring  active:shadow-inner *:active:scale-90 "
 				variant="ghost"
 				size="icon"
 			>
@@ -179,3 +180,14 @@
 		</Button>
 	{/snippet}
 {/if}
+
+<div class="absolute bottom-20 right-2">
+	<DebugState
+		state={{
+			matchesSm: screenMinSm.matches,
+			matchesXs: screenMaxXs.matches,
+			qsminXs: media.xs.queryStringMin,
+			qsminSm: media.sm.queryStringMin,
+		}}
+	/>
+</div>
