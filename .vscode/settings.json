@@ -1,14 +1,7 @@
 {
   "caddyfile.executable": "/home/codespace/.local/bin/caddy",
-  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
   "editor.formatOnType": false,
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
   "vs-code-prettier-eslint.prettierLast": false,
-  "[svelte]": {
-    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
 }

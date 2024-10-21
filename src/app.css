@@ -1,5 +1,4 @@
-/* @import './theme/theme-rosepine.css'; */
-@import './theme/theme-shadrose.css';
+@import './theme/index.css';
 
 @tailwind base;
 @tailwind components;

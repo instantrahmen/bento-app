@@ -1,8 +1,7 @@
-@import './catppuccin-colors.css';
+@import './colors/catppuccin-colors.css';
 
 @layer base {
-	:root {
-		/* Light Theme: Catppuccin Latte */
+	html[data-theme='catppuccin'] {
 		--background: var(--ctp-latte-crust);
 		--foreground: var(--ctp-latte-text);
 		--muted: var(--ctp-latte-subtext-1);
@@ -26,27 +25,29 @@
 		--ring: var(--ctp-latte-mauve);
 
 		--radius: 0.6rem;
-	}
-	.dark {
-		/* Dark Theme: Catppuccin Mocha */
-		--background: var(--ctp-mocha-crust);
-		--foreground: var(--ctp-mocha-text);
-		--muted: var(--ctp-mocha-subtext-1);
-		--muted-foreground: var(--ctp-mocha-overlay-1);
-		--popover: var(--ctp-mocha-surface-0);
-		--popover-foreground: var(--ctp-mocha-text);
-		--card: var(--ctp-mocha-surface-0);
-		--card-foreground: var(--ctp-mocha-text);
-		--border: var(--ctp-mocha-surface-1);
-		--input: var(--ctp-mocha-surface-2);
-		--primary: var(--ctp-mocha-blue);
-		--primary-foreground: var(--ctp-mocha-crust);
-		--secondary: var(--ctp-mocha-mauve);
-		--secondary-foreground: var(--ctp-mocha-base);
-		--accent: var(--ctp-mocha-surface-1);
-		--accent-foreground: var(--ctp-mocha-text);
+		/* } */
+		&.dark,
+		.dark {
+			/* Dark Theme: Catppuccin Mocha */
+			--background: var(--ctp-mocha-crust);
+			--foreground: var(--ctp-mocha-text);
+			--muted: var(--ctp-mocha-subtext-1);
+			--muted-foreground: var(--ctp-mocha-overlay-1);
+			--popover: var(--ctp-mocha-surface-0);
+			--popover-foreground: var(--ctp-mocha-text);
+			--card: var(--ctp-mocha-surface-0);
+			--card-foreground: var(--ctp-mocha-text);
+			--border: var(--ctp-mocha-surface-1);
+			--input: var(--ctp-mocha-surface-2);
+			--primary: var(--ctp-mocha-blue);
+			--primary-foreground: var(--ctp-mocha-crust);
+			--secondary: var(--ctp-mocha-mauve);
+			--secondary-foreground: var(--ctp-mocha-base);
+			--accent: var(--ctp-mocha-surface-1);
+			--accent-foreground: var(--ctp-mocha-text);
 
-		--destructive: var(--ctp-mocha-red);
-		--destructive-foreground: var(--ctp-mocha-base);
+			--destructive: var(--ctp-mocha-red);
+			--destructive-foreground: var(--ctp-mocha-base);
+		}
 	}
 }

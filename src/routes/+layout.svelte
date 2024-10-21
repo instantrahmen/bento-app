@@ -5,12 +5,20 @@
 	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 	import { ModeWatcher } from 'mode-watcher';
 	import { onMount } from 'svelte';
+	import Navbar from '$features/navbar/components/navbar.svelte';
+	import { themeStorageKey } from 'mode-watcher';
 
-	import Navbar from './../lib/features/navbar/components/navbar.svelte';
+	const clearThemeFromLocalStorage = () => {
+		localStorage.removeItem($themeStorageKey);
+	};
 
 	onMount(() => {
 		enableCache('all');
+
+		// Just for testing purposes
+		clearThemeFromLocalStorage();
 	});
+
 	let { children, data } = $props();
 </script>
 
@@ -19,7 +27,7 @@
 </svelte:head>
 
 <QueryClientProvider client={data.queryClient}>
-	<ModeWatcher />
+	<ModeWatcher defaultTheme="dracula" />
 
 	<Navbar {...data} />
 

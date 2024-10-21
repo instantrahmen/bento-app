@@ -11,13 +11,14 @@ const config = {
 			'$features/*': './src/lib/features',
 			'$api/*': './src/lib/api',
 			'$lib/*': './src/lib',
-		}
+		},
 	},
+
 	compilerOptions: {
 		compatibility: {
-			componentApi: 4
-		}
-	}
+			componentApi: 4,
+		},
+	},
 };
 
 export default config;

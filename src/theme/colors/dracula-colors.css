@@ -1,0 +1,39 @@
+:root {
+	--dr-background-darker: 255 13% 6%;
+	--dr-background-overlay: 257 11% 12%;
+	--dr-background: 231 15% 18%;
+	--dr-current-line: 232 14% 31%;
+	--dr-border-light: 232 14% 70%;
+	--dr-accent-light: 232 14% 86%;
+	--dr-foreground-darker: 60 10% 90%;
+	--dr-foreground: 60 30% 96%;
+	--dr-foreground-muted: 60 30% 86%;
+	--dr-comment: 225 27% 51%;
+	--dr-cyan: 191 97% 77%;
+	--dr-green: 135 94% 65%;
+	--dr-orange: 31 100% 71%;
+	--dr-pink: 326 100% 74%;
+	--dr-purple: 265 89% 78%;
+	--dr-red: 0 100% 67%;
+	--dr-yellow: 65 92% 76%;
+}
+
+/* 
+
+## Dracula Palette:
+
+Background-darker 	hsl(255, 13%, 6%)
+Background-overlay hsl(257, 11%, 12%)
+Background HSL(231, 15, 18)
+Current Line HSL(232, 14, 31)
+Foreground HSL(60, 30, 96)
+Comment HSL(225, 27, 51)
+Cyan HSL(191, 97, 77)
+Green HSL(135, 94, 65)
+Orange HSL(31, 100, 71)
+Pink HSL(326, 100, 74)
+Purple HSL(265, 89, 78)
+Red HSL(0, 100, 67)
+Yellow HSL(65, 92, 76)
+
+*/

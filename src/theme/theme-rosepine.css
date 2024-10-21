@@ -1,7 +1,7 @@
-@import './rosepine-colors.css';
+@import './colors/rosepine-colors.css';
 
 @layer base {
-	:root {
+	html[data-theme='rosepine'] {
 		--background: var(--rp-base);
 		--foreground: var(--rp-text);
 
@@ -23,28 +23,30 @@
 		--destructive-foreground: var(--rp-surface);
 		--ring: var(--rp-iris);
 		--radius: 0.6rem;
-	}
-	.dark {
-		--background: var(--rp-dark-base);
-		--foreground: var(--rp-dark-text);
-		--muted: var(--rp-dark-muted);
-		--muted-foreground: var(--rp-dark-subtle);
-		--popover: var(--rp-dark-card);
-		--popover-foreground: var(--rp-dark-text);
-		--card: var(--rp-dark-surface);
-		--card-foreground: var(--rp-dark-text);
-		--border: var(--rp-dark-overlay);
-		--input: var(--rp-dark-overlay);
-		--primary: var(--rp-dark-pine);
-		--primary-foreground: var(--rp-dark-surface);
-		--secondary: (--rp-dark-rose);
-		--secondary-foreground: var(--rp-dark-surface);
-		--accent: var(--rp-dark-overlay);
-		--accent-foreground: var(--rp-dark-text);
-		--destructive: var(--rp-dark-love);
-		--destructive-foreground: var(--rp-dark-surface);
-		--ring: var(--rp-dark-iris);
-		--radius: 0.6rem;
+
+		&.dark,
+		.dark {
+			--background: var(--rp-dark-base);
+			--foreground: var(--rp-dark-text);
+			--muted: var(--rp-dark-muted);
+			--muted-foreground: var(--rp-dark-subtle);
+			--popover: var(--rp-dark-card);
+			--popover-foreground: var(--rp-dark-text);
+			--card: var(--rp-dark-surface);
+			--card-foreground: var(--rp-dark-text);
+			--border: var(--rp-dark-overlay);
+			--input: var(--rp-dark-overlay);
+			--primary: var(--rp-dark-pine);
+			--primary-foreground: var(--rp-dark-surface);
+			--secondary: (--rp-dark-rose);
+			--secondary-foreground: var(--rp-dark-surface);
+			--accent: var(--rp-dark-overlay);
+			--accent-foreground: var(--rp-dark-text);
+			--destructive: var(--rp-dark-love);
+			--destructive-foreground: var(--rp-dark-surface);
+			--ring: var(--rp-dark-iris);
+			--radius: 0.6rem;
+		}
 	}
 }
 

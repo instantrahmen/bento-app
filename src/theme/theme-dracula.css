@@ -1,0 +1,67 @@
+@import './colors/dracula-colors.css';
+
+@layer base {
+	html[data-theme='dracula'] {
+		--background: var(--dr-foreground-darker);
+		--foreground: var(--dr-background-darker);
+
+		--muted: 232 14% 88%;
+		--muted-foreground: 60 30% 20%;
+
+		--popover: var(--dr-foreground);
+		--popover-foreground: var(--dr-background);
+
+		--border: var(--dr-border-light);
+		--input: var(--dr-current-line);
+
+		--card: var(--dr-foreground);
+		--card-foreground: var(--dr-background);
+
+		--primary: var(--dr-purple);
+		--primary-foreground: var(--dr-foreground);
+
+		--secondary: var(--dr-pink);
+		--secondary-foreground: var(--dr-foreground);
+
+		--accent: var(--dr-accent-light);
+		--accent-foreground: 60 30% 10%;
+
+		--destructive: var(--dr-red);
+		--destructive-foreground: var(--dr-foreground);
+
+		--ring: var(--dr-pink);
+
+		--radius: 0.6rem;
+
+		&.dark,
+		.dark {
+			--background: var(--dr-background-darker);
+			--foreground: var(--dr-foreground);
+
+			--muted: var(--dr-current-line);
+			--muted-foreground: var(--dr-foreground-muted);
+
+			--popover: var(--dr-background) --popover-foreground: var(--dr-foreground);
+
+			--border: var(--dr-current-line);
+			--input: var(--dr-comment);
+
+			--card: var(--dr-background-overlay);
+			--card-foreground: var(--dr-foreground);
+
+			--primary: var(--dr-purple);
+			--primary-foreground: var(--dr-foreground);
+
+			--secondary: var(--dr-pink);
+			--secondary-foreground: var(--dr-foreground);
+
+			--accent: var(--dr-current-line);
+			--accent-foreground: var(--dr-foreground);
+
+			--destructive: var(--dr-red);
+			--destructive-foreground: var(--dr-foreground);
+
+			--ring: var(--dr-pink);
+		}
+	}
+}
