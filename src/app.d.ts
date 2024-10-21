@@ -1,3 +1,5 @@
+import 'vite-plugin-pwa/pwa-assets';
+
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {

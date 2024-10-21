@@ -1,0 +1,14 @@
+{
+  "name": "Bento",
+  "description": "Quickly access your favorite links all in one place",
+  "display": "standalone",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "167x167",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
