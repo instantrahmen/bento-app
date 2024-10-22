@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { APIGetUsersMeResponse } from '$features/auth/types/api';
-	import type { APIGetBentosResponse } from '../types/api';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { slide } from 'svelte/transition';
 	import { MediaQuery, useResizeObserver } from 'runed';
