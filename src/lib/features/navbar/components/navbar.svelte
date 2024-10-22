@@ -18,9 +18,11 @@
 </script>
 
 <nav
-	class="fixed right-2 top-2 z-20 flex h-12 w-min flex-row items-center justify-end gap-2 rounded-md border bg-card bg-none p-2 shadow-md"
+	class="fixed right-2 top-2 z-10 flex h-12 w-min flex-row items-center justify-end gap-2 rounded-md border bg-card bg-none p-2 shadow-md"
 >
-	<ThemePicker />
+	<div class="hidden sm:contents">
+		<ThemePicker />
+	</div>
 	<Lightswitch />
 	{#if !session?.user || !user}
 		<div class="actions">

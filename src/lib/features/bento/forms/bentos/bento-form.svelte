@@ -48,7 +48,7 @@
 
 	const createBentoMutation = createMutation({
 		mutationFn: (bento: APIPostBentosBody) => createBento({ body: bento }).then(() => bento),
-		onSuccess: () => {
+		onSuccess: ({ slug }) => {
 			client.invalidateQueries({ queryKey: ['bentos'] });
 			client.invalidateQueries({ queryKey: ['bentos', 'bento'] });
 			client.invalidateQueries({ queryKey: ['bentos', 'bento', { slug: slug }] });

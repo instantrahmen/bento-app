@@ -16,7 +16,7 @@
 	import { MediaQuery } from 'runed';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { readable } from 'svelte/store';
-	import { keys } from '../api/keys';
+	import { keys } from '../../api/keys';
 	import { Button } from '$lib/components/ui/button';
 	import { cn } from '$lib/utils/shadcn';
 	import { media } from '$lib/utils/media-queries';
@@ -67,8 +67,9 @@
 		href={!disabled ? `/bento/${bento.slug}` : undefined}
 		class={cn(
 			'h-12 justify-start gap-2 px-2 text-left sm:h-9 sm:justify-center sm:gap-0 sm:px-0',
-			'relative text-[length:inherit] shadow-black/30  focus-visible:text-ring active:shadow-inner *:active:scale-90',
-			active && 'border bg-accent text-accent-foreground shadow-inner *:scale-95',
+			'relative rounded-xl text-[length:inherit] shadow-black/30 focus-visible:text-ring active:shadow-inner *:active:scale-75',
+			active && 'rounded-xl border bg-accent text-accent-foreground shadow-inner *:scale-90',
+			// active && 'rounded-lg border border-background bg-accent text-accent-foreground *:scale-95',
 			!active && 'text-muted-foreground',
 			disabled &&
 				'cursor-pointer text-muted-foreground hover:bg-transparent hover:text-muted-foreground',

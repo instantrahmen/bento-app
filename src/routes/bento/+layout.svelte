@@ -1,5 +1,5 @@
 <script lang="ts">
-	import BentosSidebar from '$features/bento/components/bentos-sidebar.svelte';
+	import BentosSidebar from '$features/bento/components/sidebar/bentos-sidebar.svelte';
 
 	let { children } = $props();
 </script>

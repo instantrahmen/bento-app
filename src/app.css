@@ -25,15 +25,13 @@ body,
 	@apply !transition-colors !duration-100;
 }
 
-/* body {                            
-	@apply bg-gradient-to-br from-primary to-secondary text-foreground;
-}
-.bg-card {
-	@apply bg-card/55 backdrop-blur-md;
-} */
-
 iconify-icon {
 	display: inline-block;
 	width: 1em;
 	height: 1em;
+}
+
+#svelte-inspector-host {
+	/* position: relative !important; */
+	/* z-index: 100 !important; */
 }

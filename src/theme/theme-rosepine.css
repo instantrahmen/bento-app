@@ -40,7 +40,7 @@
 			--primary-foreground: var(--rp-dark-surface);
 			--secondary: (--rp-dark-rose);
 			--secondary-foreground: var(--rp-dark-surface);
-			--accent: var(--rp-dark-overlay);
+			--accent: var(--rp-dark-highlight-med);
 			--accent-foreground: var(--rp-dark-text);
 			--destructive: var(--rp-dark-love);
 			--destructive-foreground: var(--rp-dark-surface);

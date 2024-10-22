@@ -63,18 +63,30 @@
 		<p class="text-lg">The requested bento ({slug}) could not be found</p>
 	</div>
 {:else if $query.data}
+	{@const items = $query.data.links.length}
 	<!-- Bento Grid -->
 	<div class="relative mx-auto w-full max-w-2xl @container">
 		<div
 			class={cn(
 				'bento-grid',
-				'grid grid-flow-dense gap-2',
-				'grid-cols-3 @2xl:grid-cols-4 @5xl:grid-cols-5'
+				'grid grid-flow-dense gap-1 sm:gap-2',
+				items === 0 && 'grid-cols-3 [&>*]:col-start-2 [&>*]:col-end-3',
+				items > 0 && 'grid-cols-3 @2xl:grid-cols-4 @5xl:grid-cols-5'
 			)}
 		>
 			{#each currentBento.links as link (link.id)}
 				<LinkCard {link} />
 			{/each}
+			<LinkCard
+				link={{
+					title: 'Add link',
+					url: `/bento/${currentBento.slug}/add`,
+					icon: 'lucide:plus',
+				}}
+				hideEditButton
+				hideLabel
+			/>
+			<!-- class="-col-start-1 -col-end-2" -->
 		</div>
 	</div>
 {/if}

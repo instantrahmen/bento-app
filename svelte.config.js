@@ -19,6 +19,14 @@ const config = {
 			componentApi: 4,
 		},
 	},
+
+	vitePlugin: {
+		inspector: {
+			toggleKeyCombo: 'meta-ctrl-alt-shift-i',
+			showToggleButton: 'always',
+			toggleButtonPos: 'bottom-middle',
+		},
+	},
 };
 
 export default config;

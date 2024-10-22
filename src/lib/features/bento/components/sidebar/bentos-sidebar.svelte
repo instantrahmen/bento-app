@@ -4,7 +4,7 @@
 	import { slide } from 'svelte/transition';
 	import { MediaQuery, useResizeObserver } from 'runed';
 	import { onMount } from 'svelte';
-	import BentoLink from './bento-link.svelte';
+	import BentoLink from './sidebar-link.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
 	import { keys } from '$features/bento/api/keys';
@@ -80,7 +80,7 @@
 			axis: 'x',
 		}}
 		class={cn(
-			'top-0 z-10 flex h-dvh flex-col gap-0 overflow-y-auto border-r bg-card px-0 py-0 text-3xl transition-all duration-300 *:m-1',
+			'top-0 z-20 flex h-dvh flex-col gap-0 overflow-y-auto border-r bg-card px-0 py-0 text-3xl transition-all duration-300 *:m-1',
 			'sm:sticky sm:top-2 sm:my-2 sm:ml-2 sm:h-auto sm:rounded-md sm:border',
 			screenMaxXs.matches ? 'fixed w-full' : 'sticky'
 		)}
@@ -107,7 +107,7 @@
 		<hr />
 		{#if !$bentosQuery.isLoading && !$bentosQuery.isError && $bentosQuery.data}
 			{#each $bentosQuery.data as bento}
-				<BentoLink {bento} />
+				<BentoLink {bento} active={bento.slug === pageData.slug} />
 			{/each}
 			<div>
 				<BentoLink bento={{ title: 'Add a link', slug: 'create', icon: 'lucide:plus' }} skipQuery />

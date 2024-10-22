@@ -1,5 +1,5 @@
-import { getBentos } from '$lib/features/bento/api';
 import { redirect } from '@sveltejs/kit';
+import { getBentos } from '$lib/features/bento/api';
 
 export const load = async ({ parent, fetch }) => {
 	const { queryClient, user } = await parent();
