@@ -63,3 +63,23 @@ export const PUT: RequestHandler = async ({ locals, request, params: { slug } })
 
 	return json({ bento }, {});
 };
+
+// Delete Bento
+export const DELETE: RequestHandler = async ({ locals, params: { slug } }) => {
+	const session = await locals.auth();
+
+	if (!session?.user?.id) {
+		throw new Response(null, { status: 401 });
+	}
+
+	await prisma.bento.delete({
+		where: {
+			slug_ownerId: {
+				slug,
+				ownerId: session.user.id,
+			},
+		},
+	});
+
+	return json({ bento: null }, {});
+};
