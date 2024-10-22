@@ -31,16 +31,18 @@
 </script>
 
 {#if currentBento}
-	<header class="my-4 flex flex-col items-center justify-center gap-2">
-		<!-- Bento edit button -->
-		<div class="square relative mx-auto">
+	<header
+		class="flex h-16 w-full flex-row items-center gap-2 sm:my-4 sm:h-auto sm:flex-col sm:justify-center"
+	>
+		<div class="relative">
 			<IconOrImage
 				src={currentBento.icon}
 				alt="Main icon for {currentBento.title}"
 				role="presentation"
+				class="m-0 text-left text-5xl"
 			/>
 		</div>
-		<h2 class="font-lighter inline-flex items-center gap-2 text-3xl">
+		<h2 class="font-lighter inline-flex flex-1 gap-2 text-2xl tracking-wide sm:text-3xl">
 			{currentBento.title}
 
 			<Button
@@ -63,7 +65,7 @@
 		<p class="text-lg">The requested bento ({slug}) could not be found</p>
 	</div>
 {:else if $query.data}
-	{@const items = $query.data.links.length}
+	{@const items = $query.data.links?.length || 0}
 	<!-- Bento Grid -->
 	<div class="relative mx-auto w-full max-w-2xl @container">
 		<div
@@ -86,7 +88,6 @@
 				hideEditButton
 				hideLabel
 			/>
-			<!-- class="-col-start-1 -col-end-2" -->
 		</div>
 	</div>
 {/if}

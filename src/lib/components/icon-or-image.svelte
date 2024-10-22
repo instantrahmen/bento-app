@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { cn, getIconName } from '$lib/utils';
-	import { stringIsValidUrl } from '$lib/utils';
+	import { cn, getIconName, stringIsValidUrl } from '$lib/utils';
 
 	let {
 		src,
@@ -18,7 +17,7 @@
 		icon={src}
 		height="1em"
 		width="1em"
-		class={cn('items-center self-center text-center text-[5em] text-inherit')}
+		class={cn('items-center self-center text-center text-[5em] text-inherit', className)}
 		role="presentation"
 	></iconify-icon>
 {/if}

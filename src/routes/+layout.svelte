@@ -6,7 +6,6 @@
 	import { ModeWatcher } from 'mode-watcher';
 	import { onMount } from 'svelte';
 	import Navbar from '$features/navbar/components/navbar.svelte';
-	import { themeStorageKey } from 'mode-watcher';
 	import { themes } from '$features/themes/config';
 
 	onMount(() => {

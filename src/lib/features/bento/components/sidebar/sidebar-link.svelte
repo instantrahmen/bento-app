@@ -9,6 +9,7 @@
 		class?: string;
 		active?: boolean;
 		skipQuery?: boolean;
+		hideLabel?: boolean;
 	};
 </script>
 
@@ -28,6 +29,7 @@
 		class: className,
 		active = false,
 		skipQuery = false,
+		hideLabel = true,
 	}: Props = $props();
 
 	let screenMinSm = new MediaQuery(`(${media.sm.queryStringMin})`);
@@ -44,7 +46,7 @@
 
 {#if !skipQuery && !!$bentoQuery}
 	{#if $bentoQuery.isLoading}
-		<div class=" flex items-center justify-center rounded-md py-1 text-center">
+		<div class="flex items-center justify-center rounded-md py-1 text-center">
 			<iconify-icon
 				icon="lucide:loader-circle"
 				class="aspect-square h-[1em] w-[1em] animate-spin text-[1em]"
@@ -66,17 +68,17 @@
 	<Button
 		href={!disabled ? `/bento/${bento.slug}` : undefined}
 		class={cn(
-			'h-12 justify-start gap-2 px-2 text-left sm:h-9 sm:justify-center sm:gap-0 sm:px-0',
-			'relative rounded-xl text-[length:inherit] shadow-black/30 focus-visible:text-ring active:shadow-inner *:active:scale-75',
+			'gap-0 px-2 text-left sm:px-0 ',
+			'relative rounded-xl text-[length:inherit] focus-visible:text-ring active:shadow-inner *:active:scale-75 sm:shadow-black/30',
+			hideLabel ? 'aspect-square h-full w-full justify-center sm:h-9 sm:w-min' : 'justify-start',
 			active && 'rounded-xl border bg-accent text-accent-foreground shadow-inner *:scale-90',
-			// active && 'rounded-lg border border-background bg-accent text-accent-foreground *:scale-95',
 			!active && 'text-muted-foreground',
 			disabled &&
 				'cursor-pointer text-muted-foreground hover:bg-transparent hover:text-muted-foreground',
 			className
 		)}
 		variant="ghost"
-		size={screenMinSm.matches ? 'icon' : 'lg'}
+		size={hideLabel ? 'icon' : 'lg'}
 	>
 		{#if bento.icon}
 			<iconify-icon
@@ -88,6 +90,6 @@
 		{:else}
 			<span class="text-[1em] font-thin capitalize">{bento.title[0]}</span>
 		{/if}
-		<span class=" text-xs sm:sr-only">{bento.title}</span>
+		<span class={cn('text-xs sm:sr-only', hideLabel && 'sr-only')}>{bento.title}</span>
 	</Button>
 {/snippet}

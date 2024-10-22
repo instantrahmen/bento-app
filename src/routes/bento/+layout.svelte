@@ -1,12 +1,17 @@
 <script lang="ts">
+	import { MediaQuery } from 'runed';
 	import BentosSidebar from '$features/bento/components/sidebar/bentos-sidebar.svelte';
+	import { media } from '$lib/utils/media-queries';
 
 	let { children } = $props();
+	let screenMinSm = new MediaQuery(`(${media.sm.queryStringMin})`);
+
+	let type: 'sidenav' | 'bottomnav' = $derived(screenMinSm.matches ? 'sidenav' : 'bottomnav');
 </script>
 
 <div class="flex h-dvh w-full flex-row overflow-y-auto">
-	<BentosSidebar />
-	<div class="mx-2 mt-12 flex min-h-full flex-1 flex-col text-base">
+	<BentosSidebar {type} />
+	<div class="mx-2 flex min-h-full flex-1 flex-col text-base sm:mt-12">
 		{@render children()}
 	</div>
 </div>

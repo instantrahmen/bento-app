@@ -1,8 +1,8 @@
+import type { LayoutLoad } from './$types';
+import { redirect } from '@sveltejs/kit';
 import { getMultipleCollectionsIcons } from '$features/icon-select/api/iconify';
 import { defaultIconsSets } from '$features/icon-select/default-icons-sets';
 import { getBentos } from '$lib/features/bento/api';
-import { redirect } from '@sveltejs/kit';
-import type { LayoutLoad } from './$types';
 
 export const load = (async ({ params: { slug }, parent, fetch }) => {
 	const { queryClient, session, user } = await parent();
