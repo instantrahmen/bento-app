@@ -5,13 +5,13 @@
 </script>
 
 <script lang="ts">
-	import { cn } from '$lib/utils/shadcn';
+	import type { APIGetUsersMeResponse } from '$features/auth/types/api';
 	import { createQuery } from '@tanstack/svelte-query';
+	import LinkCard from './link-card.svelte';
+	import { cn } from '$lib/utils/shadcn';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
 	import { keys } from '$features/bento/api/keys';
-	import LinkCard from './link-card.svelte';
 	import { page } from '$app/stores';
-	import type { APIGetUsersMeResponse } from '$features/auth/types/api';
 	import { Button } from '$lib/components/ui/button';
 	import IconOrImage from '$lib/components/icon-or-image.svelte';
 
@@ -78,8 +78,3 @@
 		</div>
 	</div>
 {/if}
-
-<!-- <pre class="prose-xs hidden w-screen max-w-full overflow-auto sm:visible">
-	{JSON.stringify({ slug }, null, 2)}
-	{JSON.stringify($query.data, null, 2)}
-</pre> -->

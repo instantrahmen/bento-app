@@ -1,10 +1,10 @@
 <script lang="ts">
+	import type { User } from '@prisma/client';
+	import type { Session } from '@auth/sveltekit';
 	import { SignIn } from '@auth/sveltekit/components';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { getInitials } from '$lib/utils';
 	import { buttonVariants } from '$lib/components/ui/button';
-	import type { User } from '@prisma/client';
-	import type { Session } from '@auth/sveltekit';
 	import ThemePicker from '$features/themes/components/theme-picker.svelte';
 	import Lightswitch from '$features/themes/components/light-switch.svelte';
 
@@ -18,7 +18,7 @@
 </script>
 
 <nav
-	class="fixed right-2 top-2 flex h-12 w-min flex-row items-center justify-end gap-2 rounded-md border bg-card bg-none p-2 shadow-md"
+	class="fixed right-2 top-2 z-20 flex h-12 w-min flex-row items-center justify-end gap-2 rounded-md border bg-card bg-none p-2 shadow-md"
 >
 	<ThemePicker />
 	<Lightswitch />

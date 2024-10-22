@@ -1,8 +1,8 @@
-import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import prisma from '$features/database/prisma';
 import type { APIGetBentoResponse } from '$lib/features/bento/types/api';
 import type { Bento } from '@prisma/client';
+import { json } from '@sveltejs/kit';
+import prisma from '$features/database/prisma';
 
 // Get single Bento
 export const GET: RequestHandler = async ({ locals, params }) => {
@@ -41,7 +41,7 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 // Update Bento
 export const PUT: RequestHandler = async ({ locals, request, params: { slug } }) => {
 	const session = await locals.auth();
-	const newBentoData: Partial<Bento> = (await request.json()) as Partial<Bento>;
+	const { description, icon, title }: Partial<Bento> = (await request.json()) as Partial<Bento>;
 
 	if (!session?.user?.id) {
 		throw new Response(null, { status: 401 });
@@ -54,7 +54,11 @@ export const PUT: RequestHandler = async ({ locals, request, params: { slug } })
 				ownerId: session.user.id,
 			},
 		},
-		data: newBentoData,
+		data: {
+			description,
+			icon,
+			title,
+		},
 	});
 
 	return json({ bento }, {});

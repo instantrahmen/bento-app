@@ -29,6 +29,7 @@
 	import IconOrImage from '$lib/components/icon-or-image.svelte';
 	import { stringIsValidUrl } from '$lib/utils';
 	import DebugState from '$lib/components/debug/debug-state.svelte';
+	import { goto } from '$app/navigation';
 
 	let { slug }: Props = $props();
 
@@ -47,12 +48,24 @@
 
 	const createBentoMutation = createMutation({
 		mutationFn: (bento: APIPostBentosBody) => createBento({ body: bento }).then(() => bento),
-		onSuccess: () => client.invalidateQueries({ queryKey: ['bentos'] }),
+		onSuccess: () => {
+			client.invalidateQueries({ queryKey: ['bentos'] });
+			client.invalidateQueries({ queryKey: ['bentos', 'bento'] });
+			client.invalidateQueries({ queryKey: ['bentos', 'bento', { slug: slug }] });
+
+			goto(`/bento/${slug}`);
+		},
 	});
 
 	const updateBentoMutation = createMutation({
 		mutationFn: (bento: APIPostBentosBody) => updateBento({ body: bento }).then(() => bento),
-		onSettled: () => client.invalidateQueries({ queryKey: ['bentos'] }),
+		onSettled: () => {
+			client.invalidateQueries({ queryKey: ['bentos'] });
+			client.invalidateQueries({ queryKey: ['bentos', 'bento'] });
+			client.invalidateQueries({ queryKey: ['bentos', 'bento', { slug: slug }] });
+
+			goto(`/bento/${slug}`);
+		},
 	});
 
 	const slugify = (text: string) => {
@@ -65,6 +78,7 @@
 			.replace(/^-+/, '') // Trim - from start of text
 			.replace(/-+$/, ''); // Trim - from end of text
 	};
+
 	const form = superForm(initialize(), {
 		SPA: true,
 		validators: zod(formSchema),
@@ -86,6 +100,7 @@
 				console.log('invalid', {
 					form,
 				});
+
 				$createBentoMutation.reset();
 				$updateBentoMutation.reset();
 			}

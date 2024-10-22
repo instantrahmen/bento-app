@@ -1,10 +1,10 @@
-import { type QueryKey } from '@tanstack/svelte-query';
-import { getBento, getBentos } from '../queries';
 import type {
 	APIGetBentosOptions,
 	APIGetBentosResponse,
 	APIGetBentoResponse,
 } from '../../types/api';
+import { type QueryKey } from '@tanstack/svelte-query';
+import { getBento, getBentos } from '../queries';
 
 export type BentoQueryKey<T = unknown> = {
 	queryKey: QueryKey;
@@ -16,13 +16,12 @@ export const keys = {
 		queryFn: async () => await getBentos(options),
 		queryKey: ['bentos'],
 	}),
-
 	bento: (
 		options: APIGetBentosOptions & {
 			slug: string;
 		}
 	): BentoQueryKey<APIGetBentoResponse> => ({
 		queryFn: async () => await getBento(options),
-		queryKey: ['bento', { slug: options.slug }],
+		queryKey: ['bentos', 'bento', { slug: options.slug }],
 	}),
 };
