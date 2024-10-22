@@ -7,7 +7,7 @@
 
 		--muted: var(--rp-muted);
 		--muted-foreground: var(--rp-subtle);
-		--popover: var(--rp-card);
+		--popover: var(--rp-surface);
 		--popover-foreground: var(--rp-text);
 		--card: var(--rp-surface);
 		--card-foreground: var(--rp-text);

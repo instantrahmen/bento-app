@@ -31,7 +31,7 @@
 			/* Dark Theme: Catppuccin Mocha */
 			--background: var(--ctp-mocha-crust);
 			--foreground: var(--ctp-mocha-text);
-			--muted: var(--ctp-mocha-subtext-1);
+			--muted: var(--ctp-mocha-surface-2);
 			--muted-foreground: var(--ctp-mocha-overlay-1);
 			--popover: var(--ctp-mocha-surface-0);
 			--popover-foreground: var(--ctp-mocha-text);
