@@ -31,8 +31,6 @@
 		}))
 	);
 
-	type Bento = Pick<APIGetBentosResponse[0], 'title' | 'slug' | 'icon'>;
-
 	let sidebarOpen = $state(true);
 
 	const setSidebarBasedOnScreenSize = () => {
@@ -131,43 +129,6 @@
 	</div>
 {/if}
 
-<!-- {#snippet bentoLink({
-	disabled = false,
-	class: className = '',
-	bento,
-}: {
-	bento: Bento;
-	disabled?: boolean;
-	class?: string;
-})}
-	<Button
-		href={!disabled ? `/bento/${bento.slug}` : undefined}
-		class={cn(
-			'h-12 justify-start gap-2 px-2 text-left sm:h-9 sm:justify-center sm:gap-0 sm:px-0',
-			'relative text-[length:inherit] shadow-black/30  focus-visible:text-ring active:shadow-inner *:active:scale-90',
-			bento.slug === pageData.slug &&
-				'border bg-accent text-accent-foreground shadow-inner *:scale-95',
-			bento.slug !== pageData.slug && 'text-muted-foreground',
-			disabled &&
-				'cursor-pointer text-muted-foreground hover:bg-transparent hover:text-muted-foreground',
-			className
-		)}
-		variant="ghost"
-		size={screenMinSm.matches ? 'icon' : 'lg'}
-	>
-		{#if bento.icon}
-			<iconify-icon
-				width="1em"
-				height="1em"
-				icon={bento.icon || ''}
-				class="aspect-square h-[1em] w-[1em] text-[1em]"
-			></iconify-icon>
-		{:else}
-			<span class="text-[1em] font-thin capitalize">{bento.title[0]}</span>
-		{/if}
-		<span class=" text-xs sm:sr-only">{bento.title}</span>
-	</Button>
-{/snippet} -->
 <div class="absolute bottom-20 right-2">
 	<DebugState
 		state={{
