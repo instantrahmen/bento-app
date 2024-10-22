@@ -1,13 +1,15 @@
-import { fontFamily } from 'tailwindcss/defaultTheme';
 import type { Config } from 'tailwindcss';
+import { fontFamily } from 'tailwindcss/defaultTheme';
 import tailwindTypography from '@tailwindcss/typography';
 import tailwindContainerQueries from '@tailwindcss/container-queries';
+import fluid, { extract } from 'fluid-tailwind';
 
 const config: Config = {
-	plugins: [tailwindTypography, tailwindContainerQueries],
+	plugins: [tailwindTypography, tailwindContainerQueries, fluid],
 	darkMode: ['class'],
-	content: ['./src/**/*.{html,js,svelte,ts}'],
+	content: { files: ['./src/**/*.{html,js,svelte,ts}'], extract },
 	safelist: ['dark'],
+
 	theme: {
 		container: {
 			center: true,

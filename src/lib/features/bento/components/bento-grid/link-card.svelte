@@ -17,6 +17,7 @@
 	import { Edit } from 'lucide-svelte';
 	import IconOrImage from '$lib/components/icon-or-image.svelte';
 	import { cn } from '$lib/utils';
+	import { page } from '$app/stores';
 
 	let {
 		link: initLink,
@@ -50,15 +51,24 @@
 		variant="card"
 		size="none"
 		{href}
-		class={cn('absolute left-0 top-0 h-full w-full overflow-hidden')}
+		class={cn('absolute left-0 top-0 h-full w-full @container')}
 	>
 		<div
-			class="flex h-full flex-col items-center justify-center gap-0 p-6 text-[0.5rem] text-card-foreground @[11rem]:text-sm @[16rem]:text-xl @sm:text-3xl"
+			class="flex h-full w-full flex-col items-center justify-center gap-0 p-6 text-[0.5rem] text-card-foreground @[11rem]:text-sm @[16rem]:text-xl @sm:text-3xl"
 		>
-			<IconOrImage src={link.icon || 'https://placehold.co/600x400'} alt={link.title} />
-			<span class={cn('text-xl font-semibold tracking-wide', hideLabel && 'sr-only')}>
+			<IconOrImage
+				class="text-6xl @[6rem]:text-7xl"
+				src={link.icon || 'https://placehold.co/600x400'}
+				alt={link.title}
+			/>
+			<p
+				class={cn(
+					'sr-only line-clamp-2 min-h-8 !overflow-hidden text-wrap break-words text-center text-xs leading-none @[8rem]:not-sr-only @[8rem]:text-sm @[12rem]:text-xl',
+					hideLabel && 'sr-only sm:sr-only'
+				)}
+			>
 				{link.title}
-			</span>
+			</p>
 		</div>
 	</Button>
 
@@ -67,6 +77,7 @@
 			class="absolute right-2 top-2 hidden text-card-foreground focus-visible:ring-2 sm:flex"
 			variant="ghost"
 			size="icon"
+			href="/bento/{$page.params.slug}/{link.id}"
 		>
 			<Edit class="h-6 w-6" />
 		</Button>

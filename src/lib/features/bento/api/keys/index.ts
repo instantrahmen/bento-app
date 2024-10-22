@@ -1,27 +1,31 @@
-import type {
-	APIGetBentosOptions,
-	APIGetBentosResponse,
-	APIGetBentoResponse,
-} from '../../types/api';
-import { type QueryKey } from '@tanstack/svelte-query';
-import { getBento, getBentos } from '../queries';
+import type { APIGetBentosOptions, APIGetBentoLinkOptions } from '../../types/api';
+import { queryOptions } from '@tanstack/svelte-query';
+import { getBento, getBentoLink, getBentos } from '../queries';
 
-export type BentoQueryKey<T = unknown> = {
-	queryKey: QueryKey;
-	queryFn: () => Promise<T>;
-};
-
-export const keys = {
-	bentos: (options: APIGetBentosOptions): BentoQueryKey<APIGetBentosResponse> => ({
-		queryFn: async () => await getBentos(options),
-		queryKey: ['bentos'],
-	}),
+export const queries = {
+	bentos: (options: APIGetBentosOptions) =>
+		queryOptions({
+			queryFn: async () => await getBentos(options),
+			queryKey: ['bentos'],
+			staleTime: 1000 * 60 * 60 * 24,
+		}),
 	bento: (
 		options: APIGetBentosOptions & {
 			slug: string;
 		}
-	): BentoQueryKey<APIGetBentoResponse> => ({
-		queryFn: async () => await getBento(options),
-		queryKey: ['bentos', 'bento', { slug: options.slug }],
-	}),
+	) =>
+		queryOptions({
+			queryFn: async () => await getBento(options),
+			queryKey: ['bentos', { slug: options.slug }],
+			staleTime: 1000 * 60 * 60 * 24,
+		}),
+
+	bentoLink: (options: APIGetBentoLinkOptions) =>
+		queryOptions({
+			queryFn: async () => await getBentoLink(options),
+			queryKey: ['bentos', 'bentoLink', { slug: options.bentoSlug, id: options.id }],
+			staleTime: 1000 * 60 * 60 * 24,
+		}),
 };
+
+export { queries as keys };

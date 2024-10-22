@@ -105,6 +105,9 @@ model Bento {
   owner       User        @relation(fields: [ownerId], references: [id])
   links       BentoLink[]
 
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
   @@unique([slug, ownerId])
 }
 
@@ -116,4 +119,7 @@ model BentoLink {
   description String @default("")
   bentoId     String
   bento       Bento  @relation(fields: [bentoId], references: [id])
+
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }

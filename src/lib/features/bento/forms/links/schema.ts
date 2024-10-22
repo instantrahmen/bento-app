@@ -14,9 +14,14 @@ export const formSchema = z.object({
 		.string()
 		.url({ message: 'Must be a valid url' })
 		.min(3, { message: 'Must be at least 3 characters' })
-		.max(256, { message: 'May not be longer than 256 characters' })
+		.max(256, { message: 'May not be longer than 256 characters. Consider using a url shortener.' })
 		.describe('The url of the link'),
-	description: z.string().min(0).max(100).default('').describe('A short description of the link'),
+	description: z
+		.string()
+		.min(0)
+		.max(256, { message: 'May not be longer than 256 characters' })
+		.default('')
+		.describe('A short description of the link'),
 	icon: z
 		.string()
 		.describe('An iconify icon or a url to an image')

@@ -36,6 +36,8 @@ export default tseslint.config(
 	},
 	{
 		rules: {
+			// no-undef seems to conflict with generics in Svelte components and should be handled by Typescript anyway
+			'no-undef': 'off',
 			'@typescript-eslint/ban-ts-comment': 'off',
 			'@typescript-eslint/no-explicit-any': 'off',
 			'import/no-unresolved': 'off',

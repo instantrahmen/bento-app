@@ -2,7 +2,7 @@
 	import type { APIGetUsersMeResponse } from '$features/auth/types/api';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { slide } from 'svelte/transition';
-	import { MediaQuery, useResizeObserver } from 'runed';
+	import { MediaQuery } from 'runed';
 	import { onMount } from 'svelte';
 	import BentoLink from './sidebar-link.svelte';
 	import { Button } from '$lib/components/ui/button';
@@ -11,10 +11,8 @@
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
 	import { media } from '$lib/utils/media-queries';
-	import { onNavigate } from '$app/navigation';
 
 	let screenMinSm = new MediaQuery(`(${media.sm.queryStringMin})`);
-	let screenMaxXs = new MediaQuery(`(${media.xs.queryStringMax})`);
 
 	type PageData = APIGetUsersMeResponse & {
 		slug?: string;
@@ -34,30 +32,11 @@
 		}))
 	);
 
-	let sidebarOpen = $state(true);
-
-	const setSidebarBasedOnScreenSize = () => {
-		if (type === 'bottomnav') return;
-		if (sidebarOpen) {
-			if (!screenMinSm.matches) {
-				sidebarOpen = false;
-			}
-		} else if (screenMinSm.matches) {
-			sidebarOpen = true;
-		}
-	};
-
+	let sidebarOpen = $state(false);
 	onMount(() => {
-		useResizeObserver(
-			() => document.querySelector('body'),
-			() => {
-				setSidebarBasedOnScreenSize();
-			}
-		);
-	});
-
-	onNavigate(() => {
-		setSidebarBasedOnScreenSize();
+		// We're waiting about 100ms before we open the sidebar since sometimes the sm: media queries don't seem to register immediately.
+		// Possibly a weird hydration issue or just my laptop being slow but this way the UI isn't jumping around while loading
+		setTimeout(() => (sidebarOpen = true), 100);
 	});
 </script>
 
@@ -87,10 +66,9 @@
 		}}
 		class={cn(
 			'z-20 flex bg-card px-0 py-0 text-3xl transition-all duration-300 *:m-1 [&>*]:flex [&>*]:items-center [&>*]:justify-center',
-			bottomnav &&
-				'absolute bottom-0 left-0 h-16 w-dvw flex-row items-center justify-between gap-0 overflow-x-auto border-t py-2 text-3xl [&>*]:rounded-md',
-			sidenav && 'fixed top-0 h-dvh w-full flex-col gap-0 overflow-y-auto border-r',
-			sidenav && 'sm:sticky sm:top-2 sm:my-2 sm:ml-2 sm:h-auto sm:w-min sm:rounded-md sm:border'
+			// bottomnav &&
+			'fixed bottom-0 left-0 h-16 w-dvw flex-row items-center justify-between gap-0 overflow-x-auto overflow-y-hidden border-t py-2 text-3xl [&>*]:rounded-md',
+			' border-r sm:sticky sm:top-2 sm:my-2 sm:ml-2 sm:h-auto sm:w-min sm:flex-col sm:overflow-y-auto sm:overflow-x-hidden sm:rounded-md sm:border'
 		)}
 	>
 		<!-- {type} -->
@@ -120,13 +98,13 @@
 		{/if}
 		{#if !$bentosQuery.isLoading && !$bentosQuery.isError && $bentosQuery.data}
 			{#each $bentosQuery.data as bento}
-				<BentoLink {bento} active={bento.slug === pageData.slug} />
+				<BentoLink {bento} active={bento.slug === pageData.slug} hideLabel />
 			{/each}
 			<div>
 				<BentoLink
 					bento={{ title: 'Add a link', slug: 'create', icon: 'lucide:plus' }}
 					skipQuery
-					hideLabel={bottomnav || screenMinSm.matches}
+					hideLabel
 				/>
 			</div>
 		{:else if $bentosQuery.isLoading}
@@ -146,14 +124,3 @@
 		{/if}
 	</div>
 {/if}
-
-<!-- <div class="absolute bottom-20 right-2">
-	<DebugState
-		state={{
-			matchesSm: screenMinSm.matches,
-			matchesXs: screenMaxXs.matches,
-			qsminXs: media.xs.queryStringMin,
-			qsminSm: media.sm.queryStringMin,
-		}}
-	/>
-</div> -->

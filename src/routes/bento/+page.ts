@@ -1,13 +1,10 @@
 import { redirect } from '@sveltejs/kit';
-import { getBentos } from '$lib/features/bento/api';
+import { keys } from '$features/bento/api/keys';
 
 export const load = async ({ parent, fetch }) => {
 	const { queryClient, user } = await parent();
 
-	await queryClient.prefetchQuery({
-		queryKey: ['bentos', user?.id],
-		queryFn: async () => await getBentos({ fetch }),
-	});
+	await queryClient.prefetchQuery(keys.bentos({ fetch }));
 
 	if (!user) {
 		throw redirect(303, '/');

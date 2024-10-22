@@ -14,13 +14,12 @@
 </script>
 
 <script lang="ts">
-	import { MediaQuery } from 'runed';
+	import type { APIGetBentoResponse } from '$features/bento/types/api';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { readable } from 'svelte/store';
 	import { keys } from '../../api/keys';
 	import { Button } from '$lib/components/ui/button';
 	import { cn } from '$lib/utils/shadcn';
-	import { media } from '$lib/utils/media-queries';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
 
 	let {
@@ -32,14 +31,12 @@
 		hideLabel = true,
 	}: Props = $props();
 
-	let screenMinSm = new MediaQuery(`(${media.sm.queryStringMin})`);
-
 	const bentoQuery = skipQuery
 		? readable(null)
 		: createQuery(
 				toReadable(() => ({
 					...keys.bento({ slug: bento.slug }),
-					initialData: bento,
+					initialData: bento as APIGetBentoResponse,
 				}))
 			);
 </script>

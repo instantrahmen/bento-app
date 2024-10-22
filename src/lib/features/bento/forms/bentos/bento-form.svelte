@@ -27,7 +27,7 @@
 	import { createBento, updateBento } from '$features/bento/api';
 	import { IconSelect } from '$features/icon-select';
 	import IconOrImage from '$lib/components/icon-or-image.svelte';
-	import { stringIsValidUrl } from '$lib/utils';
+	import { slugify, stringIsValidUrl } from '$lib/utils';
 	import DebugState from '$lib/components/debug/debug-state.svelte';
 	import { goto } from '$app/navigation';
 
@@ -47,37 +47,24 @@
 	};
 
 	const createBentoMutation = createMutation({
-		mutationFn: (bento: APIPostBentosBody) => createBento({ body: bento }).then(() => bento),
+		mutationFn: (bento: APIPostBentosBody) => createBento({ body: bento }),
 		onSuccess: ({ slug }) => {
 			client.invalidateQueries({ queryKey: ['bentos'] });
-			client.invalidateQueries({ queryKey: ['bentos', 'bento'] });
-			client.invalidateQueries({ queryKey: ['bentos', 'bento', { slug: slug }] });
+			client.invalidateQueries({ queryKey: ['bentos', { slug: slug }] });
 
 			goto(`/bento/${slug}`);
 		},
 	});
 
 	const updateBentoMutation = createMutation({
-		mutationFn: (bento: APIPostBentosBody) => updateBento({ body: bento }).then(() => bento),
+		mutationFn: (bento: APIPostBentosBody) => updateBento({ body: bento }),
 		onSettled: () => {
 			client.invalidateQueries({ queryKey: ['bentos'] });
-			client.invalidateQueries({ queryKey: ['bentos', 'bento'] });
-			client.invalidateQueries({ queryKey: ['bentos', 'bento', { slug: slug }] });
+			client.invalidateQueries({ queryKey: ['bentos', { slug: slug }] });
 
 			goto(`/bento/${slug}`);
 		},
 	});
-
-	const slugify = (text: string) => {
-		return text
-			.toString()
-			.toLowerCase()
-			.replace(/\s+/g, '-') // Replace spaces with -
-			.replace(/[^\w-]+/g, '') // Remove all non-word chars
-			.replace(/--+/g, '-') // Replace multiple - with single -
-			.replace(/^-+/, '') // Trim - from start of text
-			.replace(/-+$/, ''); // Trim - from end of text
-	};
 
 	const form = superForm(initialize(), {
 		SPA: true,
@@ -175,7 +162,7 @@
 		<Form.FieldErrors />
 	</Form.Field>
 
-	<Form.Button>Save</Form.Button>
+	<Form.Button>{initData ? 'Save Changes' : 'Create Bento'}</Form.Button>
 </form>
 
 <DebugState
