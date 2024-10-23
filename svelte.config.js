@@ -6,7 +6,9 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+			edge: false,
+		}),
 		alias: {
 			'$features/*': './src/lib/features',
 			'$api/*': './src/lib/api',
