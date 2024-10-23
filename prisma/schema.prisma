@@ -2,6 +2,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// datasource db {
+//   provider  = "postgresql"
+//   url       = env("DATABASE_URL")
+//   directUrl = env("DIRECT_URL")
+// }
+
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
@@ -105,8 +111,8 @@ model Bento {
   owner       User        @relation(fields: [ownerId], references: [id])
   links       BentoLink[]
 
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  // createdAt DateTime? @default(now())
+  // updatedAt DateTime? @updatedAt
 
   @@unique([slug, ownerId])
 }
@@ -120,6 +126,6 @@ model BentoLink {
   bentoId     String
   bento       Bento  @relation(fields: [bentoId], references: [id])
 
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  // createdAt DateTime? @default(now())
+  // updatedAt DateTime? @updatedAt
 }

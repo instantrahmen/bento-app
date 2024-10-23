@@ -79,15 +79,17 @@
 			{#each currentBento.links as link (link.id)}
 				<LinkCard {link} />
 			{/each}
-			<LinkCard
-				link={{
-					title: 'Add link',
-					url: `/bento/${currentBento.slug}/add`,
-					icon: 'lucide:plus',
-				}}
-				hideEditButton
-				hideLabel
-			/>
+			{#key currentBento.slug}
+				<LinkCard
+					link={{
+						title: 'Add link',
+						url: `/bento/${currentBento.slug}/add`,
+						icon: 'lucide:plus',
+					}}
+					hideEditButton
+					hideLabel
+				/>
+			{/key}
 		</div>
 	</div>
 {/if}

@@ -1,9 +1,9 @@
 import { SvelteKitAuth } from '@auth/sveltekit';
-import GitHub from '@auth/sveltekit/providers/github';
+// import GitHub from '@auth/sveltekit/providers/github';
 import Discord from '@auth/sveltekit/providers/discord';
+import { PrismaAdapter } from '@auth/prisma-adapter';
 import { DISCORD_ID, DISCORD_SECRET } from '$env/static/private';
 
-import { PrismaAdapter } from '@auth/prisma-adapter';
 import prisma from '$features/database/prisma';
 
 export const providers = [

@@ -23,8 +23,8 @@ const config = {
 	vitePlugin: {
 		inspector: {
 			toggleKeyCombo: 'meta-ctrl-alt-shift-i',
-			showToggleButton: 'always',
-			toggleButtonPos: 'bottom-middle',
+			showToggleButton: 'active',
+			toggleButtonPos: 'bottom-right',
 		},
 	},
 };
