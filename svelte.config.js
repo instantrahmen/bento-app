@@ -13,6 +13,8 @@ const config = {
 			'$features/*': './src/lib/features',
 			'$api/*': './src/lib/api',
 			'$lib/*': './src/lib',
+			// HACK: potential workaround for https://github.com/prisma/prisma/issues/12504
+			'.prisma/client/*': './node_modules/.prisma/client',
 		},
 	},
 
