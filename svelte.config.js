@@ -7,7 +7,7 @@ const config = {
 
 	kit: {
 		adapter: adapter({
-			edge: false,
+			// runtime: 'edge',
 		}),
 		alias: {
 			'$features/*': './src/lib/features',
