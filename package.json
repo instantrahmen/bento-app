@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite dev --host",
-    "build": "vite build",
+    "build": "prisma generate && vite build",
     "preview": "vite preview",
     "db:push": "bunx prisma db push",
     "db:studio": "bunx prisma studio",
