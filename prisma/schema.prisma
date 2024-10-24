@@ -13,6 +13,12 @@ datasource db {
 //   url      = env("DATABASE_URL")
 // }
 
+model App {
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
+
 // Auth Models
 model User {
   id            String    @id @default(cuid())
