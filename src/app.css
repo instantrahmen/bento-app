@@ -31,7 +31,6 @@ iconify-icon {
 	height: 1em;
 }
 
-#svelte-inspector-host {
-	/* position: relative !important; */
-	/* z-index: 100 !important; */
+.bg-card-base {
+	@apply bg-card;
 }

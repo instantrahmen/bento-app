@@ -34,4 +34,10 @@
 	:global(body) {
 		@apply flex h-full min-h-dvh w-dvw max-w-full flex-col overflow-hidden;
 	}
+
+	/* modify position of the SvelteQueryDevtools button to avoid overlap with the navbar */
+	:global(.tsqd-open-btn-container) {
+		bottom: 5rem !important;
+		left: 4rem !important;
+	}
 </style>

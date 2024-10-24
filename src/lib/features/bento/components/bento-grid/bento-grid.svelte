@@ -35,6 +35,19 @@
 		queryClient.invalidateQueries(keys.bentos({}));
 		queryClient.invalidateQueries(keys.bento({ slug }));
 	};
+
+	// If less than 4 links, grid will auto fit. Default to 4 cols otherwise
+	const gridStyles = (items: number) => {
+		const base = 'grid-cols-4';
+		if (items === 0) {
+			return 'grid-cols-3 [&>*]:col-start-2 [&>*]:col-end-3';
+		}
+		if (items < 4) {
+			return 'grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] max-w-lg mx-auto';
+		}
+
+		return base;
+	};
 </script>
 
 <Button
@@ -42,7 +55,7 @@
 	variant="default"
 	size="icon"
 	class={cn(
-		'absolute bottom-4 right-4 z-10 h-12 w-12 rounded-full',
+		'absolute bottom-20 right-4 z-10 h-12 w-12 rounded-full sm:bottom-4',
 
 		$query.isLoading || ($query.isFetching && 'animate-spin')
 	)}
@@ -87,14 +100,7 @@
 	{@const items = $query.data.links?.length || 0}
 	<!-- Bento Grid -->
 	<div class="relative mx-auto w-full max-w-2xl @container">
-		<div
-			class={cn(
-				'bento-grid',
-				'grid grid-flow-dense gap-1 sm:gap-2',
-				items === 0 && 'grid-cols-3 [&>*]:col-start-2 [&>*]:col-end-3',
-				items > 0 && 'grid-cols-3 @2xl:grid-cols-4 @5xl:grid-cols-5'
-			)}
-		>
+		<div class={cn('bento-grid', 'grid grid-flow-dense gap-1 sm:gap-2', gridStyles(items))}>
 			{#each currentBento.links as link (link.id)}
 				<LinkCard {link} />
 			{/each}

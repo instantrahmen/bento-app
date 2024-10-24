@@ -63,7 +63,7 @@
 			/>
 			<p
 				class={cn(
-					'sr-only line-clamp-2 min-h-8 !overflow-hidden text-wrap break-words text-center text-xs leading-none @[8rem]:not-sr-only @[8rem]:text-sm @[12rem]:text-xl',
+					'sr-only  min-h-8 !overflow-visible text-wrap break-words text-center text-xs leading-none @[8rem]:not-sr-only @[8rem]:text-sm @[12rem]:text-xl',
 					hideLabel && 'sr-only sm:sr-only'
 				)}
 			>

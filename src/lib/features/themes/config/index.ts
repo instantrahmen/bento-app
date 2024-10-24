@@ -4,7 +4,8 @@ export const themes: Selected<string>[] = [
 	{ value: 'catppuccin', label: 'Catppuccin' },
 	{ value: 'rosepine', label: 'Rosepine' },
 	{ value: 'dracula', label: 'Dracula' },
+	{ value: 'pink-glass', label: 'Pink Glass' },
 	{ value: 'shadrose', label: 'Rose' },
-	{ value: 'shadgreen', label: 'Green' },
 	{ value: 'lunarpink', label: 'Lunar Pink' },
+	{ value: 'shadgreen', label: 'Green' },
 ];
