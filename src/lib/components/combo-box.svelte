@@ -2,14 +2,14 @@
 	import Check from 'svelte-radix/Check.svelte';
 	import CaretSort from 'svelte-radix/CaretSort.svelte';
 	import { tick, untrack, type Snippet } from 'svelte';
-	import * as Command from '$lib/components/ui/command';
-	import * as Popover from '$lib/components/ui/popover';
-	import { Button } from '$lib/components/ui/button';
-	import { cn } from '$lib/utils/shadcn';
-	import { fuzzySearch } from '$lib/utils/fuzzy-search';
-	import VirtualList from './virtual-list.svelte';
 	import Icon from '@iconify/svelte';
 	import { Debounced } from 'runed';
+	import VirtualList from './virtual-list.svelte';
+	import * as Command from '$lib/components/ui/command';
+	import * as Popover from '$lib/components/ui/popover';
+	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import { cn } from '$lib/utils/shadcn';
+	import { fuzzySearch } from '$lib/utils/fuzzy-search';
 
 	type IDs = {
 		content: string;
@@ -99,21 +99,21 @@
 </script>
 
 <Popover.Root bind:open let:ids>
-	<Popover.Trigger asChild let:builder>
-		<Button
-			builders={[builder]}
-			variant="outline"
-			role="combobox"
-			aria-expanded={open}
-			class="cn{cn('flex w-min justify-between gap-4 p-2', inputClass)}"
-		>
-			{#if value}
-				<Icon icon={value} class="h-6 w-6"></Icon>
-			{/if}
-			<span class="">{selectedValue}</span>
+	<Popover.Trigger
+		class={cn(
+			buttonVariants({ variant: 'outline' }),
+			'flex w-min justify-between gap-4 p-2',
+			inputClass
+		)}
+		role="combobox"
+		aria-expanded={open}
+	>
+		{#if value}
+			<Icon icon={value} class="h-6 w-6"></Icon>
+		{/if}
+		<span class="">{selectedValue}</span>
 
-			<CaretSort class="relative -mr-2 h-4 w-4 shrink-0 opacity-50" />
-		</Button>
+		<CaretSort class="relative -mr-2 h-4 w-4 shrink-0 opacity-50" />
 	</Popover.Trigger>
 	<Popover.Content align="start" class="w-full max-w-[200px] bg-transparent p-0">
 		<Command.Root class="bg-background">
