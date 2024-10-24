@@ -16,11 +16,10 @@
 	import { createQuery, createMutation, useQueryClient } from '@tanstack/svelte-query';
 
 	import { untrack } from 'svelte';
+	import { Trash2, Save } from 'lucide-svelte';
 	import { page } from '$app/stores';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
 	import * as Form from '$lib/components/ui/form';
-	import { Input } from '$lib/components/ui/input';
-	import * as Tabs from '$lib/components/ui/tabs';
 	import FormInput from '$lib/components/form/form-input.svelte';
 
 	import { keys } from '$features/bento/api/keys';
@@ -28,8 +27,9 @@
 	import { IconSelect } from '$features/icon-select';
 	import IconOrImage from '$lib/components/icon-or-image.svelte';
 	import { slugify, stringIsValidUrl } from '$lib/utils';
-	import DebugState from '$lib/components/debug/debug-state.svelte';
 	import { goto } from '$app/navigation';
+	import { Button } from '$lib/components/ui/button';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 
 	let { slug }: Props = $props();
 
@@ -66,6 +66,16 @@
 		},
 	});
 
+	const deleteBentoMutation = createMutation({
+		mutationFn: (slug: string) => fetch(`/api/bentos/${slug}`, { method: 'DELETE' }),
+		onSettled: () => {
+			client.invalidateQueries({ queryKey: ['bentos'] });
+			client.invalidateQueries({ queryKey: ['bentos', { slug: slug }] });
+
+			goto('/bento');
+		},
+	});
+
 	const form = superForm(initialize(), {
 		SPA: true,
 		validators: zod(formSchema),
@@ -84,10 +94,6 @@
 					});
 				}
 			} else {
-				console.log('invalid', {
-					form,
-				});
-
 				$createBentoMutation.reset();
 				$updateBentoMutation.reset();
 			}
@@ -105,68 +111,101 @@
 	);
 </script>
 
-<form method="POST" use:enhance>
-	<header class="flex w-full flex-col items-center text-center">
-		{#if $formData?.icon}
-			<IconOrImage src={$formData.icon} alt="Bento main icon: {$formData.icon}" />
-		{/if}
-		{#if initData}
-			<h2 class="text-3xl font-extralight text-muted-foreground">
-				Editing
-				<span class="font-semibold text-foreground">
-					{initData.title}
-				</span>
-			</h2>
-			<!-- <div class="text-left">
+{#if $bento.isLoading || $bento.isFetching}
+	<div class=" p-6 text-center">
+		<iconify-icon
+			icon="mdi:loading"
+			width="2em"
+			height="2em"
+			class="mx-auto aspect-square h-[2em] w-[2em] animate-spin text-[2em]"
+		></iconify-icon>
+	</div>
+{:else}
+	<form method="POST" use:enhance>
+		<header class="flex w-full flex-col items-center text-center">
+			{#if $formData?.icon}
+				<IconOrImage src={$formData.icon} alt="Bento main icon: {$formData.icon}" />
+			{/if}
+			{#if initData}
+				<h2 class="text-3xl font-extralight text-muted-foreground">
+					Editing
+					<span class="font-semibold text-foreground">
+						{initData.title}
+					</span>
+				</h2>
+				<!-- <div class="text-left">
 				<DebugState state={{ initialData, initData }} />
 			</div> -->
-		{:else}
-			<h2 class="text-3xl font-extralight text-muted-foreground">New Bento</h2>
-		{/if}
-	</header>
-	<FormInput
-		bind:value={$formData.title}
-		{form}
-		name="title"
-		description={formSchema.shape.title.description}
-	/>
-	<FormInput
-		bind:value={$formData.description}
-		{form}
-		name="description"
-		description={formSchema.shape.description.description}
-	/>
-	<Form.Field {form} name="icon">
-		<Form.Control let:attrs>
-			<Form.Label class="capitalize">{imageMode}</Form.Label>
-			<Form.Description>{formSchema.shape.icon.description}</Form.Description>
+			{:else}
+				<h2 class="text-3xl font-extralight text-muted-foreground">New Bento</h2>
+			{/if}
+		</header>
+		<FormInput
+			bind:value={$formData.title}
+			{form}
+			name="title"
+			description={formSchema.shape.title.description}
+		/>
+		<FormInput
+			bind:value={$formData.description}
+			{form}
+			name="description"
+			description={formSchema.shape.description.description}
+		/>
+		<Form.Field {form} name="icon">
+			<Form.Control let:attrs>
+				<Form.Label class="capitalize">{imageMode}</Form.Label>
+				<Form.Description>{formSchema.shape.icon.description}</Form.Description>
+				<IconSelect class="w-full" bind:value={$formData.icon} {...attrs} />
+			</Form.Control>
+			<Form.FieldErrors />
+		</Form.Field>
 
-			<!-- <Tabs.Root bind:value={imageMode} class="w-[400px]">
-				<Tabs.List class="grid w-full grid-cols-2">
-					<Tabs.Trigger value="icon">Icon</Tabs.Trigger>
-					<Tabs.Trigger value="image">Image</Tabs.Trigger>
-				</Tabs.List>
-				<Tabs.Content value="icon"> -->
-			<IconSelect class="w-full" bind:value={$formData.icon} {...attrs} />
-			<!-- </Tabs.Content>
-				<Tabs.Content value="image">
-					<Input
-						class="w-full"
-						placeholder="Enter image url"
-						bind:value={$formData.icon}
-						{...attrs}
-					/>
-				</Tabs.Content>
-			</Tabs.Root> -->
-		</Form.Control>
-		<Form.FieldErrors />
-	</Form.Field>
+		<div class="grid grid-cols-1 gap-4 sm:grid-cols-[1fr_2fr]">
+			<Button
+				on:click={() => goto(`/bento${slug ? `/${slug}` : ''}`)}
+				variant="ghost"
+				class="w-full bg-muted"
+				size="lg">Cancel</Button
+			>
+			<Form.Button class="flex w-full gap-2" size="lg">
+				<Save />
+				{initData ? 'Save Changes' : 'Create Bento'}
+			</Form.Button>
 
-	<Form.Button>{initData ? 'Save Changes' : 'Create Bento'}</Form.Button>
-</form>
-<!-- 
-<DebugState
-	state={{
-		formData: $formData,
-	}}
-/> -->
+			{#if initData && slug}
+				<span class="flex flex-row items-center sm:col-span-2">
+					<hr class="w-full bg-muted" />
+					<span class="mx-4 text-lg text-muted">OR</span>
+					<hr class="w-full bg-muted" />
+				</span>
+				<AlertDialog.Root closeOnOutsideClick>
+					<AlertDialog.Trigger asChild let:builder>
+						<!-- <Button builders={[builder]} variant="outline">Show Dialog</Button> -->
+						<Button
+							builders={[builder]}
+							variant="destructive"
+							class="ml-auto flex w-full gap-2 sm:col-span-2"
+						>
+							<Trash2 />
+							Delete Bento
+						</Button>
+					</AlertDialog.Trigger>
+					<AlertDialog.Content>
+						<AlertDialog.Header>
+							<AlertDialog.Title>Are you sure you want to delete this bento?</AlertDialog.Title>
+							<AlertDialog.Description>This action cannot be undone.</AlertDialog.Description>
+						</AlertDialog.Header>
+						<AlertDialog.Footer>
+							<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+							<AlertDialog.Action
+								class="bg-destructive"
+								onclick={() => $deleteBentoMutation.mutate(slug)}>Continue</AlertDialog.Action
+							>
+						</AlertDialog.Footer>
+					</AlertDialog.Content>
+				</AlertDialog.Root>
+			{/if}
+		</div>
+	</form>
+{/if}

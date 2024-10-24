@@ -1,13 +1,12 @@
-import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import prisma from '$features/database/prisma';
 import type { APIGetUsersMeResponse } from '$features/auth/types';
+import { json } from '@sveltejs/kit';
+import prisma from '$features/database/prisma';
 
 export const GET: RequestHandler = async ({ locals }) => {
 	const session = await locals.auth();
 
 	if (!session?.user?.id) {
-		console.warn('not logged in');
 		return json({ user: null, session: null });
 	}
 
@@ -27,7 +26,6 @@ export const GET: RequestHandler = async ({ locals }) => {
 		.catch(() => null);
 
 	if (!user) {
-		console.warn('user not found');
 		return json({ user: null, session });
 	}
 	const res: APIGetUsersMeResponse = {
