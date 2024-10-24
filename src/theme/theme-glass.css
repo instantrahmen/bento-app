@@ -54,6 +54,6 @@ html[data-theme='glass'] {
 		@apply bg-opacity-55 backdrop-blur-md;
 	}
 	& .bg-card-base {
-		@apply dark:bg-black/85 sm:bg-card;
+		@apply dark:!bg-black/85 sm:!bg-card;
 	}
 }
