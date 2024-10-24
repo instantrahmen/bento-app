@@ -2,7 +2,6 @@
 	import type { APIGetUsersMeResponse } from '$features/auth/types/api';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { slide } from 'svelte/transition';
-	import { MediaQuery } from 'runed';
 	import { onMount } from 'svelte';
 	import BentoLink from './sidebar-link.svelte';
 	import { Button } from '$lib/components/ui/button';
@@ -10,9 +9,6 @@
 	import { keys } from '$features/bento/api/keys';
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
-	import { media } from '$lib/utils/media-queries';
-
-	let screenMinSm = new MediaQuery(`(${media.sm.queryStringMin})`);
 
 	type PageData = APIGetUsersMeResponse & {
 		slug?: string;
@@ -21,7 +17,6 @@
 	let { type = 'sidenav' }: { type: 'sidenav' | 'bottomnav' } = $props();
 
 	let sidenav = $derived(type === 'sidenav');
-	let bottomnav = $derived(type === 'bottomnav');
 
 	let pageData: PageData = $derived($page.data as PageData);
 
