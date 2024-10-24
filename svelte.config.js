@@ -26,7 +26,7 @@ const config = {
 
 	vitePlugin: {
 		inspector: {
-			toggleKeyCombo: 'meta-ctrl-alt-shift-i',
+			toggleKeyCombo: 'shift-a',
 			showToggleButton: 'active',
 			toggleButtonPos: 'bottom-right',
 		},
