@@ -3,17 +3,18 @@
 	import { createVirtualizer } from '@tanstack/svelte-virtual';
 	import Icon from '@iconify/svelte';
 
+	import { getCollections, getMultipleCollectionsIcons } from '../api/iconify';
+	import { defaultIconsSets } from '../default-icons-sets';
 	import { cn } from '$lib/utils/shadcn';
 	import ComboBox from '$lib/components/combo-box.svelte';
 	import * as Command from '$lib/components/ui/command';
 	import * as Tooltip from '$lib/components/ui/tooltip';
 
-	import { getCollections, getMultipleCollectionsIcons } from '../api/iconify';
 	import { paginate } from '$lib/utils/paginate';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
-	import { defaultIconsSets } from '../default-icons-sets';
 	import { Button } from '$lib/components/ui/button';
 	import Popover from '$lib/components/popover.svelte';
+	import { seconds } from '$lib/utils/time';
 
 	let {
 		iconSets = [...defaultIconsSets],
@@ -68,10 +69,6 @@
 		return collection;
 	};
 
-	let tooltipText: string = $state('');
-
-	let childrenElements: { [key: string]: HTMLElement } = {};
-
 	let lastActiveElement: string = $state('');
 	let hovering: boolean = $state(false);
 
@@ -83,7 +80,7 @@
 </script>
 
 <Popover
-	closeDelay={1000}
+	closeDelay={seconds(1)}
 	open={tooltipOpen}
 	class="popover prose-sm absolute inset-[unset] bottom-2 right-2 max-w-sm rounded-md border bg-background py-2 pl-4 pr-2 shadow-lg"
 >

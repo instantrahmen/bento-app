@@ -6,7 +6,8 @@
 
 <script lang="ts">
 	import type { APIGetUsersMeResponse } from '$features/auth/types/api';
-	import { createQuery } from '@tanstack/svelte-query';
+	import { createQuery, useQueryClient } from '@tanstack/svelte-query';
+	import { RefreshCw } from 'lucide-svelte';
 	import LinkCard from './link-card.svelte';
 	import { cn } from '$lib/utils/shadcn';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
@@ -19,6 +20,7 @@
 
 	type PageData = APIGetUsersMeResponse;
 	let pageData: PageData = $derived($page.data) as PageData;
+	const queryClient = useQueryClient();
 
 	const query = createQuery(
 		toReadable(() => ({
@@ -28,8 +30,25 @@
 	);
 
 	let currentBento = $derived($query.data);
+
+	const refresh = () => {
+		queryClient.invalidateQueries(keys.bentos({}));
+		queryClient.invalidateQueries(keys.bento({ slug }));
+	};
 </script>
 
+<Button
+	on:click={refresh}
+	variant="default"
+	size="icon"
+	class={cn(
+		'absolute bottom-4 right-4 z-10 h-12 w-12 rounded-full',
+
+		$query.isLoading || ($query.isFetching && 'animate-spin')
+	)}
+>
+	<RefreshCw class="h-5 w-5" />
+</Button>
 {#if currentBento}
 	<header
 		class="flex h-16 w-full flex-row items-center gap-2 sm:my-4 sm:h-auto sm:flex-col sm:justify-center"

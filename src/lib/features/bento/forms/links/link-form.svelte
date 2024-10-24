@@ -116,9 +116,9 @@
 					{initData.title}
 				</span>
 			</h2>
-			<div class="text-left">
+			<!-- <div class="text-left">
 				<DebugState state={{ initialData, initData }} />
-			</div>
+			</div> -->
 		{:else}
 			<h2 class="text-3xl font-extralight text-muted-foreground">New Bento</h2>
 		{/if}

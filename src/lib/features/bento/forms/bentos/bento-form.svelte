@@ -117,9 +117,9 @@
 					{initData.title}
 				</span>
 			</h2>
-			<div class="text-left">
+			<!-- <div class="text-left">
 				<DebugState state={{ initialData, initData }} />
-			</div>
+			</div> -->
 		{:else}
 			<h2 class="text-3xl font-extralight text-muted-foreground">New Bento</h2>
 		{/if}
@@ -141,14 +141,14 @@
 			<Form.Label class="capitalize">{imageMode}</Form.Label>
 			<Form.Description>{formSchema.shape.icon.description}</Form.Description>
 
-			<Tabs.Root bind:value={imageMode} class="w-[400px]">
+			<!-- <Tabs.Root bind:value={imageMode} class="w-[400px]">
 				<Tabs.List class="grid w-full grid-cols-2">
 					<Tabs.Trigger value="icon">Icon</Tabs.Trigger>
 					<Tabs.Trigger value="image">Image</Tabs.Trigger>
 				</Tabs.List>
-				<Tabs.Content value="icon">
-					<IconSelect class="w-full" bind:value={$formData.icon} {...attrs} />
-				</Tabs.Content>
+				<Tabs.Content value="icon"> -->
+			<IconSelect class="w-full" bind:value={$formData.icon} {...attrs} />
+			<!-- </Tabs.Content>
 				<Tabs.Content value="image">
 					<Input
 						class="w-full"
@@ -157,16 +157,16 @@
 						{...attrs}
 					/>
 				</Tabs.Content>
-			</Tabs.Root>
+			</Tabs.Root> -->
 		</Form.Control>
 		<Form.FieldErrors />
 	</Form.Field>
 
 	<Form.Button>{initData ? 'Save Changes' : 'Create Bento'}</Form.Button>
 </form>
-
+<!-- 
 <DebugState
 	state={{
 		formData: $formData,
 	}}
-/>
+/> -->
