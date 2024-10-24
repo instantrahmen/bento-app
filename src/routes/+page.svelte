@@ -1,16 +1,14 @@
 <script lang="ts">
-	import { SignIn, SignOut } from '@auth/sveltekit/components';
-	import Button from '$lib/components/ui/button/button.svelte';
+	import { SignIn } from '@auth/sveltekit/components';
 	import { cn } from '$lib/utils/shadcn';
 	import { buttonVariants } from '$lib/components/ui/button';
 	import { afterNavigate, goto } from '$app/navigation';
 
 	let { data } = $props();
 
-	let { user, session } = $derived(data);
+	let { user } = $derived(data);
 
 	afterNavigate(() => {
-		// This should honestly never be called, but just to be safe we'll redirect both here and in `+page.ts`
 		if (user) {
 			goto(`/bento/${user.bentos[0].slug}`);
 		}
