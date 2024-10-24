@@ -7,7 +7,7 @@
 <script lang="ts">
 	import type { APIGetUsersMeResponse } from '$features/auth/types/api';
 	import { createQuery, useQueryClient } from '@tanstack/svelte-query';
-	import { RefreshCw } from 'lucide-svelte';
+	import { RefreshCw, SquarePen } from 'lucide-svelte';
 	import LinkCard from './link-card.svelte';
 	import { cn } from '$lib/utils/shadcn';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
@@ -64,26 +64,31 @@
 </Button>
 {#if currentBento}
 	<header
-		class="flex h-16 w-full flex-row items-center gap-2 sm:my-4 sm:h-auto sm:flex-col sm:justify-center"
+		class={cn(
+			'mx-0 my-2 h-12 w-max items-center rounded-md border bg-card px-2 shadow-md',
+			'sm:my-4 sm:h-auto sm:w-full sm:flex-col sm:justify-center sm:border-none sm:bg-transparent sm:shadow-none ',
+			'flex  flex-row items-center gap-2'
+		)}
 	>
-		<div class="relative">
-			<IconOrImage
-				src={currentBento.icon}
-				alt="Main icon for {currentBento.title}"
-				role="presentation"
-				class="m-0 text-left text-5xl"
-			/>
-		</div>
-		<h2 class="font-lighter inline-flex flex-1 gap-2 text-2xl tracking-wide sm:text-3xl">
+		<IconOrImage
+			src={currentBento.icon}
+			alt="Main icon for {currentBento.title}"
+			role="presentation"
+			class="m-0 text-left text-3xl sm:text-5xl"
+		/>
+		<h2
+			class="inline-flex flex-1 gap-2 text-2xl font-light tracking-wide text-muted-foreground sm:text-3xl"
+		>
 			{currentBento.title}
 
 			<Button
-				class="items-center text-center text-2xl focus-visible:text-ring focus-visible:ring-2"
+				class="items-center text-center text-xl text-foreground/75 focus-visible:text-ring focus-visible:ring-2"
 				variant="ghost"
 				size="icon"
 				href="/bento/{currentBento.slug}/edit"
 			>
-				<iconify-icon icon="lucide:square-pen" class="h-[1em] w-[1em] text-[1em]"></iconify-icon>
+				<!-- <iconify-icon icon="lucide:square-pen" class="h-[1em] w-[1em] text-[1em]"></iconify-icon> -->
+				<SquarePen class="h-[1em] w-[1em] text-[1em]"></SquarePen>
 			</Button>
 		</h2>
 	</header>
