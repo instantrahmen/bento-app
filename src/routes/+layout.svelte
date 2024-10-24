@@ -27,7 +27,7 @@
 	<main class="mx-auto my-auto flex h-full max-h-dvh w-full flex-1 flex-col">
 		{@render children()}
 	</main>
-	<SvelteQueryDevtools />
+	<SvelteQueryDevtools buttonPosition="bottom-left" />
 </QueryClientProvider>
 
 <style lang="postcss">

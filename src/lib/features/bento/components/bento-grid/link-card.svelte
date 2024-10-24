@@ -42,7 +42,7 @@
 
 <div
 	class={cn(
-		'square relative box-border h-full w-full text-primary-foreground @container',
+		'square relative box-border h-full w-full text-card-foreground @container hover:text-primary',
 		className
 	)}
 >
@@ -51,10 +51,10 @@
 		variant="card"
 		size="none"
 		{href}
-		class={cn('absolute left-0 top-0 h-full w-full @container')}
+		class={cn('absolute left-0 top-0 h-full w-full @container focus-visible:text-ring')}
 	>
 		<div
-			class="flex h-full w-full flex-col items-center justify-center gap-0 p-6 text-[0.5rem] text-card-foreground @[11rem]:text-sm @[16rem]:text-xl @sm:text-3xl"
+			class="flex h-full w-full flex-col items-center justify-center gap-0 p-6 text-[0.5rem] text-inherit @[11rem]:text-sm @[16rem]:text-xl @sm:text-3xl"
 		>
 			<IconOrImage
 				class="text-6xl @[6rem]:text-7xl"
@@ -74,7 +74,7 @@
 
 	{#if !hideEditButton}
 		<Button
-			class="absolute right-2 top-2 hidden text-card-foreground focus-visible:ring-2 sm:flex"
+			class="absolute right-2 top-2 hidden text-inherit focus-visible:text-ring focus-visible:ring-2 sm:flex"
 			variant="ghost"
 			size="icon"
 			href="/bento/{$page.params.slug}/{link.id}"

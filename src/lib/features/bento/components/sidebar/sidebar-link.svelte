@@ -67,8 +67,10 @@
 		class={cn(
 			'gap-0 px-2 text-left sm:px-0 ',
 			'relative rounded-xl text-[length:inherit] focus-visible:text-ring active:shadow-inner *:active:scale-75 sm:shadow-black/30',
+			' hover:text-primary',
 			hideLabel ? 'aspect-square h-full w-full justify-center sm:h-9 sm:w-min' : 'justify-start',
-			active && 'rounded-xl border bg-accent text-accent-foreground shadow-inner *:scale-90',
+			active &&
+				'rounded-xl border bg-accent/20 text-primary shadow-inner *:scale-90 dark:bg-accent',
 			!active && 'text-muted-foreground',
 			disabled &&
 				'cursor-pointer text-muted-foreground hover:bg-transparent hover:text-muted-foreground',

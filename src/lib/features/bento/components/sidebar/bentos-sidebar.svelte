@@ -34,8 +34,7 @@
 
 	let sidebarOpen = $state(false);
 	onMount(() => {
-		// We're waiting about 100ms before we open the sidebar since sometimes the sm: media queries don't seem to register immediately.
-		// Possibly a weird hydration issue or just my laptop being slow but this way the UI isn't jumping around while loading
+		// Animate in after 100ms
 		setTimeout(() => (sidebarOpen = true), 100);
 	});
 </script>
@@ -45,7 +44,7 @@
 		<div class="absolute left-1 top-1 flex items-center justify-between text-3xl">
 			<Button
 				on:click={() => (sidebarOpen = !sidebarOpen)}
-				class="relative p-1 text-[length:inherit] text-xl  focus-visible:text-ring active:shadow-inner *:active:scale-90 sm:m-2"
+				class="!hover:bg-none relative p-1 text-[length:inherit] text-xl hover:text-primary focus-visible:text-ring active:shadow-inner *:active:scale-90 sm:m-2"
 				variant="ghost"
 				size="icon"
 			>
@@ -76,7 +75,7 @@
 			<div class="flex items-center justify-between">
 				<Button
 					on:click={() => (sidebarOpen = !sidebarOpen)}
-					class="relative p-1 text-[length:inherit] text-xl focus-visible:text-ring  active:shadow-inner *:active:scale-90 "
+					class="relative p-1  text-[length:inherit] text-xl hover:text-primary focus-visible:text-ring  active:shadow-inner *:active:scale-90 "
 					variant="ghost"
 					size="icon"
 				>
