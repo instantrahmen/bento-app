@@ -64,10 +64,11 @@
 			axis: sidenav ? 'x' : 'y',
 		}}
 		class={cn(
-			'z-20 flex bg-card px-0 py-0 text-3xl transition-all duration-300 *:m-1 [&>*]:flex [&>*]:items-center [&>*]:justify-center',
-			// bottomnav &&
+			'bg-card-base z-20 flex px-0 py-0 text-3xl transition-all duration-300 *:m-1 [&>*]:flex [&>*]:items-center [&>*]:justify-center',
+			// Bottom nav styles
 			'fixed bottom-0 left-0 h-16 w-dvw flex-row items-center justify-start gap-0 overflow-x-auto overflow-y-hidden border-t py-2 text-3xl [&>*]:rounded-md',
-			' border-r sm:sticky sm:top-2 sm:my-2 sm:ml-2 sm:h-auto sm:w-min sm:flex-col sm:overflow-y-auto sm:overflow-x-hidden sm:rounded-md sm:border'
+			// Side nav styles
+			'sm:sticky sm:top-2 sm:my-2 sm:ml-2 sm:h-auto sm:w-min sm:flex-col sm:overflow-y-auto sm:overflow-x-hidden sm:rounded-md sm:border'
 		)}
 	>
 		<!-- {type} -->
