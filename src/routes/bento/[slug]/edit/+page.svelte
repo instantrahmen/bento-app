@@ -4,7 +4,9 @@
 	let { data } = $props();
 </script>
 
-<BentoForm slug={data.slug} />
+<div class="form-container">
+	<BentoForm slug={data.slug} />
+</div>
 
 <style lang="postcss">
 </style>

@@ -2,4 +2,6 @@
 	import BentoForm from '$features/bento/forms/bentos/bento-form.svelte';
 </script>
 
-<BentoForm></BentoForm>
+<div class="form-container">
+	<BentoForm></BentoForm>
+</div>
