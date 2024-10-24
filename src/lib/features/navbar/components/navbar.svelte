@@ -7,7 +7,8 @@
 	import { buttonVariants } from '$lib/components/ui/button';
 	import ThemePicker from '$features/themes/components/theme-picker.svelte';
 	import Lightswitch from '$features/themes/components/light-switch.svelte';
-
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import Button from '$lib/components/ui/button/button.svelte';
 	let {
 		user,
 		session,
@@ -33,11 +34,32 @@
 			</SignIn>
 		</div>
 	{:else}
-		<Avatar.Root class="border">
-			<Avatar.Image src={user.image} alt={user.name} />
-			<Avatar.Fallback>
-				{getInitials(user.name ?? 'User')}
-			</Avatar.Fallback>
-		</Avatar.Root>
+		<DropdownMenu.Root>
+			<DropdownMenu.Trigger asChild let:builder>
+				<Button builders={[builder]} variant="secondary" size="icon" class="rounded-full">
+					<Avatar.Root class="border">
+						<Avatar.Image src={user.image} alt={user.name} />
+						<Avatar.Fallback>
+							{getInitials(user.name ?? 'User')}
+						</Avatar.Fallback>
+					</Avatar.Root>
+					<span class="sr-only">Toggle user menu</span>
+				</Button>
+			</DropdownMenu.Trigger>
+			<DropdownMenu.Content align="end" class="flex flex-col gap-0">
+				<DropdownMenu.Label>Settings</DropdownMenu.Label>
+				<DropdownMenu.Separator />
+
+				<ThemePicker type="submenu" />
+
+				<DropdownMenu.Separator />
+
+				<DropdownMenu.Item asChild>
+					<form action="/signout" method="POST">
+						<Button type="submit" variant="ghost" class="w-full">Sign out</Button>
+					</form>
+				</DropdownMenu.Item>
+			</DropdownMenu.Content>
+		</DropdownMenu.Root>
 	{/if}
 </nav>
