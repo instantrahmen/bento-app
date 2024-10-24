@@ -42,7 +42,6 @@ export const createBentoLink = async ({
 	bentoSlug,
 	body,
 }: CreateBentoLinkOptions) => {
-	console.log('createBentoLink', bentoSlug, body, `/api/bentos/${bentoSlug}/add`);
 	const res = (await fetch(`/api/bentos/${bentoSlug}/add`, {
 		method: 'POST',
 		headers: {

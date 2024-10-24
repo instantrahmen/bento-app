@@ -18,8 +18,6 @@
 	$effect(() => {
 		setHtml();
 	});
-
-	$inspect(_state);
 </script>
 
 <!-- {@html html} -->
@@ -40,6 +38,7 @@
 	</div>
 	<Collapsible.Content class="space-y-2">
 		<div class="max-h-96 overflow-auto rounded-md border p-0 font-mono text-sm [&>pre]:p-4">
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			{@html html}
 		</div>
 	</Collapsible.Content>

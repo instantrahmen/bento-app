@@ -1,34 +1,36 @@
-import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import prisma from '$features/database/prisma';
 import type {
 	APIGetBentosResponse,
 	APIPostBentosBody,
 	APIPostBentosResponse,
 } from '$lib/features/bento/types/api';
+import { json } from '@sveltejs/kit';
+import prisma from '$features/database/prisma';
 
 export const GET: RequestHandler = async ({ locals }) => {
 	const session = await locals.auth();
 
 	if (!session?.user?.id) {
-		console.warn('not logged in');
 		return json({ bentos: [] });
 		// throw new Response(null, { status: 401 });
 	}
 
-	const bentos: APIGetBentosResponse = await prisma.bento.findMany({
-		where: {
-			owner: {
-				id: session.user.id,
+	const bentos: APIGetBentosResponse = await prisma.bento
+		.findMany({
+			where: {
+				owner: {
+					id: session.user.id,
+				},
 			},
-		},
-		include: {
-			links: true,
-		},
-	});
+			include: {
+				links: true,
+			},
+		})
+		.catch(() => {
+			return [];
+		});
 
-	if (!bentos) {
-		console.warn('bentos not found');
+	if (!bentos || bentos.length === 0) {
 		return json({ bentos: [] });
 		// throw new Response(null, { status: 404 });
 	}
@@ -53,7 +55,6 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 		.map((field) => field[0]);
 
 	if (missingFields.length > 0) {
-		console.warn('Missing required fields', missingFields);
 		throw json(
 			{
 				error: `Missing required fields: ${missingFields.join(', ')}`,

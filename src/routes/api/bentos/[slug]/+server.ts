@@ -10,7 +10,6 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 	const slug = params.slug;
 
 	if (!session?.user?.id) {
-		console.warn('not logged in');
 		return json({ bento: null }, { status: 401 });
 	}
 
@@ -31,7 +30,6 @@ export const GET: RequestHandler = async ({ locals, params }) => {
 		});
 
 	if (!bento) {
-		console.warn('bento not found');
 		return json({ bento: null }, { status: 404 });
 	}
 
