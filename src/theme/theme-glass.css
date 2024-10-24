@@ -23,7 +23,7 @@
 
 		&.dark,
 		.dark {
-			--background: 0 0% 7%;
+			--background: 0 0% 0%;
 			--foreground: 0 0% 87%;
 			--muted: 0 12% 15%;
 			--muted-foreground: 0 12% 65%;
@@ -48,7 +48,7 @@
 
 html[data-theme='glass'] {
 	& body {
-		@apply bg-gradient-to-br from-secondary to-primary/60 dark:bg-gradient-to-b dark:from-background dark:to-black;
+		@apply bg-gradient-to-br from-secondary to-primary/60 dark:bg-background;
 	}
 	& .bg-card {
 		@apply bg-opacity-55 backdrop-blur-md;
