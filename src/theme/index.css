@@ -6,3 +6,10 @@
 @import './theme-dracula.css';
 @import './theme-lunarpink.css';
 @import './theme-glass.css';
+
+@layer base {
+	:root {
+		--nav: var(--card);
+		--nav-foreground: var(--card-foreground);
+	}
+}

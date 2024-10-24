@@ -120,7 +120,7 @@
 				<DebugState state={{ initialData, initData }} />
 			</div> -->
 		{:else}
-			<h2 class="text-3xl font-extralight text-muted-foreground">New Bento</h2>
+			<h2 class="text-3xl font-extralight text-muted-foreground">New Link</h2>
 		{/if}
 	</header>
 	<FormInput

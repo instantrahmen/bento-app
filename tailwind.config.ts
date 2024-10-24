@@ -53,6 +53,10 @@ const config: Config = {
 					DEFAULT: 'hsl(var(--card) / <alpha-value>)',
 					foreground: 'hsl(var(--card-foreground) / <alpha-value>)',
 				},
+				nav: {
+					DEFAULT: 'hsl(var(--nav) / <alpha-value>)',
+					foreground: 'hsl(var(--nav-foreground) / <alpha-value>)',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

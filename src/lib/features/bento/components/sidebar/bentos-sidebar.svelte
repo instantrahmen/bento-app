@@ -59,11 +59,11 @@
 			axis: sidenav ? 'x' : 'y',
 		}}
 		class={cn(
-			'bg-card-base z-20 flex px-0 py-0 text-3xl transition-all duration-300 *:m-1 [&>*]:flex [&>*]:items-center [&>*]:justify-center',
+			'bg-nav z-20 flex px-0  text-3xl transition-all duration-300 *:m-1 [&>*]:flex [&>*]:items-center [&>*]:justify-center',
 			// Bottom nav styles
-			'fixed bottom-0 left-0 h-16 w-dvw flex-row items-center justify-start gap-0 overflow-x-auto overflow-y-hidden border-t py-2 text-3xl [&>*]:rounded-md',
+			'fixed bottom-0 left-0 h-16 w-dvw flex-row items-center justify-start gap-0 overflow-x-auto overflow-y-hidden border-t py-1 text-3xl [&>*]:rounded-md',
 			// Side nav styles
-			'sm:sticky sm:top-2 sm:my-2 sm:ml-2 sm:h-auto sm:w-min sm:flex-col sm:overflow-y-auto sm:overflow-x-hidden sm:rounded-md sm:border'
+			'sm:sticky sm:top-2 sm:my-2 sm:ml-2 sm:h-auto sm:w-min sm:flex-col sm:overflow-y-auto sm:overflow-x-hidden sm:rounded-md sm:border sm:py-0'
 		)}
 	>
 		<!-- {type} -->
@@ -89,19 +89,18 @@
 					<iconify-icon icon="material-symbols:bento" class="h-[1em] w-[1em]"></iconify-icon>
 				</Button>
 			</div>
-			<hr />
+			<div class="flex h-[1px] w-full bg-border" role="presentation"></div>
 		{/if}
 		{#if !$bentosQuery.isLoading && !$bentosQuery.isError && $bentosQuery.data}
 			{#each $bentosQuery.data as bento}
 				<BentoLink {bento} active={bento.slug === pageData.slug} hideLabel />
 			{/each}
-			<div>
-				<BentoLink
-					bento={{ title: 'Add a link', slug: 'create', icon: 'lucide:plus' }}
-					skipQuery
-					hideLabel
-				/>
-			</div>
+
+			<BentoLink
+				bento={{ title: 'Add a bento', slug: 'create', icon: 'lucide:plus' }}
+				skipQuery
+				hideLabel
+			/>
 		{:else if $bentosQuery.isLoading}
 			<BentoLink
 				bento={{ title: 'Loading...', icon: 'mdi:loading', slug: 'loading' }}

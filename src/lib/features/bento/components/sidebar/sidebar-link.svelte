@@ -43,7 +43,7 @@
 
 {#if !skipQuery && !!$bentoQuery}
 	{#if $bentoQuery.isLoading}
-		<div class="flex items-center justify-center rounded-md py-1 text-center">
+		<div class="flex items-center justify-center rounded-xl py-1 text-center">
 			<iconify-icon
 				icon="lucide:loader-circle"
 				class="aspect-square h-[1em] w-[1em] animate-spin text-[1em]"
@@ -66,10 +66,10 @@
 		href={!disabled ? `/bento/${bento.slug}` : undefined}
 		class={cn(
 			'gap-0 px-2 text-left sm:px-0 ',
-			'relative rounded-xl text-[length:inherit] shadow-black/30 focus-visible:text-ring active:shadow-inner *:active:scale-75',
+			'relative !rounded-xl text-[length:inherit] shadow-black/30 focus-visible:text-ring active:shadow-inner *:active:scale-75',
 			' hover:text-primary',
 			hideLabel ? 'aspect-square h-full w-full justify-center sm:h-9 sm:w-min' : 'justify-start',
-			active && 'rounded-xl border bg-accent text-primary shadow-inner *:scale-90 dark:bg-accent',
+			active && ' border bg-accent text-primary shadow-inner *:scale-90 dark:bg-accent/40',
 			!active && 'text-muted-foreground',
 			disabled &&
 				'cursor-pointer text-muted-foreground hover:bg-transparent hover:text-muted-foreground',

@@ -15,3 +15,9 @@
 		{@render children()}
 	</div>
 </div>
+
+<style lang="postcss">
+	:global(.form-container) {
+		@apply mx-auto my-16 w-full max-w-xl rounded-md border bg-card p-4 shadow-md;
+	}
+</style>

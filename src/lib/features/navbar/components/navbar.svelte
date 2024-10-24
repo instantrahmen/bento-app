@@ -3,7 +3,7 @@
 	import type { Session } from '@auth/sveltekit';
 	import { SignIn } from '@auth/sveltekit/components';
 	import * as Avatar from '$lib/components/ui/avatar';
-	import { getInitials } from '$lib/utils';
+	import { cn, getInitials } from '$lib/utils';
 	import { buttonVariants } from '$lib/components/ui/button';
 	import ThemePicker from '$features/themes/components/theme-picker.svelte';
 	import Lightswitch from '$features/themes/components/light-switch.svelte';
@@ -19,7 +19,10 @@
 </script>
 
 <nav
-	class="fixed right-2 top-2 z-10 flex h-12 w-min flex-row items-center justify-end gap-2 rounded-md border bg-card bg-none p-2 shadow-md"
+	class={cn(
+		'fixed right-2 top-2 z-10 flex h-12 w-min flex-row items-center justify-end gap-2  p-2'
+		// 'fixed right-2 top-2 z-10 flex h-12 w-min flex-row items-center justify-end gap-2 rounded-md border bg-card bg-none p-2 shadow-md'
+	)}
 >
 	<div class="hidden sm:contents">
 		<ThemePicker />
@@ -36,7 +39,12 @@
 	{:else}
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger asChild let:builder>
-				<Button builders={[builder]} variant="secondary" size="icon" class="rounded-full">
+				<Button
+					builders={[builder]}
+					variant="secondary"
+					size="icon"
+					class="rounded-full focus-visible:ring-4"
+				>
 					<Avatar.Root class="border">
 						<Avatar.Image src={user.image} alt={user.name} />
 						<Avatar.Fallback>

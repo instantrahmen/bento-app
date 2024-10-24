@@ -21,6 +21,9 @@
 		--ring: 317 80% 52%;
 		--radius: 0.8rem;
 
+		--nav: var(--card);
+		--nav-foreground: var(--card-foreground);
+
 		&.dark,
 		.dark {
 			--background: 0 0% 0%;
@@ -42,18 +45,15 @@
 			--destructive: 1 93% 51%;
 			--destructive-foreground: 0 0% 100%;
 			--ring: 317 80% 52%;
+
+			--nav: var(--background);
+			--nav-foreground: var(--foreground);
 		}
 	}
 }
 
-html[data-theme='glass'] {
-	& body {
-		@apply bg-gradient-to-br from-secondary to-primary/60 dark:bg-background;
-	}
-	& .bg-card {
-		@apply bg-opacity-55 backdrop-blur-md;
-	}
-	& .bg-card-base {
-		@apply dark:!bg-black/85 sm:!bg-card;
+html[data-theme='pink-glass'] {
+	body {
+		@apply bg-gradient-to-br from-primary to-violet-500 dark:bg-gradient-to-b dark:from-popover dark:to-black;
 	}
 }

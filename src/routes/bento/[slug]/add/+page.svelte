@@ -7,4 +7,6 @@
 	} = $derived($page);
 </script>
 
-<LinkForm bentoSlug={slug}></LinkForm>
+<div class="form-container">
+	<LinkForm bentoSlug={slug}></LinkForm>
+</div>
