@@ -115,7 +115,7 @@
 	const { form: formData, enhance } = form;
 </script>
 
-{#if $bentoLink.isLoading || $bentoLink.isFetching}
+{#if id && ($bentoLink.isLoading || $bentoLink.isFetching)}
 	<div class=" p-6 text-center">
 		<iconify-icon
 			icon="mdi:loading"

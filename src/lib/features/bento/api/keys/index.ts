@@ -15,24 +15,37 @@ export const queries = {
 		}),
 	bento: (
 		options: APIGetBentosOptions & {
-			slug: string;
+			slug?: string;
 		}
 	) =>
 		queryOptions({
-			queryFn: async () =>
-				await getBento(options).catch((e) => {
+			queryFn: async () => {
+				if (!options.slug) {
+					return null;
+				}
+				const { slug } = options;
+
+				return await getBento({ slug }).catch((e) => {
 					throw new Error(e);
-				}),
+				});
+			},
 			queryKey: ['bentos', { slug: options.slug }],
 			staleTime: minutes(5),
 		}),
 
 	bentoLink: (options: APIGetBentoLinkOptions) =>
 		queryOptions({
-			queryFn: async () =>
-				await getBentoLink(options).catch((e) => {
-					throw new Error(e);
-				}),
+			queryFn: async () => {
+				if (!options.id) {
+					return null;
+				}
+				if (!options.bentoSlug) {
+					throw new Error('slug is required');
+				}
+				return await getBentoLink(options).catch(() => {
+					throw new Error('bento link not found');
+				});
+			},
 			queryKey: ['bentos', 'bentoLink', { slug: options.bentoSlug, id: options.id }],
 			staleTime: minutes(5),
 		}),
