@@ -1,5 +1,4 @@
 <script lang="ts" generics="T extends Record<string, unknown>, U extends FormPath<T>">
-	import type { ComponentProps } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 	import type { FormPath, SuperForm } from 'sveltekit-superforms';
 	import * as FormPrimitive from 'formsnap';

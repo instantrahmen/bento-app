@@ -8,11 +8,6 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-// datasource db {
-//   provider = "sqlite"
-//   url      = env("DATABASE_URL")
-// }
-
 model App {
   id        String   @id @default(cuid())
   updatedAt DateTime @updatedAt
@@ -116,9 +111,7 @@ model Bento {
   ownerId     String
   owner       User        @relation(fields: [ownerId], references: [id])
   links       BentoLink[]
-
-  // createdAt DateTime? @default(now())
-  // updatedAt DateTime? @updatedAt
+  // public      Boolean     @default(false)
 
   @@unique([slug, ownerId])
 }

@@ -8,10 +8,32 @@ export const slugify = (text: string) => {
 		.toString()
 		.toLowerCase()
 		.replace(/\s+/g, '-') // Replace spaces with -
-		.replace(/[^\w\-]+/g, '') // Remove all non-word chars
-		.replace(/\-\-+/g, '-') // Replace multiple - with single -
+		.replace(/[^\w-]+/g, '') // Remove all non-word chars
+		.replace(/--+/g, '-') // Replace multiple - with single -
 		.replace(/^-+/, '') // Trim - from start of text
 		.replace(/-+$/, ''); // Trim - from end of text
+};
+
+export type CheckUniqueFn = (slug: string) => Promise<boolean>;
+export const slugifyWithCheck = async (
+	text: string,
+	checkUnique: CheckUniqueFn = async () => true,
+	index = 0
+): Promise<string> => {
+	const indexStr = index > 0 ? `-${index}` : '';
+	const slug = slugify(text);
+	const finalSlug = `${slug}${indexStr}`;
+
+	// Limit to 10 attempts before giving up and defaulting to a random uuid
+	if (index > 10) {
+		return `${slug}-${crypto.randomUUID()}`;
+	}
+
+	if (await checkUnique(finalSlug)) {
+		return finalSlug;
+	} else {
+		return slugifyWithCheck(text, checkUnique, index + 1);
+	}
 };
 
 /**

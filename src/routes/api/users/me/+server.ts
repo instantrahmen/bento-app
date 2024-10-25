@@ -35,3 +35,32 @@ export const GET: RequestHandler = async ({ locals }) => {
 
 	return json(res);
 };
+
+// Update user info
+export const PUT: RequestHandler = async ({ locals, request }) => {
+	const session = await locals.auth();
+	const _data: Partial<APIGetUsersMeResponse['user']> = await request.json();
+	if (!_data) {
+		return json({ user: null }, { status: 400 });
+	}
+	const { email, image, name } = _data;
+
+	if (!session?.user?.id) {
+		return json({ user: null, session: null });
+	}
+
+	const user = await prisma.user
+		.update({
+			where: {
+				id: session.user.id,
+			},
+			data: {
+				email,
+				image,
+				name,
+			},
+		})
+		.catch(() => null);
+
+	return json({ user });
+};
