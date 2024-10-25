@@ -56,4 +56,8 @@ html[data-theme='pink-glass'] {
 	body {
 		@apply bg-gradient-to-br from-primary to-violet-500 dark:bg-gradient-to-b dark:from-popover dark:to-black;
 	}
+
+	.bg-card {
+		@apply bg-opacity-30 backdrop-blur-lg;
+	}
 }
