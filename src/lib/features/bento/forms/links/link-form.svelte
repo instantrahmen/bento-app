@@ -44,7 +44,7 @@
 	);
 
 	let bentoLink = createQuery(
-		toReadable(() => ({ ...keys.bentoLink({ bentoSlug, id }), initialData }))
+		toReadable(() => ({ ...keys.bentoLink({ bentoSlug, id, fetch }), initialData }))
 	);
 
 	let initData = $derived($bentoLink.data);

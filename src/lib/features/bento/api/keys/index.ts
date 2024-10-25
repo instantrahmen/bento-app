@@ -13,23 +13,26 @@ export const queries = {
 			queryKey: ['bentos'],
 			staleTime: minutes(5),
 		}),
-	bento: (
-		options: APIGetBentosOptions & {
-			slug?: string;
-		}
-	) =>
+	bento: ({
+		slug,
+		...options
+	}: APIGetBentosOptions & {
+		slug?: string;
+	}) =>
 		queryOptions({
 			queryFn: async () => {
-				if (!options.slug) {
+				if (!slug) {
 					return null;
 				}
-				const { slug } = options;
 
-				return await getBento({ slug }).catch((e) => {
+				return await getBento({
+					slug,
+					...options,
+				}).catch((e) => {
 					throw new Error(e);
 				});
 			},
-			queryKey: ['bentos', { slug: options.slug }],
+			queryKey: ['bentos', { slug }],
 			staleTime: minutes(5),
 		}),
 
