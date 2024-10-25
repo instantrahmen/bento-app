@@ -37,7 +37,7 @@
 			--border: var(--rp-dark-overlay);
 			--input: var(--rp-dark-overlay);
 			--primary: var(--rp-dark-pine);
-			--primary-foreground: var(--rp-dark-surface);
+			--primary-foreground: var(--rp-dark-pine-text);
 			--secondary: (--rp-dark-rose);
 			--secondary-foreground: var(--rp-dark-surface);
 			--accent: var(--rp-dark-highlight-med);

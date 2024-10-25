@@ -4,13 +4,13 @@
 		--rp-base: 32 57% 95%;
 		--rp-surface: 35 100% 98%;
 		--rp-overlay: 257 9% 78%;
-		--rp-muted: 257 9% 61%;
-		--rp-subtle: 248 12% 32%;
+		--rp-muted: 257 9% 77%;
+		--rp-subtle: 248 12% 28%;
 		--rp-text: 248 19% 20%;
 		--rp-love: 343 35% 55%;
 		--rp-gold: 35 81% 56%;
 		--rp-rose: 3 50% 57%;
-		--rp-pine: 197 53% 34%;
+		--rp-pine: 197 53% 30%;
 		--rp-foam: 189 30% 48%;
 		--rp-iris: 268 21% 57%;
 		--rp-highlight-lower: 25 34% 98%;
@@ -22,13 +22,15 @@
 		--rp-dark-base: 249 22% 8%;
 		--rp-dark-surface: 247 23% 16%;
 		--rp-dark-overlay: 248 25% 24%;
-		--rp-dark-muted: 249 12% 47%;
-		--rp-dark-subtle: 248 15% 61%;
+		--rp-dark-muted: 249 12% 30%;
+		--rp-dark-subtle: 248 15% 71%;
 		--rp-dark-text: 245 50% 91%;
 		--rp-dark-love: 343 76% 68%;
 		--rp-dark-gold: 35 88% 72%;
 		--rp-dark-rose: 2 55% 83%;
-		--rp-dark-pine: 197 49% 38%;
+		--rp-dark-pine: 197 49% 28%;
+		--rp-dark-pine-text: 220 29% 88%;
+
 		--rp-dark-foam: 189 43% 73%;
 		--rp-dark-iris: 267 57% 78%;
 		--rp-dark-highlight-lower: 240 10% 10%;
