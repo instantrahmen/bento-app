@@ -80,7 +80,7 @@
 	const form = superForm(initialize(), {
 		SPA: true,
 		validators: zod(formSchema),
-		onUpdate({ form }) {
+		async onUpdate({ form }) {
 			if (form.valid) {
 				if (slug && initData?.id) {
 					$updateBentoMutation.mutate({
@@ -88,7 +88,9 @@
 						...form.data,
 					});
 				} else {
-					const newSlug = slugify(form.data.title);
+					const slugifyEndpoint = new URL('/api/bentos/slugify');
+					slugifyEndpoint.searchParams.set('text', form.data.title);
+					const newSlug = await fetch(slugifyEndpoint.toString()).then((r) => r.json());
 					$createBentoMutation.mutate({
 						...form.data,
 						slug: form.data.slug || newSlug,

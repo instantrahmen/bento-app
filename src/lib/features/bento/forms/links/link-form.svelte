@@ -137,9 +137,6 @@
 						{initData.title}
 					</span>
 				</h2>
-				<!-- <div class="text-left">
-				<DebugState state={{ initialData, initData }} />
-			</div> -->
 			{:else}
 				<h2 class="text-3xl font-extralight text-muted-foreground">New Link</h2>
 			{/if}
