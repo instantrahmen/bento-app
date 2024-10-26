@@ -44,7 +44,7 @@
 	);
 
 	let bentoLink = createQuery(
-		toReadable(() => ({ ...keys.bentoLink({ bentoSlug, id }), initialData }))
+		toReadable(() => ({ ...keys.bentoLink({ bentoSlug, id, fetch }), initialData }))
 	);
 
 	let initData = $derived($bentoLink.data);
@@ -115,7 +115,7 @@
 	const { form: formData, enhance } = form;
 </script>
 
-{#if $bentoLink.isLoading || $bentoLink.isFetching}
+{#if id && ($bentoLink.isLoading || $bentoLink.isFetching)}
 	<div class=" p-6 text-center">
 		<iconify-icon
 			icon="mdi:loading"
@@ -137,9 +137,6 @@
 						{initData.title}
 					</span>
 				</h2>
-				<!-- <div class="text-left">
-				<DebugState state={{ initialData, initData }} />
-			</div> -->
 			{:else}
 				<h2 class="text-3xl font-extralight text-muted-foreground">New Link</h2>
 			{/if}

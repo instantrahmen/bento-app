@@ -5,10 +5,16 @@ import prisma from '$features/database/prisma';
 // Create new Bento Link
 export const POST: RequestHandler = async ({ locals, request, params }) => {
 	const session = await locals.auth();
-	const { title, url, icon } = (await request.json()) as {
+	const {
+		title,
+		url,
+		icon,
+		description = '',
+	} = (await request.json()) as {
 		title: string;
 		url: string;
 		icon: string;
+		description?: string;
 	};
 
 	if (!session?.user?.id) {
@@ -20,6 +26,7 @@ export const POST: RequestHandler = async ({ locals, request, params }) => {
 			title,
 			url,
 			icon,
+			description,
 			bento: {
 				connect: {
 					slug_ownerId: {

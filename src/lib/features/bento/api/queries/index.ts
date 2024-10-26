@@ -11,6 +11,7 @@ export const getBentos = async ({
 	fetch = globalThis.fetch,
 }: APIGetBentosOptions): Promise<APIGetBentosResponse> => {
 	const res: APIGetBentosResponse = await fetch('/api/bentos').then((r) => r.json());
+	console.log({ bentos: res });
 	return res;
 };
 

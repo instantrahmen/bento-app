@@ -4,8 +4,8 @@
 	html[data-theme='catppuccin'] {
 		--background: var(--ctp-latte-crust);
 		--foreground: var(--ctp-latte-text);
-		--muted: var(--ctp-latte-subtext-1);
-		--muted-foreground: var(--ctp-overlay-1);
+		--muted: var(--ctp-latte-surface-1);
+		--muted-foreground: var(--ctp-latte-subtext-1);
 		--popover: var(--ctp-latte-mantle);
 		--popover-foreground: var(--ctp-latte-text);
 		--card: var(--ctp-latte-mantle);

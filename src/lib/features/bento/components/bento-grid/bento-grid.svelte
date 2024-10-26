@@ -94,7 +94,7 @@
 	</header>
 {/if}
 
-{#if $query.isLoading}
+{#if $query.isLoading || $query.isFetching}
 	<iconify-icon icon="mdi:loading" class="h-12 w-12 animate-spin"></iconify-icon>
 {:else if $query.isError || !currentBento}
 	<div class="flex flex-col items-center justify-center p-4 text-center">

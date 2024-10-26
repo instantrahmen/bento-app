@@ -3,7 +3,7 @@
 	import BentosSidebar from '$features/bento/components/sidebar/bentos-sidebar.svelte';
 	import { media } from '$lib/utils/media-queries';
 
-	let { children } = $props();
+	let { children, data } = $props();
 	let screenMinSm = new MediaQuery(`(${media.sm.queryStringMin})`);
 
 	let type: 'sidenav' | 'bottomnav' = $derived(screenMinSm.matches ? 'sidenav' : 'bottomnav');

@@ -1,8 +1,10 @@
 <script lang="ts">
 	import type { APIGetUsersMeResponse } from '$features/auth/types/api';
+	import type { BentoWithLinks } from '$features/bento/types/api';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { slide } from 'svelte/transition';
 	import { onMount } from 'svelte';
+
 	import BentoLink from './sidebar-link.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
@@ -29,8 +31,7 @@
 
 	let sidebarOpen = $state(false);
 	onMount(() => {
-		// Animate in after 100ms
-		setTimeout(() => (sidebarOpen = true), 100);
+		setTimeout(() => (sidebarOpen = true), 10);
 	});
 </script>
 
@@ -59,7 +60,7 @@
 			axis: sidenav ? 'x' : 'y',
 		}}
 		class={cn(
-			'bg-nav z-20 flex px-0  text-3xl transition-all duration-300 *:m-1 [&>*]:flex [&>*]:items-center [&>*]:justify-center',
+			'z-20 flex bg-nav px-0  text-3xl transition-all duration-300 *:m-1 [&>*]:flex [&>*]:items-center [&>*]:justify-center',
 			// Bottom nav styles
 			'fixed bottom-0 left-0 h-16 w-dvw flex-row items-center justify-start gap-0 overflow-x-auto overflow-y-hidden border-t py-1 text-3xl [&>*]:rounded-md',
 			// Side nav styles

@@ -35,10 +35,7 @@
 	</Select.Root>
 {:else}
 	<DropdownMenu.Sub>
-		<DropdownMenu.SubTrigger>
-			<Palette class="mr-auto size-6 text-muted-foreground" />
-			Theme
-		</DropdownMenu.SubTrigger>
+		<DropdownMenu.SubTrigger>Theme</DropdownMenu.SubTrigger>
 		<DropdownMenu.SubContent>
 			{#each themes as theme}
 				<DropdownMenu.Item

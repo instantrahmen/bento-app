@@ -7,7 +7,6 @@
 	import { formSchema } from './schema';
 
 	export type Props = {
-		/** The slug of the bento to be edited. If not provided, a new bento will be created. */
 		slug?: string;
 	};
 </script>
@@ -38,7 +37,9 @@
 	let user = $derived($page.data.user) as APIGetUsersMeResponse['user'];
 	let initialData = $derived(user?.bentos.find((bento) => bento.slug === slug));
 
-	let bento = createQuery(toReadable(() => ({ ...keys.bento({ slug: slug || '' }), initialData })));
+	let bento = createQuery(
+		toReadable(() => ({ ...keys.bento({ slug: slug }), initialData, retry: 0 }))
+	);
 	let initData = $derived($bento.data);
 
 	let initialize = () => {
@@ -79,7 +80,7 @@
 	const form = superForm(initialize(), {
 		SPA: true,
 		validators: zod(formSchema),
-		onUpdate({ form }) {
+		async onUpdate({ form }) {
 			if (form.valid) {
 				if (slug && initData?.id) {
 					$updateBentoMutation.mutate({
@@ -87,7 +88,9 @@
 						...form.data,
 					});
 				} else {
-					const newSlug = slugify(form.data.title);
+					const slugifyEndpoint = new URL('/api/bentos/slugify');
+					slugifyEndpoint.searchParams.set('text', form.data.title);
+					const newSlug = await fetch(slugifyEndpoint.toString()).then((r) => r.json());
 					$createBentoMutation.mutate({
 						...form.data,
 						slug: form.data.slug || newSlug,
@@ -111,7 +114,7 @@
 	);
 </script>
 
-{#if $bento.isLoading || $bento.isFetching}
+{#if slug && ($bento.isLoading || $bento.isFetching)}
 	<div class=" p-6 text-center">
 		<iconify-icon
 			icon="mdi:loading"
@@ -133,9 +136,6 @@
 						{initData.title}
 					</span>
 				</h2>
-				<!-- <div class="text-left">
-				<DebugState state={{ initialData, initData }} />
-			</div> -->
 			{:else}
 				<h2 class="text-3xl font-extralight text-muted-foreground">New Bento</h2>
 			{/if}
@@ -181,7 +181,6 @@
 				</span>
 				<AlertDialog.Root closeOnOutsideClick>
 					<AlertDialog.Trigger asChild let:builder>
-						<!-- <Button builders={[builder]} variant="outline">Show Dialog</Button> -->
 						<Button
 							builders={[builder]}
 							variant="destructive"

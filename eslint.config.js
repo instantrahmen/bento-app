@@ -36,23 +36,12 @@ export default tseslint.config(
 	},
 	{
 		rules: {
-			// no-undef seems to conflict with generics in Svelte components and should be handled by Typescript anyway
+			// no-undef and no-unused-vars seems to conflict with generics in Svelte components and should be handled by Typescript anyway
 			'no-undef': 'off',
+			'@typescript-eslint/no-unused-vars': 'off',
 			'@typescript-eslint/ban-ts-comment': 'off',
 			'@typescript-eslint/no-explicit-any': 'off',
 			'import/no-unresolved': 'off',
-			'@typescript-eslint/no-unused-vars': [
-				'warn',
-				{
-					args: 'all',
-					argsIgnorePattern: '^_',
-					caughtErrors: 'all',
-					caughtErrorsIgnorePattern: '^_',
-					destructuredArrayIgnorePattern: '^_',
-					varsIgnorePattern: '^_',
-					ignoreRestSiblings: true,
-				},
-			],
 			'import/order': [
 				'error',
 				{
