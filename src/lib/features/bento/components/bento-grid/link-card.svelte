@@ -15,9 +15,12 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
 	import { Edit } from 'lucide-svelte';
+	import { createQuery } from '@tanstack/svelte-query';
 	import IconOrImage from '$lib/components/icon-or-image.svelte';
 	import { cn } from '$lib/utils';
 	import { page } from '$app/stores';
+	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
+	import { queries } from '$features/settings/api/queries';
 
 	let {
 		link: initLink,
@@ -26,6 +29,14 @@
 		hideLabel = false,
 		hideEditButton = false,
 	}: LinkCardProps = $props();
+
+	const settingsQuery = createQuery(
+		toReadable(() =>
+			queries.settings({
+				userId: $page.data.user?.id,
+			})
+		)
+	);
 
 	let link: PartialLink = $state(untrack(() => ({ ...initLink })));
 
@@ -38,6 +49,8 @@
 	};
 
 	let href = $derived(onClick ? undefined : link.url);
+
+	let openInNewTab = $settingsQuery.data?.openLinksInNewTab ?? false;
 </script>
 
 <div
@@ -50,6 +63,7 @@
 		onclick={handleClick}
 		variant="card"
 		size="none"
+		target={openInNewTab ? '_blank' : undefined}
 		{href}
 		class={cn('absolute left-0 top-0 h-full w-full @container focus-visible:text-ring')}
 	>

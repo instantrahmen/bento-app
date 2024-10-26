@@ -14,7 +14,6 @@ export const GET = async ({ locals }) => {
 		})
 		.then(async (res) => {
 			if (!res) {
-				console.log('No settings found for user, creating...');
 				const settings = await prisma.userSettings.create({
 					data: {
 						user: {
@@ -30,8 +29,6 @@ export const GET = async ({ locals }) => {
 			return res;
 		})
 		.catch((e) => {
-			console.log('Failed to get or create user settings');
-			console.log(e);
 			return null;
 		});
 

@@ -8,7 +8,7 @@
 	import BentoLink from './sidebar-link.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
-	import { keys } from '$features/bento/api/keys';
+	import { queries } from '$features/bento/api/queries';
 	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
 
@@ -24,7 +24,7 @@
 
 	const bentosQuery = createQuery(
 		toReadable(() => ({
-			...keys.bentos({}),
+			...queries.bentos({}),
 			initialData: pageData.user?.bentos,
 		}))
 	);

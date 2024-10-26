@@ -24,7 +24,7 @@
 	import * as Form from '$lib/components/ui/form';
 	import FormInput from '$lib/components/form/form-input.svelte';
 
-	import { keys } from '$features/bento/api/keys';
+	import { queries } from '$features/bento/api/queries';
 	import { createBentoLink, updateBentoLink } from '$features/bento/api';
 	import { IconSelect } from '$features/icon-select';
 	import IconOrImage from '$lib/components/icon-or-image.svelte';
@@ -44,7 +44,7 @@
 	);
 
 	let bentoLink = createQuery(
-		toReadable(() => ({ ...keys.bentoLink({ bentoSlug, id, fetch }), initialData }))
+		toReadable(() => ({ ...queries.bentoLink({ bentoSlug, id, fetch }), initialData }))
 	);
 
 	let initData = $derived($bentoLink.data);

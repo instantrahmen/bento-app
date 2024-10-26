@@ -21,7 +21,7 @@
 	import * as Form from '$lib/components/ui/form';
 	import FormInput from '$lib/components/form/form-input.svelte';
 
-	import { keys } from '$features/bento/api/keys';
+	import { queries } from '$features/bento/api/queries';
 	import { createBento, updateBento } from '$features/bento/api';
 	import { IconSelect } from '$features/icon-select';
 	import IconOrImage from '$lib/components/icon-or-image.svelte';
@@ -38,7 +38,7 @@
 	let initialData = $derived(user?.bentos.find((bento) => bento.slug === slug));
 
 	let bento = createQuery(
-		toReadable(() => ({ ...keys.bento({ slug: slug }), initialData, retry: 0 }))
+		toReadable(() => ({ ...queries.bento({ slug: slug }), initialData, retry: 0 }))
 	);
 	let initData = $derived($bento.data);
 

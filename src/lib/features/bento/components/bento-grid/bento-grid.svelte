@@ -11,7 +11,7 @@
 	import LinkCard from './link-card.svelte';
 	import { cn } from '$lib/utils/shadcn';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
-	import { keys } from '$features/bento/api/keys';
+	import { queries } from '$features/bento/api/queries';
 	import { page } from '$app/stores';
 	import { Button } from '$lib/components/ui/button';
 	import IconOrImage from '$lib/components/icon-or-image.svelte';
@@ -24,7 +24,7 @@
 
 	const query = createQuery(
 		toReadable(() => ({
-			...keys.bento({ slug }),
+			...queries.bento({ slug }),
 			initialData: pageData.user?.bentos.find((bento) => bento.slug === slug),
 		}))
 	);
@@ -32,8 +32,8 @@
 	let currentBento = $derived($query.data);
 
 	const refresh = () => {
-		queryClient.invalidateQueries(keys.bentos({}));
-		queryClient.invalidateQueries(keys.bento({ slug }));
+		queryClient.invalidateQueries(queries.bentos({}));
+		queryClient.invalidateQueries(queries.bento({ slug }));
 	};
 
 	// If less than 4 links, grid will auto fit. Default to 4 cols otherwise
@@ -55,12 +55,11 @@
 	variant="default"
 	size="icon"
 	class={cn(
-		'absolute bottom-20 right-4 z-10 h-12 w-12 rounded-full sm:bottom-4',
-
-		$query.isLoading || ($query.isFetching && 'animate-spin')
+		'absolute bottom-20 right-4 z-10 h-16 w-16 rounded-full shadow-md sm:bottom-4',
+		($query.isLoading || $query.isFetching) && 'animate-spin'
 	)}
 >
-	<RefreshCw class="h-5 w-5" />
+	<RefreshCw class="h-6 w-6" />
 </Button>
 {#if currentBento}
 	<header
@@ -95,7 +94,8 @@
 {/if}
 
 {#if $query.isLoading || $query.isFetching}
-	<iconify-icon icon="mdi:loading" class="h-12 w-12 animate-spin"></iconify-icon>
+	<iconify-icon icon="mdi:loading" width="8rem" height="8rem" class="mx-auto h-32 w-32 animate-spin"
+	></iconify-icon>
 {:else if $query.isError || !currentBento}
 	<div class="flex flex-col items-center justify-center p-4 text-center">
 		<h2 class="text-3xl font-semibold">404 - Not found</h2>

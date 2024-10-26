@@ -53,11 +53,31 @@
 }
 
 html[data-theme='pink-glass'] {
+	--glass-opacity: 0.2;
 	body {
-		@apply bg-gradient-to-br from-primary to-violet-500 dark:bg-gradient-to-b dark:from-popover dark:to-black;
+		@apply bg-gradient-to-br from-violet-400 to-primary/70 dark:bg-gradient-to-b dark:from-card dark:to-background;
+	}
+
+	* {
+		border-color: rgb(255 255 255 / 0.2) !important;
 	}
 
 	.bg-card {
-		@apply bg-opacity-30 backdrop-blur-lg;
+		@apply bg-opacity-[var(--glass-opacity)] backdrop-blur-lg dark:bg-[var(--card)];
+
+		:not(.dark) {
+			@apply border-white/20;
+		}
+	}
+
+	.bg-border:not(.dark) {
+		@apply bg-white/20;
+	}
+
+	.bg-accent:not(.dark) {
+		@apply border-white/20 bg-white/30;
+	}
+	.bg-nav:not(.dark) {
+		@apply !border-white/20 bg-opacity-[var(--glass-opacity)] shadow-md backdrop-blur-lg;
 	}
 }
