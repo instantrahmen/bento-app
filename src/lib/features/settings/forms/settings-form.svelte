@@ -15,10 +15,9 @@
 
 	import { Avatar, AvatarFallback, AvatarImage } from '$lib/components/ui/avatar';
 	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
 	import { Switch } from '$lib/components/ui/switch';
-	import { keys } from '$features/auth/api/keys';
+	import { queries } from '$features/auth/api/queries';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
 	import EditableField from '$lib/components/form/editable-field.svelte';
 
@@ -26,7 +25,7 @@
 	let { initialData, authData }: { initialData?: UserSettings; authData: APIGetUsersMeResponse } =
 		$props();
 
-	let nameError: string | null = $state(null);
+	// let nameError: string | null = $state(null);
 
 	const settingsQueryKey = [
 		'settings',
@@ -47,7 +46,7 @@
 		}))
 	);
 
-	const userQuery = createQuery(toReadable(() => ({ ...keys.me({}), initialData: authData })));
+	const userQuery = createQuery(toReadable(() => ({ ...queries.me({}), initialData: authData })));
 
 	const settingsMutation = createMutation({
 		mutationFn: async (data: Partial<UserSettings>) => {
@@ -69,22 +68,17 @@
 			});
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: keys.me({}).queryKey });
+			queryClient.invalidateQueries({ queryKey: queries.me({}).queryKey });
 		},
 	});
 
 	let userData = $derived($userQuery.data || authData);
 
 	const handleSaveName = (newName: string) => {
-		console.log('saving name:', newName);
 		$userMutation.mutate({ name: newName });
 	};
 
 	let openLinksInNewTab = $state(untrack(() => $settingsQuery.data?.openLinksInNewTab || false));
-
-	$effect(() => {
-		console.log({ openLinksInNewTab });
-	});
 
 	$effect(() => {
 		if ($settingsQuery.isFetching || $settingsQuery.isLoading) {
@@ -163,7 +157,6 @@
 				<CardFooter>
 					<Button>Save Preferences</Button>
 				</CardFooter>
-				<!-- {/if} -->
 			</Card>
 		</TabsContent>
 	</Tabs>

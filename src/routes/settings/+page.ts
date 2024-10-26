@@ -1,5 +1,4 @@
 import type { UserSettings } from '@prisma/client';
-import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ parent }) => {
 	const { queryClient, session } = await parent();

@@ -17,7 +17,7 @@
 	import type { APIGetBentoResponse } from '$features/bento/types/api';
 	import { createQuery } from '@tanstack/svelte-query';
 	import { readable } from 'svelte/store';
-	import { keys } from '../../api/keys';
+	import { queries } from '$features/bento/api/queries';
 	import { Button } from '$lib/components/ui/button';
 	import { cn } from '$lib/utils/shadcn';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
@@ -35,7 +35,7 @@
 		? readable(null)
 		: createQuery(
 				toReadable(() => ({
-					...keys.bento({ slug: bento.slug }),
+					...queries.bento({ slug: bento.slug }),
 					initialData: bento as APIGetBentoResponse,
 				}))
 			);

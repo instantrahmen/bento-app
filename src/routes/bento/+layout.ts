@@ -1,6 +1,6 @@
 import type { LayoutLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
-import { keys } from '$features/bento/api/keys';
+import { queries } from '$features/bento/api/queries';
 
 export const load = (async ({ params: { slug }, parent, fetch }) => {
 	const { queryClient, session, user } = await parent();
@@ -9,7 +9,7 @@ export const load = (async ({ params: { slug }, parent, fetch }) => {
 		throw redirect(303, `/`);
 	}
 
-	await queryClient.prefetchQuery(keys.bentos({ fetch }));
+	await queryClient.prefetchQuery(queries.bentos({ fetch }));
 
 	return {
 		slug,

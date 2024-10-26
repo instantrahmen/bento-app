@@ -79,7 +79,6 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 			},
 		})
 		.catch(() => {
-			console.error('Failed to create bento');
 			throw json({ error: 'Failed to create bento' }, { status: 500 });
 		});
 

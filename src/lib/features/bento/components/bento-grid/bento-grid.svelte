@@ -11,7 +11,7 @@
 	import LinkCard from './link-card.svelte';
 	import { cn } from '$lib/utils/shadcn';
 	import { toReadable } from '$lib/utils/reactive-query-args.svelte';
-	import { keys } from '$features/bento/api/keys';
+	import { queries } from '$features/bento/api/queries';
 	import { page } from '$app/stores';
 	import { Button } from '$lib/components/ui/button';
 	import IconOrImage from '$lib/components/icon-or-image.svelte';
@@ -24,7 +24,7 @@
 
 	const query = createQuery(
 		toReadable(() => ({
-			...keys.bento({ slug }),
+			...queries.bento({ slug }),
 			initialData: pageData.user?.bentos.find((bento) => bento.slug === slug),
 		}))
 	);
@@ -32,8 +32,8 @@
 	let currentBento = $derived($query.data);
 
 	const refresh = () => {
-		queryClient.invalidateQueries(keys.bentos({}));
-		queryClient.invalidateQueries(keys.bento({ slug }));
+		queryClient.invalidateQueries(queries.bentos({}));
+		queryClient.invalidateQueries(queries.bento({ slug }));
 	};
 
 	// If less than 4 links, grid will auto fit. Default to 4 cols otherwise
