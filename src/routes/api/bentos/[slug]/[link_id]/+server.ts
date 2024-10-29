@@ -65,10 +65,11 @@ export const DELETE: RequestHandler = async ({ locals, params: { slug, link_id }
 // Update Bento Link
 export const PUT: RequestHandler = async ({ locals, request, params: { slug, link_id } }) => {
 	const session = await locals.auth();
-	const { title, url, icon } = (await request.json()) as {
+	const { title, url, icon, description } = (await request.json()) as {
 		title?: string;
 		url?: string;
 		icon?: string;
+		description?: string;
 	};
 
 	if (!session?.user?.id) {
@@ -88,6 +89,7 @@ export const PUT: RequestHandler = async ({ locals, request, params: { slug, lin
 				title,
 				url,
 				icon,
+				description,
 			},
 		})
 		.catch((_e) => {
