@@ -9,6 +9,7 @@
 		hideLabel?: boolean;
 		hideEditButton?: boolean;
 		class?: string;
+		forceSameTab?: boolean;
 	};
 </script>
 
@@ -28,6 +29,7 @@
 		class: className = '',
 		hideLabel = false,
 		hideEditButton = false,
+		forceSameTab = false,
 	}: LinkCardProps = $props();
 
 	const settingsQuery = createQuery(
@@ -50,7 +52,12 @@
 
 	let href = $derived(onClick ? undefined : link.url);
 
-	let openInNewTab = $settingsQuery.data?.openLinksInNewTab ?? false;
+	const shouldOpenInNewTab = () => {
+		if (forceSameTab) return true;
+		return $settingsQuery.data?.openLinksInNewTab ?? false;
+	};
+
+	let openInNewTab = $derived(shouldOpenInNewTab());
 </script>
 
 <div
