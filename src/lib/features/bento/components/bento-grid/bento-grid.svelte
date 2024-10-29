@@ -118,6 +118,7 @@
 					}}
 					hideEditButton
 					hideLabel
+					forceSameTab
 				/>
 			{/key}
 		</div>
