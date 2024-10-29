@@ -132,7 +132,6 @@
 	);
 </script>
 
-{submitted}
 {#if (slug && ($bento.isLoading || $bento.isFetching)) || submitted}
 	<div class=" p-6 text-center">
 		<iconify-icon
