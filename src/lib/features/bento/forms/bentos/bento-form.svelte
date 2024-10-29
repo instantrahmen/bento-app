@@ -88,8 +88,7 @@
 						...form.data,
 					});
 				} else {
-					const slugifyEndpoint = new URL('/api/bentos/slugify');
-					slugifyEndpoint.searchParams.set('text', form.data.title);
+					const slugifyEndpoint = `/api/bentos/slugify?text=${form.data.title}`;
 					const newSlug = await fetch(slugifyEndpoint.toString()).then((r) => r.json());
 					$createBentoMutation.mutate({
 						...form.data,
