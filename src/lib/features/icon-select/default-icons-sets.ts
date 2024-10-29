@@ -10,7 +10,6 @@ export const defaultIconsSets = [
 	'simple-icons',
 	'fa-brands',
 	'fa',
-	'fa6',
 	'fa6-solid',
 	'fa6-brands',
 	'fe',
