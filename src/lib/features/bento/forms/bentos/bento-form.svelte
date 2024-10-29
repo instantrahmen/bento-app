@@ -33,6 +33,7 @@
 	let { slug }: Props = $props();
 
 	const client = useQueryClient();
+	let submitted = $state(false);
 
 	let user = $derived($page.data.user) as APIGetUsersMeResponse['user'];
 	let initialData = $derived(user?.bentos.find((bento) => bento.slug === slug));
@@ -55,7 +56,13 @@
 
 			goto(`/bento/${slug}`);
 		},
+		onError: (error) => {
+			submitted = false;
+			formError = error.message;
+		},
 	});
+
+	let formError: string | undefined = $state();
 
 	const updateBentoMutation = createMutation({
 		mutationFn: (bento: APIPostBentosBody) => updateBento({ body: bento }),
@@ -64,6 +71,10 @@
 			client.invalidateQueries({ queryKey: ['bentos', { slug: slug }] });
 
 			goto(`/bento/${slug}`);
+		},
+		onError: (error) => {
+			submitted = false;
+			formError = error.message;
 		},
 	});
 
@@ -75,6 +86,10 @@
 
 			goto('/bento');
 		},
+		onError: (error) => {
+			submitted = false;
+			formError = error.message;
+		},
 	});
 
 	const form = superForm(initialize(), {
@@ -82,6 +97,7 @@
 		validators: zod(formSchema),
 		async onUpdate({ form }) {
 			if (form.valid) {
+				submitted = true;
 				if (slug && initData?.id) {
 					$updateBentoMutation.mutate({
 						slug,
@@ -89,13 +105,16 @@
 					});
 				} else {
 					const slugifyEndpoint = `/api/bentos/slugify?text=${form.data.title}`;
-					const newSlug = await fetch(slugifyEndpoint.toString()).then((r) => r.json());
+					const { slug: newSlug }: { slug: string } = await fetch(slugifyEndpoint.toString()).then(
+						(r) => r.json()
+					);
 					$createBentoMutation.mutate({
 						...form.data,
 						slug: form.data.slug || newSlug,
 					});
 				}
 			} else {
+				submitted = false;
 				$createBentoMutation.reset();
 				$updateBentoMutation.reset();
 			}
@@ -113,7 +132,8 @@
 	);
 </script>
 
-{#if slug && ($bento.isLoading || $bento.isFetching)}
+{submitted}
+{#if (slug && ($bento.isLoading || $bento.isFetching)) || submitted}
 	<div class=" p-6 text-center">
 		<iconify-icon
 			icon="mdi:loading"
@@ -139,6 +159,9 @@
 				<h2 class="text-3xl font-extralight text-muted-foreground">New Bento</h2>
 			{/if}
 		</header>
+		{#if formError}
+			<p class="text-center text-sm text-destructive">{formError}</p>
+		{/if}
 		<FormInput
 			bind:value={$formData.title}
 			{form}

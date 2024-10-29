@@ -55,7 +55,7 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 		.map((field) => field[0]);
 
 	if (missingFields.length > 0) {
-		throw json(
+		return json(
 			{
 				error: `Missing required fields: ${missingFields.join(', ')}`,
 			},
@@ -65,7 +65,7 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 		);
 	}
 
-	const bento: APIPostBentosResponse = await prisma.bento
+	const bento: APIPostBentosResponse | null = await prisma.bento
 		.create({
 			data: {
 				title,
@@ -78,9 +78,15 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 				},
 			},
 		})
-		.catch(() => {
-			throw json({ error: 'Failed to create bento' }, { status: 500 });
+		.catch((e) => {
+			console.error(e);
+			return null;
+			// return json({ error: 'Failed to create bento' }, { status: 500 });
 		});
 
-	return json({ bento });
+	if (!bento) {
+		return json({ error: 'Failed to create bento' }, { status: 400 });
+	}
+
+	return json(bento);
 };
